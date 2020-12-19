@@ -22,6 +22,10 @@ const appRoutes: Routes = [
     {
         path      : '**',
         redirectTo: 'sample'
+    },
+    {
+        path: 'pages',
+        loadChildren: () => import('./main/pages/pages.module').then(m => m.PagesModule)
     }
 ];
 
