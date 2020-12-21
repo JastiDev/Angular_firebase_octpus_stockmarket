@@ -1,21 +1,18 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation } from "@angular/core";
 
-import { fuseAnimations } from '@fuse/animations';
+import { fuseAnimations } from "@fuse/animations";
+import { ProfileService } from "./profile.service";
 
 @Component({
-    selector     : 'profile',
-    templateUrl  : './profile.component.html',
-    styleUrls    : ['./profile.component.scss'],
+    selector: "profile",
+    templateUrl: "./profile.component.html",
+    styleUrls: ["./profile.component.scss"],
     encapsulation: ViewEncapsulation.None,
-    animations   : fuseAnimations
+    animations: fuseAnimations,
 })
-export class ProfileComponent
-{
+export class ProfileComponent {
     /**
      * Constructor
      */
-    constructor()
-    {
-
-    }
+    constructor(public _profileService: ProfileService) {}
 }

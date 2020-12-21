@@ -1,21 +1,20 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from "@angular/core";
+import { Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 
-import { FuseProgressBarService } from '@fuse/components/progress-bar/progress-bar.service';
+import { FuseProgressBarService } from "@fuse/components/progress-bar/progress-bar.service";
 
 @Component({
-    selector     : 'fuse-progress-bar',
-    templateUrl  : './progress-bar.component.html',
-    styleUrls    : ['./progress-bar.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    selector: "fuse-progress-bar",
+    templateUrl: "./progress-bar.component.html",
+    styleUrls: ["./progress-bar.component.scss"],
+    encapsulation: ViewEncapsulation.None,
 })
-export class FuseProgressBarComponent implements OnInit, OnDestroy
-{
+export class FuseProgressBarComponent implements OnInit, OnDestroy {
     bufferValue: number;
-    mode: 'determinate' | 'indeterminate' | 'buffer' | 'query';
+    mode: "determinate" | "indeterminate" | "buffer" | "query";
     value: number;
-    visible: boolean;
+    visible: boolean = true;
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -25,10 +24,7 @@ export class FuseProgressBarComponent implements OnInit, OnDestroy
      *
      * @param {FuseProgressBarService} _fuseProgressBarService
      */
-    constructor(
-        private _fuseProgressBarService: FuseProgressBarService
-    )
-    {
+    constructor(private _fuseProgressBarService: FuseProgressBarService) {
         // Set the defaults
 
         // Set the private defaults
@@ -42,8 +38,7 @@ export class FuseProgressBarComponent implements OnInit, OnDestroy
     /**
      * On init
      */
-    ngOnInit(): void
-    {
+    ngOnInit(): void {
         // Subscribe to the progress bar service properties
 
         // Buffer value
@@ -73,14 +68,12 @@ export class FuseProgressBarComponent implements OnInit, OnDestroy
             .subscribe((visible) => {
                 this.visible = visible;
             });
-
     }
 
     /**
      * On destroy
      */
-    ngOnDestroy(): void
-    {
+    ngOnDestroy(): void {
         // Unsubscribe from all subscriptions
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
@@ -89,5 +82,4 @@ export class FuseProgressBarComponent implements OnInit, OnDestroy
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
-
 }

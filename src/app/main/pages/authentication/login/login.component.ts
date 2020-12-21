@@ -1,18 +1,21 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ViewEncapsulation } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
-import { FuseConfigService } from '@fuse/services/config.service';
-import { fuseAnimations } from '@fuse/animations';
+import { FuseConfigService } from "@fuse/services/config.service";
+import { fuseAnimations } from "@fuse/animations";
+import { AuthService } from "app/auth/auth.service";
+import { Router } from "@angular/router";
+import { FuseProgressBarService } from "@fuse/components/progress-bar/progress-bar.service";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
-    selector     : 'login',
-    templateUrl  : './login.component.html',
-    styleUrls    : ['./login.component.scss'],
+    selector: "login",
+    templateUrl: "./login.component.html",
+    styleUrls: ["./login.component.scss"],
     encapsulation: ViewEncapsulation.None,
-    animations   : fuseAnimations
+    animations: fuseAnimations,
 })
-export class LoginComponent implements OnInit
-{
+export class LoginComponent implements OnInit {
     loginForm: FormGroup;
 
     /**
@@ -23,25 +26,28 @@ export class LoginComponent implements OnInit
      */
     constructor(
         private _fuseConfigService: FuseConfigService,
-        private _formBuilder: FormBuilder
-    )
-    {
+        private _fuseProgress: FuseProgressBarService,
+        private _formBuilder: FormBuilder,
+        public authService: AuthService,
+        private router: Router,
+        private snack: MatSnackBar
+    ) {
         // Configure the layout
         this._fuseConfigService.config = {
             layout: {
-                navbar   : {
-                    hidden: true
+                navbar: {
+                    hidden: true,
                 },
-                toolbar  : {
-                    hidden: true
+                toolbar: {
+                    hidden: true,
                 },
-                footer   : {
-                    hidden: true
+                footer: {
+                    hidden: true,
                 },
                 sidepanel: {
-                    hidden: true
-                }
-            }
+                    hidden: true,
+                },
+            },
         };
     }
 
@@ -52,11 +58,31 @@ export class LoginComponent implements OnInit
     /**
      * On init
      */
-    ngOnInit(): void
-    {
+    ngOnInit(): void {
         this.loginForm = this._formBuilder.group({
-            email   : ['', [Validators.required, Validators.email]],
-            password: ['', Validators.required]
+            email: ["", [Validators.required, Validators.email]],
+            password: ["", Validators.required],
         });
+    }
+
+    onSubmit(event) {
+        event.preventDefault();
+        if (!this.loginForm.valid) return;
+
+        this._fuseProgress.show();
+        this.authService
+            .emailSignIn(this.loginForm.value)
+            .then((resp) => {
+                this._fuseProgress.hide();
+                setTimeout(() => {
+                    this.router.navigate([""]);
+                }, 500);
+            })
+            .catch((error) => {
+                this._fuseProgress.hide();
+                this.snack.open("Failed: " + error.message, "Dismiss", {
+                    duration: 5000,
+                });
+            });
     }
 }

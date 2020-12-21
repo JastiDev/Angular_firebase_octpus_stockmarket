@@ -1,133 +1,221 @@
-import { Injectable, NgZone } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { auth } from 'firebase';
-import { from, Subject } from 'rxjs';
-import { NotificationsService, NotificationType } from 'angular2-notifications';
-import { UserRole } from './auth.roles';
-import { Router } from '@angular/router';
-import { environment } from '../../environments/environment';
+import { Injectable, NgZone } from "@angular/core";
+import { AngularFireAuth } from "@angular/fire/auth";
+import { auth, User } from "firebase";
+import { Subject } from "rxjs";
+import { UserRole } from "./auth.roles";
+import { Router } from "@angular/router";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 export interface ISignInCredentials {
-  email: string;
-  password: string;
+    email: string;
+    password: string;
 }
 
 export interface ICreateCredentials {
-  email: string;
-  password: string;
-  displayName: string;
+    email: string;
+    password: string;
+    displayName: string;
 }
 
 export interface IPasswordReset {
-  code: string;
-  newPassword: string;
+    code: string;
+    newPassword: string;
 }
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ providedIn: "root" })
 export class AuthService {
-  user;
-  subjectAuth = new Subject<boolean>();
+    user;
+    subjectAuth = new Subject<{ isAuthed: boolean; user: any }>();
 
-  constructor(
-    private auth: AngularFireAuth,
-    private notifications: NotificationsService,
-    private router: Router,
-    public ngZone: NgZone
-  ) {}
+    constructor(
+        private auth: AngularFireAuth,
+        private router: Router,
+        public ngZone: NgZone,
+        private snack: MatSnackBar
+    ) {}
 
-  init() {
-    this.auth.authState.subscribe((userData) => {
-      if (userData) {
-        this.user = { ...userData, role: UserRole.Admin };
-        localStorage.setItem('user', JSON.stringify(userData));
-        JSON.parse(localStorage.getItem('user'));
-        this.subjectAuth.next(true);
-      } else {
-        this.user = null;
-        localStorage.setItem('user', null);
-        JSON.parse(localStorage.getItem('user'));
-        this.subjectAuth.next(false);
-      }
-    });
-  }
-
-  // tslint:disable-next-line:typedef
-  emailSignIn(credentials: ISignInCredentials) {
-    return this.auth
-      .signInWithEmailAndPassword(credentials.email, credentials.password)
-      .then(({ user }) => {
-        return user;
-      });
-  }
-
-  async signOut() {
-    await this.auth.signOut();
-    await localStorage.removeItem('user');
-  }
-
-  // tslint:disable-next-line:typedef
-  emailSignUp(credentials: ICreateCredentials) {
-    return this.auth
-      .createUserWithEmailAndPassword(credentials.email, credentials.password)
-      .then(async ({ user }) => {
-        user.updateProfile({
-          displayName: credentials.displayName,
+    init() {
+        this.autoLogin();
+        this.auth.authState.subscribe((userData: User) => {
+            console.log("authState Changed", userData);
+            this.setUserData(userData, UserRole.FreeUser);
         });
-        this.auth.updateCurrentUser(user);
-        this.user = user;
-        return user;
-      });
-  }
+    }
 
-  googleAuth() {
-    this.auth
-      .signInWithPopup(new auth.GoogleAuthProvider())
-      .then(({ user }) => {
-        this.ngZone.run(() => {
-          this.router.navigate([environment.adminRoot]);
-        });
-      })
-      .catch((error) => {
-        this.notifications.create(
-          'Error',
-          error.message,
-          NotificationType.Bare,
-          { theClass: 'outline primary', timeOut: 6000, showProgressBar: false }
+    private autoLogin() {
+        const userData = JSON.parse(localStorage.getItem("userData"));
+        const userRole = JSON.parse(localStorage.getItem("userRole"));
+        this.setUserData(userData, userRole);
+    }
+
+    private setUserData(userData, userRole) {
+        if (userData) {
+            this.user = { ...userData, role: userRole };
+            localStorage.setItem("userData", JSON.stringify(userData));
+            localStorage.setItem("userRole", JSON.stringify(userRole));
+            this.subjectAuth.next({ isAuthed: true, user: this.user });
+        } else {
+            this.user = null;
+            localStorage.setItem("userData", null);
+            localStorage.setItem("userRole", null);
+            this.subjectAuth.next({ isAuthed: false, user: this.user });
+        }
+    }
+
+    // tslint:disable-next-line:typedef
+    emailSignIn(credentials: ISignInCredentials) {
+        return this.auth.signInWithEmailAndPassword(
+            credentials.email,
+            credentials.password
         );
-      });
-  }
+    }
 
-  facebookAuth() {
-    this.auth
-      .signInWithPopup(new auth.FacebookAuthProvider())
-      .then(({ user }) => {
+    async signOut() {
+        await this.auth.signOut();
         this.ngZone.run(() => {
-          this.router.navigate([environment.adminRoot]);
+            this.router.navigate(["/pages/auth/login"]);
         });
-      })
-      .catch((error) => {
-        this.notifications.create(
-          'Error',
-          error.message,
-          NotificationType.Bare,
-          { theClass: 'outline primary', timeOut: 6000, showProgressBar: false }
-        );
-      });
-  }
+    }
 
-  // tslint:disable-next-line:typedef
-  sendPasswordResetEmail(email) {
-    return this.auth.sendPasswordResetEmail(email).then(() => {
-      return true;
-    });
-  }
+    // tslint:disable-next-line:typedef
+    emailSignUp(credentials: ICreateCredentials) {
+        return this.auth
+            .createUserWithEmailAndPassword(
+                credentials.email,
+                credentials.password
+            )
+            .then(async ({ user }) => {
+                user.updateProfile({
+                    displayName: credentials.displayName,
+                });
+                this.auth.updateCurrentUser(user);
+                return user;
+            });
+    }
 
-  // tslint:disable-next-line:typedef
-  resetPassword(credentials: IPasswordReset) {
-    return this.auth
-      .confirmPasswordReset(credentials.code, credentials.newPassword)
-      .then((data) => {
-        return data;
-      });
-  }
+    updateProfile(displayName: string, photoURL: string = "") {
+        this.auth.currentUser
+            .then((userData) => {
+                userData
+                    .updateProfile({ displayName, photoURL })
+                    .then(() => {
+                        this.setUserData(userData, UserRole.FreeUser);
+                        this.snack.open("Successfully changed", "Dismiss", {
+                            duration: 2000,
+                            horizontalPosition: "right",
+                        });
+                    })
+                    .catch((error) => {
+                        this.snack.open("Failed: " + error.message, "Dismiss", {
+                            duration: 5000,
+                            horizontalPosition: "right",
+                        });
+                    });
+                this.auth.updateCurrentUser(userData);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+
+    updateEmail(email: string) {
+        this.auth.currentUser
+            .then((userData) => {
+                userData
+                    .updateEmail(email)
+                    .then(() => {
+                        this.setUserData(userData, UserRole.FreeUser);
+                        this.snack.open("Successfully changed", "Dismiss", {
+                            duration: 2000,
+                            horizontalPosition: "right",
+                        });
+                    })
+                    .catch((error) => {
+                        this.snack.open("Failed: " + error.message, "Dismiss", {
+                            duration: 5000,
+                            horizontalPosition: "right",
+                        });
+                    });
+                this.auth.updateCurrentUser(userData);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+
+    updatePassword(password: string) {
+        this.auth.currentUser
+            .then((userData) => {
+                userData
+                    .updatePassword(password)
+                    .then(() => {
+                        this.setUserData(userData, UserRole.FreeUser);
+                        this.snack.open("Successfully changed", "Dismiss", {
+                            duration: 2000,
+                            horizontalPosition: "right",
+                        });
+                    })
+                    .catch((error) => {
+                        this.snack.open("Failed: " + error.message, "Dismiss", {
+                            duration: 5000,
+                            horizontalPosition: "right",
+                        });
+                    });
+
+                this.auth.updateCurrentUser(userData);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+
+    googleAuth() {
+        this.auth
+            .signInWithPopup(new auth.GoogleAuthProvider())
+            .then(({ user }) => {
+                setTimeout(() => {
+                    this.ngZone.run(() => {
+                        this.router.navigate([""]);
+                    });
+                }, 500);
+            })
+            .catch((error) => {
+                this.snack.open("Failed: " + error.message, "Dismiss", {
+                    duration: 5000,
+                });
+            });
+    }
+
+    facebookAuth() {
+        this.auth
+            .signInWithPopup(new auth.FacebookAuthProvider())
+            .then(({ user }) => {
+                setTimeout(() => {
+                    this.ngZone.run(() => {
+                        this.router.navigate([""]);
+                    });
+                }, 500);
+            })
+            .catch((error) => {
+                this.snack.open("Failed: " + error.message, "Dismiss", {
+                    duration: 5000,
+                });
+            });
+    }
+
+    // tslint:disable-next-line:typedef
+    sendPasswordResetEmail(email) {
+        return this.auth.sendPasswordResetEmail(email).then(() => {
+            return true;
+        });
+    }
+
+    // tslint:disable-next-line:typedef
+    resetPassword(credentials: IPasswordReset) {
+        return this.auth
+            .confirmPasswordReset(credentials.code, credentials.newPassword)
+            .then((data) => {
+                return data;
+            });
+    }
 }

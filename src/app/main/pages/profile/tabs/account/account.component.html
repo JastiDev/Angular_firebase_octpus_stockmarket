@@ -1,0 +1,80 @@
+<div id="account" fxLayout="column">
+    <div
+        id="account-form-wrapper"
+        fxLayout="column"
+        fxLayoutAlign="center center"
+    >
+        <div
+            id="account-form"
+            [@animate]="{
+                value: '*',
+                params: { duration: '300ms', y: '100px' }
+            }"
+        >
+            <div class="myform">
+                <div style="display: flex">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Full Name</mat-label>
+                        <input matInput [(ngModel)]="displayName" />
+                        <mat-error> Name is required </mat-error>
+                    </mat-form-field>
+
+                    <button
+                        mat-button
+                        style="height: 63px"
+                        (click)="changeDisplayName()"
+                    >
+                        <mat-icon matSuffix class="secondary-text"
+                            >save</mat-icon
+                        >
+                    </button>
+                </div>
+
+                <div style="display: flex">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Email</mat-label>
+                        <input matInput [(ngModel)]="email" />
+
+                        <mat-error *ngIf="false"> Email is required </mat-error>
+                        <mat-error *ngIf="false">
+                            Please enter a valid email address
+                        </mat-error>
+                    </mat-form-field>
+
+                    <button
+                        mat-button
+                        style="height: 63px"
+                        (click)="changeEmail()"
+                    >
+                        <mat-icon matSuffix class="secondary-text"
+                            >save</mat-icon
+                        >
+                    </button>
+                </div>
+
+                <div style="display: flex">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Password</mat-label>
+                        <input
+                            matInput
+                            type="password"
+                            [(ngModel)]="password"
+                        />
+
+                        <mat-error> Password is required </mat-error>
+                    </mat-form-field>
+
+                    <button
+                        mat-button
+                        style="height: 63px"
+                        (click)="changePassword()"
+                    >
+                        <mat-icon matSuffix class="secondary-text"
+                            >save</mat-icon
+                        >
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
