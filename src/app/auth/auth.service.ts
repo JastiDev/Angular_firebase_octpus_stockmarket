@@ -1,6 +1,6 @@
 import { Injectable, NgZone } from "@angular/core";
 import { AngularFireAuth } from "@angular/fire/auth";
-import { auth, User } from "firebase";
+import { auth, User } from "firebase/app";
 import { Subject } from "rxjs";
 import { UserRole } from "./auth.roles";
 import { Router } from "@angular/router";
@@ -37,7 +37,6 @@ export class AuthService {
     init() {
         this.autoLogin();
         this.auth.authState.subscribe((userData: User) => {
-            console.log("authState Changed", userData);
             this.setUserData(userData, UserRole.FreeUser);
         });
     }

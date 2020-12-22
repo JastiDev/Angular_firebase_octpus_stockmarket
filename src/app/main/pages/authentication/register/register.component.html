@@ -94,7 +94,7 @@
                     </mat-error>
                 </mat-form-field>
 
-                <div class="terms" fxLayout="row" fxLayoutAlign="center center">
+                <!-- <div class="terms" fxLayout="row" fxLayoutAlign="center center">
                     <mat-checkbox
                         name="terms"
                         aria-label="I read and accept"
@@ -103,7 +103,7 @@
                         <span>I read and accept</span>
                     </mat-checkbox>
                     <a href="#">terms and conditions</a>
-                </div>
+                </div> -->
 
                 <button
                     mat-raised-button
@@ -115,6 +115,18 @@
                     CREATE AN ACCOUNT
                 </button>
             </form>
+
+            <div class="separator">
+                <span class="text">OR</span>
+            </div>
+
+            <button
+                mat-raised-button
+                class="google"
+                (click)="authService.googleAuth()"
+            >
+                Sign in with Google
+            </button>
 
             <div
                 class="register"

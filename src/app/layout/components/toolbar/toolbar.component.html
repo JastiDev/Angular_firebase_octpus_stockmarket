@@ -47,7 +47,10 @@
                 <div fxLayout="row" fxLayoutAlign="center center">
                     <img
                         class="avatar mr-0 mr-sm-16"
-                        [src]="authService.user?.photoURL"
+                        [src]="
+                            authService.user?.photoURL ||
+                            'assets/images/avatars/profile.jpg'
+                        "
                     />
                     <span class="username mr-12" fxHide fxShow.gt-sm>{{
                         authService.user?.displayName

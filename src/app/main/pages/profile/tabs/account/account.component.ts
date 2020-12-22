@@ -11,7 +11,7 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 import { Router } from "@angular/router";
 import { fuseAnimations } from "@fuse/animations";
 import { FuseProgressBarService } from "@fuse/components/progress-bar/progress-bar.service";
-import { User } from "firebase";
+import { User } from "firebase/app";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 import { ProfileService } from "../../profile.service";

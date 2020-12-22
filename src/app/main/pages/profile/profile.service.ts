@@ -8,7 +8,7 @@ import {
 import { BehaviorSubject, Observable } from "rxjs";
 import { AuthService } from "app/auth/auth.service";
 import { AngularFireAuth } from "@angular/fire/auth";
-import { User } from "firebase";
+import { User } from "firebase/app";
 
 @Injectable()
 export class ProfileService implements Resolve<any> {
