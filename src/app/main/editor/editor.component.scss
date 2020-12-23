@@ -1,0 +1,53 @@
+mat-toolbar {
+    z-index: 1;
+}
+
+#page-body {
+    flex: 1 1 auto;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+}
+
+#pan-container {
+    flex: 1 1 auto;
+    overflow: hidden;
+    position: relative;
+    outline: none;
+}
+
+#pan-panel {
+    cursor: grab;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    min-width: 15000px;
+    min-height: 15000px;
+    display: flex;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    background-image: -webkit-repeating-radial-gradient(
+        center center,
+        rgba(0, 0, 0, 0.1),
+        rgba(0, 0, 0, 0.1) 1px,
+        transparent 1px,
+        transparent 100%
+    );
+    background-size: 16px 16px;
+    transform: translate(-7500px, -7500px);
+}
+
+#pan-div {
+    top: 7800px;
+    left: 50vw;
+    width: 100%;
+    flex: 1 1 0%;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    position: absolute;
+}

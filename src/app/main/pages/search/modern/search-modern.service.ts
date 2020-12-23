@@ -1,11 +1,14 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import {
+    ActivatedRouteSnapshot,
+    Resolve,
+    RouterStateSnapshot,
+} from "@angular/router";
+import { BehaviorSubject, Observable } from "rxjs";
 
 @Injectable()
-export class SearchModernService implements Resolve<any>
-{
+export class SearchModernService implements Resolve<any> {
     data: any;
     dataOnChanged: BehaviorSubject<any>;
 
@@ -14,10 +17,7 @@ export class SearchModernService implements Resolve<any>
      *
      * @param {HttpClient} _httpClient
      */
-    constructor(
-        private _httpClient: HttpClient
-    )
-    {
+    constructor(private _httpClient: HttpClient) {
         // Set the defaults
         this.dataOnChanged = new BehaviorSubject({});
     }
@@ -29,33 +29,27 @@ export class SearchModernService implements Resolve<any>
      * @param {RouterStateSnapshot} state
      * @returns {Observable<any> | Promise<any> | any}
      */
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any
-    {
+    resolve(
+        route: ActivatedRouteSnapshot,
+        state: RouterStateSnapshot
+    ): Observable<any> | Promise<any> | any {
         return new Promise((resolve, reject) => {
-            Promise.all([
-                this.getSearchData()
-            ]).then(
-                () => {
-                    resolve();
-                },
-                reject
-            );
+            Promise.all([this.getSearchData()]).then(() => {
+                resolve(null);
+            }, reject);
         });
     }
 
     /**
      * Get search data
      */
-    getSearchData(): Promise<any[]>
-    {
+    getSearchData(): Promise<any[]> {
         return new Promise((resolve, reject) => {
-
-            this._httpClient.get('api/search')
-                .subscribe((data: any) => {
-                    this.data = data;
-                    this.dataOnChanged.next(this.data);
-                    resolve(this.data);
-                }, reject);
+            this._httpClient.get("api/search").subscribe((data: any) => {
+                this.data = data;
+                this.dataOnChanged.next(this.data);
+                resolve(this.data);
+            }, reject);
         });
     }
 }

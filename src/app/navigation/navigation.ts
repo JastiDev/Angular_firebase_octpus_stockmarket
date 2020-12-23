@@ -15,4 +15,11 @@ export const navigation: FuseNavigation[] = [
         icon: "assistant",
         url: "/home/flows",
     },
+    {
+        id: "myapps",
+        title: "My Apps",
+        type: "item",
+        icon: "apps",
+        url: "/home/myapps",
+    },
 ];

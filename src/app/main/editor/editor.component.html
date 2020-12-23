@@ -1,0 +1,38 @@
+<div style="width: 100%; display: flex; flex-direction: column">
+    <mat-toolbar color="primary" style="display: flex; height: 70px">
+        <button
+            mat-icon-button
+            class="example-icon"
+            aria-label="Example icon-button with menu icon"
+            (click)="goBack()"
+        >
+            <mat-icon>keyboard_arrow_left</mat-icon>
+            <span>Back</span>
+        </button>
+
+        <div style="margin-left: 100px">
+            <mat-form-field class="example-full-width">
+                <mat-icon matPrefix>mode_edit</mat-icon>
+                <input type="text" matInput [(ngModel)]="flow.title" />
+            </mat-form-field>
+        </div>
+
+        <div style="flex: 1"></div>
+        <button mat-raised-button color="accent" slot="end">Save</button>
+    </mat-toolbar>
+
+    <div id="page-body">
+        <div id="pan-container">
+            <div id="pan-panel">
+                <div id="pan-div">
+                    <div style="border: 1px solid red; user-select: none">
+                        <h1>
+                            Hello Ho hao ah;alkdf;al khd;alkdfha;sdlfkha;d
+                            lfakhdf
+                        </h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

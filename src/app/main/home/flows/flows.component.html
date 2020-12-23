@@ -1,1 +1,24 @@
-<p>flows works!</p>
+<div class="page-layout simple p-24">
+    <div class="my-container">
+        <!-- HEADER -->
+        <div class="header p-24" fxLayout="row" fxLayoutAlign="start center">
+            <h2>Flows</h2>
+        </div>
+        <!-- / HEADER -->
+
+        <!-- CONTENT -->
+        <div class="content p-24">
+            <ng-container *ngFor="let flow of flows; let i = index">
+                <flows-flow
+                    [flow]="flow"
+                    (toggleChanged)="toggleFlow($event, i)"
+                    (deleteClicked)="tryDeleteFlow(i)"
+                    (cloneClicked)="tryCloneFlow(i)"
+                    (editClicked)="tryEditFlow(i)"
+                    (renameClicked)="tryRenameFlow(i)"
+                ></flows-flow>
+            </ng-container>
+        </div>
+        <!-- / CONTENT -->
+    </div>
+</div>

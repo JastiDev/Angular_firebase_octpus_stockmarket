@@ -15,6 +15,7 @@ import { navigation } from "app/navigation/navigation";
 import { locale as navigationEnglish } from "app/navigation/i18n/en";
 import { locale as navigationTurkish } from "app/navigation/i18n/tr";
 import { AuthService } from "./auth/auth.service";
+import { FlowsService } from "./services/flows.service";
 
 @Component({
     selector: "app",
@@ -41,7 +42,6 @@ export class AppComponent implements OnInit, OnDestroy {
      * @param {TranslateService} _translateService
      */
     constructor(
-        private authService: AuthService,
         @Inject(DOCUMENT) private document: any,
         private _fuseConfigService: FuseConfigService,
         private _fuseNavigationService: FuseNavigationService,
@@ -49,9 +49,12 @@ export class AppComponent implements OnInit, OnDestroy {
         private _fuseSplashScreenService: FuseSplashScreenService,
         private _fuseTranslationLoaderService: FuseTranslationLoaderService,
         private _translateService: TranslateService,
-        private _platform: Platform
+        private _platform: Platform,
+        private authService: AuthService,
+        private flowsService: FlowsService
     ) {
         this.authService.init();
+        this.flowsService.makeMockData();
 
         // Get default navigation
         this.navigation = navigation;

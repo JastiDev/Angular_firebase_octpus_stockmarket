@@ -1,0 +1,38 @@
+<mat-card class="mt-12 card" style="display: flex; align-items: stretch">
+    <div
+        (click)="onClickFlow()"
+        style="flex: 1; display: flex; align-items: center; cursor: pointer"
+    >
+        <strong>{{ flow.title }}</strong>
+    </div>
+    <div style="margin-left: 50px; display: flex; align-items: center">
+        <mat-slide-toggle
+            [checked]="flow.isOn"
+            (change)="toggleChanged.emit($event.checked)"
+        ></mat-slide-toggle>
+        <button mat-icon-button class="ml-12" [matMenuTriggerFor]="menu">
+            <mat-icon>keyboard_arrow_down</mat-icon>
+        </button>
+
+        <mat-menu #menu="matMenu" (closed)="span.innerText = 'Trash'">
+            <div style="width: 250px">
+                <button mat-menu-item (click)="editClicked.emit()">
+                    <mat-icon>edit</mat-icon>
+                    <span>Edit</span>
+                </button>
+                <button mat-menu-item (click)="renameClicked.emit()">
+                    <mat-icon>title</mat-icon>
+                    <span>Rename</span>
+                </button>
+                <button mat-menu-item (click)="cloneClicked.emit()">
+                    <mat-icon>file_copy</mat-icon>
+                    <span>Clone</span>
+                </button>
+                <button mat-menu-item (click)="onClickDelete($event, span)">
+                    <mat-icon>delete</mat-icon>
+                    <span #span>Trash</span>
+                </button>
+            </div>
+        </mat-menu>
+    </div>
+</mat-card>

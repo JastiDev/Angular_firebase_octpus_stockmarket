@@ -18,6 +18,8 @@ import {
 } from "@fuse/components";
 
 import { fuseConfig } from "app/fuse-config";
+import { FakeDbService } from "app/fake-db/fake-db.service";
+
 import { AppComponent } from "app/app.component";
 
 import { AuthGuard } from "app/auth/auth.guard";
@@ -29,6 +31,7 @@ import { AngularFireAuthModule } from "@angular/fire/auth";
 import { AngularFireAuthGuardModule } from "@angular/fire/auth-guard";
 import { AngularFireModule } from "@angular/fire";
 import { environment } from "environments/environment";
+import { InMemoryWebApiModule } from "angular-in-memory-web-api";
 
 const appRoutes: Routes = [
     {
@@ -42,6 +45,16 @@ const appRoutes: Routes = [
         path: "pages",
         loadChildren: () =>
             import("./main/pages/pages.module").then((m) => m.PagesModule),
+    },
+    {
+        path: "editor",
+        loadChildren: () =>
+            import("./main/editor/editor.module").then((m) => m.EditorModule),
+    },
+    {
+        path: "editor/:flowId",
+        loadChildren: () =>
+            import("./main/editor/editor.module").then((m) => m.EditorModule),
     },
     {
         path: "",
@@ -63,6 +76,10 @@ const appRoutes: Routes = [
         RouterModule.forRoot(appRoutes),
 
         TranslateModule.forRoot(),
+        InMemoryWebApiModule.forRoot(FakeDbService, {
+            delay: 0,
+            passThruUnknownUrl: true,
+        }),
 
         // Material moment date module
         MatMomentDateModule,
