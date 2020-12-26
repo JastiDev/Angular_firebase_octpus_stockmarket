@@ -3,6 +3,8 @@ import { CommonModule } from "@angular/common";
 import { Routes, RouterModule } from "@angular/router";
 import { EditorComponent } from "./editor.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+
+import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 import { MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";
 import { MatChipsModule } from "@angular/material/chips";
@@ -15,6 +17,12 @@ import { MatMenuModule } from "@angular/material/menu";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { MatToolbarModule } from "@angular/material/toolbar";
 
+import { StepsPanelComponent } from "./steps-panel/steps-panel.component";
+import { DetailPanelComponent } from "./detail-panel/detail-panel.component";
+import { DiagramComponent } from "./diagram/diagram.component";
+import { StepComponent } from './diagram/step/step.component';
+import { PlusComponent } from './diagram/plus/plus.component';
+
 const routes: Routes = [
     {
         path: "",
@@ -23,12 +31,20 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    declarations: [EditorComponent],
+    declarations: [
+        EditorComponent,
+        StepsPanelComponent,
+        DetailPanelComponent,
+        DiagramComponent,
+        StepComponent,
+        PlusComponent,
+    ],
     imports: [
         RouterModule.forChild(routes),
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
+        FontAwesomeModule,
 
         MatCardModule,
         MatListModule,
@@ -41,6 +57,8 @@ const routes: Routes = [
         MatFormFieldModule,
         MatInputModule,
         MatToolbarModule,
+        MatFormFieldModule,
+        MatInputModule,
     ],
 })
 export class EditorModule {}

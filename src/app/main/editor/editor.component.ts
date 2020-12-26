@@ -2,8 +2,9 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, ParamMap } from "@angular/router";
 import { Location } from "@angular/common";
 import { FuseConfigService } from "@fuse/services/config.service";
-import { Flow } from "app/classes/flow";
+import { Flow } from "app/classes/Flow";
 import { FlowsService } from "app/services/flows.service";
+import { Step } from "app/classes/Step";
 
 declare const EasyPZ;
 
@@ -85,7 +86,17 @@ export class EditorComponent implements OnInit {
         this.location.back();
     }
 
-    test() {
-        alert("aaa");
+    activeStepId: number = -1;
+    setActiveStepId(id: number) {
+        this.activeStepId = id;
+    }
+
+    onClickPanContainer(event) {
+        if (event.target.id.slice(0, 3) === "pan") this.setActiveStepId(-1);
+    }
+
+    deleteActiveStep() {
+        this.flow.deleteStep(this.activeStepId);
+        this.setActiveStepId(-1);
     }
 }

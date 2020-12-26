@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from "@angular/core";
-import { Flow } from "app/classes/flow";
+import { Flow } from "app/classes/Flow";
 
 import { FlowsService } from "app/services/flows.service";
 import { Subject } from "rxjs";

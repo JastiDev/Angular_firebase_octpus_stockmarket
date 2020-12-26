@@ -69,7 +69,6 @@ export class ProfileService implements Resolve<any> {
     getAccount(): Promise<any> {
         return new Promise((resolve, reject) => {
             this.user = this.authService.user;
-            console.log(this.user);
             this.accountOnChanged.next(this.user);
             resolve(this.user);
 

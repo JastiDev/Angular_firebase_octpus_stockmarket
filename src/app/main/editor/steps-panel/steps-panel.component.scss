@@ -1,0 +1,62 @@
+/**
+    Steps Side-Panel
+*/
+
+.hoverable {
+    cursor: grab;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+
+    .expandable {
+        height: 0px;
+        transition: height 300ms;
+        transition-delay: 100ms;
+        overflow: hidden;
+    }
+
+    .icon-circle {
+        border-radius: 50%;
+        font-size: larger;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .icon-buy {
+        background-color: rgb(229, 240, 250);
+        color: orange;
+    }
+    .icon-sell {
+        background-color: rgb(229, 240, 250);
+        color: green;
+    }
+    .icon-signal {
+        background-color: rgb(229, 240, 250);
+        color: blue;
+    }
+}
+
+.hoverable:hover {
+    background-color: lightblue;
+
+    .expandable {
+        height: 150px;
+    }
+
+    .icon-buy {
+        color: white;
+        background-color: orange;
+    }
+    .icon-sell {
+        color: white;
+        background-color: green;
+    }
+    .icon-signal {
+        color: white;
+        background-color: blue;
+    }
+}

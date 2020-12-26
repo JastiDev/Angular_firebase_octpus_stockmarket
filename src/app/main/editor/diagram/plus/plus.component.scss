@@ -1,0 +1,54 @@
+#line_container {
+    height: 40px;
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+    #droptarget {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 40px;
+        width: 150px;
+        z-index: 1000;
+        cursor: pointer;
+    }
+
+    #line {
+        width: 1px;
+        height: 40px;
+        border: 1px solid grey;
+    }
+
+    .icon,
+    .visible_icon {
+        position: absolute;
+        top: 10px;
+        background-color: white;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+
+    .icon {
+        display: none;
+    }
+
+    &:hover {
+        .icon {
+            display: block;
+        }
+    }
+
+    #active_icon {
+        position: absolute;
+        top: 10px;
+        background-color: blue;
+        color: white;
+        border-radius: 50%;
+        cursor: pointer;
+        z-index: 10;
+    }
+}

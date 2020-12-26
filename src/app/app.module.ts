@@ -32,6 +32,7 @@ import { AngularFireAuthGuardModule } from "@angular/fire/auth-guard";
 import { AngularFireModule } from "@angular/fire";
 import { environment } from "environments/environment";
 import { InMemoryWebApiModule } from "angular-in-memory-web-api";
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 const appRoutes: Routes = [
     {
@@ -101,6 +102,7 @@ const appRoutes: Routes = [
         AngularFireModule.initializeApp(environment.firebaseConfig),
         AngularFireAuthModule,
         AngularFireAuthGuardModule,
+        FontAwesomeModule,
     ],
     bootstrap: [AppComponent],
     providers: [AuthGuard],

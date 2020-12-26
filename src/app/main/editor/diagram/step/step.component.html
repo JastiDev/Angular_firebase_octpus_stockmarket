@@ -1,0 +1,25 @@
+<div
+    class="step-container"
+    [ngStyle]="{
+        opacity: active ? 1 : 0.3
+    }"
+    (click)="onClickStep()"
+    (dragstart)="onDragStart($event)"
+    draggable="true"
+>
+    <mat-card
+        class="icon-circle"
+        [ngClass]="{
+            'icon-buy': step.template.title == 'Buy',
+            'icon-sell': step.template.title == 'Sell',
+            'icon-signal': step.template.title == 'Signal'
+        }"
+    >
+        <fa-icon [icon]="step.template.faIcon"></fa-icon>
+    </mat-card>
+
+    <strong style="color: blue; word-break: break-all">
+        {{ step.title }}
+    </strong>
+    <span style="font-size: small">{{ step.template.title }}</span>
+</div>

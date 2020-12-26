@@ -8,7 +8,12 @@ mat-toolbar {
     display: flex;
     flex-direction: row;
     height: 100%;
+    user-select: none;
 }
+
+/**
+    Panning & zooming panel
+*/
 
 #pan-container {
     flex: 1 1 auto;
@@ -42,6 +47,7 @@ mat-toolbar {
 }
 
 #pan-div {
+    position: absolute;
     top: 7800px;
     left: 50vw;
     width: 100%;
@@ -49,5 +55,26 @@ mat-toolbar {
     display: flex;
     -webkit-box-pack: center;
     justify-content: center;
+}
+
+#steps-panel-container {
+    z-index: 1;
+    user-select: none;
     position: absolute;
+    top: 64px;
+    left: 32px;
+    width: 320px;
+    min-height: 200px;
+    height: 40vh;
+}
+
+#detail-panel-container {
+    z-index: 1;
+    user-select: none;
+    position: absolute;
+    top: 64px;
+    right: 0px;
+    width: 320px;
+    min-height: 200px;
+    height: 40vh;
 }

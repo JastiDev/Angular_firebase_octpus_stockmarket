@@ -1,0 +1,44 @@
+.diagram {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .line {
+        width: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        button {
+            display: none;
+        }
+
+        .line-bar {
+            height: 40px;
+            width: 1px;
+            border: 1px solid gray;
+        }
+
+        &:hover {
+            button {
+                display: block;
+                opacity: 1;
+            }
+            .line-bar {
+                display: none;
+            }
+        }
+
+        &.active {
+            button {
+                display: block;
+                opacity: 1;
+                background-color: lightblue;
+                border: 1px dotted blue;
+            }
+            .line-bar {
+                display: none;
+            }
+        }
+    }
+}

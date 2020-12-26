@@ -11,9 +11,9 @@
         </button>
 
         <div style="margin-left: 100px">
-            <mat-form-field class="example-full-width">
-                <mat-icon matPrefix>mode_edit</mat-icon>
+            <mat-form-field>
                 <input type="text" matInput [(ngModel)]="flow.title" />
+                <mat-icon matSuffix>mode_edit</mat-icon>
             </mat-form-field>
         </div>
 
@@ -22,15 +22,30 @@
     </mat-toolbar>
 
     <div id="page-body">
-        <div id="pan-container">
+        <div id="steps-panel-container">
+            <mat-card style="padding: 5px 0">
+                <editor-steps-panel [isMenu]="false"></editor-steps-panel>
+            </mat-card>
+        </div>
+
+        <div id="detail-panel-container">
+            <editor-detail-panel
+                [flow]="flow"
+                [activeStepId]="activeStepId"
+                (setActiveStepId)="setActiveStepId($event)"
+                (deleteClicked)="deleteActiveStep()"
+            ></editor-detail-panel>
+        </div>
+
+        <div id="pan-container" (click)="onClickPanContainer($event)">
             <div id="pan-panel">
                 <div id="pan-div">
-                    <div style="border: 1px solid red; user-select: none">
-                        <h1>
-                            Hello Ho hao ah;alkdf;al khd;alkdfha;sdlfkha;d
-                            lfakhdf
-                        </h1>
-                    </div>
+                    <editor-diagram
+                        [flow]="flow"
+                        [activeStepId]="activeStepId"
+                        (setActiveStepId)="setActiveStepId($event)"
+                    >
+                    </editor-diagram>
                 </div>
             </div>
         </div>

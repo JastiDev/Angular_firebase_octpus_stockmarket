@@ -85,10 +85,6 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
                     .get("passwordConfirm")
                     .updateValueAndValidity();
             });
-
-        setInterval(() => {
-            console.log(this.resetPasswordForm.valid);
-        }, 1000);
     }
 
     /**

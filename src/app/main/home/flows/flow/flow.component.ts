@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { Flow } from "app/classes/flow";
+import { Flow } from "app/classes/Flow";
 
 @Component({
     selector: "flows-flow",

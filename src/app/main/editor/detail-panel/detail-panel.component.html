@@ -1,0 +1,40 @@
+<div id="step-detail-panel" *ngIf="activeStepId > -1">
+    <button mat-icon-button (click)="onClickClose()">
+        <mat-icon>close</mat-icon>
+    </button>
+    <mat-card>
+        <div style="display: flex; align-items: center">
+            <fa-icon
+                size="2x"
+                [icon]="flow.steps[activeStepId].template.faIcon"
+                [style.color]="flow.steps[activeStepId].template.color"
+            ></fa-icon>
+
+            <mat-form-field
+                appearance="outline"
+                style="margin-left: 10px; flex: 1"
+            >
+                <input matInput [(ngModel)]="flow.steps[activeStepId].title" />
+                <mat-icon matSuffix>edit</mat-icon>
+            </mat-form-field>
+        </div>
+
+        <mat-card-subtitle>
+            <strong>{{ flow.steps[activeStepId].template.title }} : </strong>
+            {{ flow.steps[activeStepId].template.description }}
+        </mat-card-subtitle>
+
+        <mat-card-footer style="display: flex">
+            <div style="flex: 1"></div>
+            <div style="margin: 10px">
+                <button
+                    mat-raised-button
+                    color="warn"
+                    (click)="onClickDelete()"
+                >
+                    Delete
+                </button>
+            </div>
+        </mat-card-footer>
+    </mat-card>
+</div>

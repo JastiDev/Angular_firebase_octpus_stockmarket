@@ -1,0 +1,42 @@
+<div style="padding: 10px">
+    <mat-card-title
+        color="accent"
+        style="font-size: large; color: blue"
+        *ngIf="!isMenu"
+        >Steps</mat-card-title
+    >
+    <mat-card-subtitle *ngIf="!isMenu">
+        Drag and drop steps into your flow →
+    </mat-card-subtitle>
+
+    <mat-list>
+        <div
+            *ngFor="let stepTemplate of stepTemplates; let id = index"
+            class="hoverable"
+            (click)="onClickStep(stepTemplate)"
+            [draggable]="!isMenu"
+            (dragstart)="onDragStart($event, stepTemplate)"
+        >
+            <mat-card
+                class="icon-circle"
+                [ngClass]="{
+                    'icon-buy': stepTemplate.title == 'Buy',
+                    'icon-sell': stepTemplate.title == 'Sell',
+                    'icon-signal': stepTemplate.title == 'Signal'
+                }"
+            >
+                <fa-icon [icon]="stepTemplate.faIcon" size="lg"></fa-icon>
+            </mat-card>
+
+            <div style="margin-left: 1rem">
+                <strong style="font-size: large">{{
+                    stepTemplate.title
+                }}</strong
+                ><br />
+                <div class="expandable card-4">
+                    {{ stepTemplate.description }}
+                </div>
+            </div>
+        </div>
+    </mat-list>
+</div>

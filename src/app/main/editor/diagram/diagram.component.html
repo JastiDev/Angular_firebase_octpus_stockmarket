@@ -1,0 +1,22 @@
+<div class="diagram" (mousedown)="$event.stopPropagation()">
+    <mat-icon style="color: orange">flash_on</mat-icon>
+
+    <!-- render each steps into diagram -->
+    <ng-container *ngFor="let step of flow.steps; let id = index">
+        <diagram-plus
+            [isLast]="false"
+            [stepId]="id"
+            [flow]="flow"
+        ></diagram-plus>
+
+        <diagram-step
+            [stepId]="id"
+            [step]="step"
+            [active]="activeStepId == id || activeStepId == -1"
+            (stepClicked)="handleClickStep(id)"
+        >
+        </diagram-step>
+    </ng-container>
+
+    <diagram-plus [isLast]="true" [stepId]="-1" [flow]="flow"></diagram-plus>
+</div>

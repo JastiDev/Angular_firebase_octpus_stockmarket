@@ -1,0 +1,24 @@
+<div id="line_container">
+    <div
+        id="droptarget"
+        (dragover)="allowDrop($event)"
+        (dragenter)="onDragEnter($event)"
+        (dragleave)="onDragLeave($event)"
+        (drop)="onDrop($event)"
+        [matMenuTriggerFor]="menu"
+        (onMenuOpen)="active = true"
+        (onMenuClose)="active = false"
+    ></div>
+    <div id="line" *ngIf="!isLast"></div>
+
+    <mat-icon id="active_icon" *ngIf="active">add</mat-icon>
+
+    <mat-icon [ngClass]="{ icon: !isLast, visible_icon: isLast }">add</mat-icon>
+
+    <mat-menu #menu="matMenu">
+        <editor-steps-panel
+            [isMenu]="true"
+            (templateClicked)="addByTemplate($event)"
+        ></editor-steps-panel>
+    </mat-menu>
+</div>

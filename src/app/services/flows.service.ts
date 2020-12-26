@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
-import { Flow } from "app/classes/flow";
+import { Flow } from "app/classes/Flow";
+import { Step, StepTemplate, stepTemplates } from "app/classes/Step";
 import { Subject } from "rxjs";
 
 @Injectable({
@@ -13,21 +14,13 @@ export class FlowsService {
 
     makeMockData() {
         this.flows = [
-            {
-                title: "Name your flow",
-                isOn: true,
-                items: [],
-            },
-            {
-                title: "Name your flow",
-                isOn: false,
-                items: [],
-            },
-            {
-                title: "Name your flow",
-                isOn: false,
-                items: [],
-            },
+            new Flow("Buy racket and sell", false, [
+                new Step(stepTemplates[0]),
+                new Step(stepTemplates[2]),
+                new Step(stepTemplates[1]),
+            ]),
+            new Flow("Sell everything", false),
+            new Flow("Name your flow", false),
         ];
 
         this.flowsChanged.next(this.flows);
