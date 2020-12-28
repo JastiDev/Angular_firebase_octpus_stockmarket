@@ -1,15 +1,10 @@
 <mat-card class="mt-12 card" style="display: flex; align-items: stretch">
-    <div
-        (click)="onClickFlow()"
-        style="flex: 1; display: flex; align-items: center; cursor: pointer"
-    >
+    <div (click)="onClickFlow()" style="flex: 1; display: flex; align-items: center; cursor: pointer">
+        <flows-icons [flow]="flow"></flows-icons>
         <strong>{{ flow.title }}</strong>
     </div>
     <div style="margin-left: 50px; display: flex; align-items: center">
-        <mat-slide-toggle
-            [checked]="flow.isOn"
-            (change)="toggleChanged.emit($event.checked)"
-        ></mat-slide-toggle>
+        <mat-slide-toggle [checked]="flow.isOn" (change)="toggleChanged.emit($event.checked)"></mat-slide-toggle>
         <button mat-icon-button class="ml-12" [matMenuTriggerFor]="menu">
             <mat-icon>keyboard_arrow_down</mat-icon>
         </button>

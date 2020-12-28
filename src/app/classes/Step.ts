@@ -27,14 +27,14 @@ export const stepTemplates: StepTemplate[] = [
     },
     {
         faIcon: fafa.faMoneyBill,
-        color: "blue",
+        color: "green",
         title: "Sell",
         description:
             "This step adds a note to a conversation. Notes can be seen directly on Inbox, Conversations, and available via API, but aren't visible to the recipient of the conversation.",
     },
     {
         faIcon: fafa.faMapSigns,
-        color: "green",
+        color: "blue",
         title: "Signal",
         description:
             "This step adds a note to a conversation. Notes can be seen directly on Inbox, Conversations, and available via API, but aren't visible to the recipient of the conversation.",

@@ -1,1 +1,30 @@
-<h1>Dashboard</h1>
+<div class="page-layout simple p-24">
+    <div class="my-container">
+        <!-- HEADER -->
+        <div class="header p-24" fxLayout="row" fxLayoutAlign="start center">
+            <h1>Create your own workflow</h1>
+            <span>Know exactly what you want to build? Select the steps you want to connect to start your custom setup.</span>
+        </div>
+        <!-- / HEADER -->
+
+        <!-- CONTENT -->
+        <div class="content p-24">
+            <div style="display: flex">
+                <div style="flex: 1">
+                    <dash-select-step [step]="step0" (stepChanged)="step0 = $event"></dash-select-step>
+                </div>
+                <div id="arrow_right">
+                    <mat-icon inline="true">chevron_right</mat-icon>
+                </div>
+                <div style="flex: 1">
+                    <dash-select-step [step]="step1" (stepChanged)="step1 = $event"></dash-select-step>
+                </div>
+            </div>
+
+            <div *ngIf="step0 && step1" style="display: flex; justify-content: center; padding-top: 100px">
+                <button mat-raised-button color="warn" (click)="onClickMakeFlow()">Make a flow</button>
+            </div>
+        </div>
+        <!-- / CONTENT -->
+    </div>
+</div>

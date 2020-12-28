@@ -14,8 +14,11 @@ export class FlowsService {
 
     makeMockData() {
         this.flows = [
+            new Flow("Buy racket and sell", false, [new Step(stepTemplates[0]), new Step(stepTemplates[2]), new Step(stepTemplates[1])]),
             new Flow("Buy racket and sell", false, [
                 new Step(stepTemplates[0]),
+                new Step(stepTemplates[2]),
+                new Step(stepTemplates[2]),
                 new Step(stepTemplates[2]),
                 new Step(stepTemplates[1]),
             ]),
@@ -27,14 +30,20 @@ export class FlowsService {
     }
 
     getFlow(flowId: number): Flow {
-        if (flowId >= 0 && flowId < this.flows.length)
-            return this.flows[flowId];
+        if (flowId >= 0 && flowId < this.flows.length) return this.flows[flowId];
         return null;
     }
 
     toggleFlow(checked: boolean, id: number) {
         this.flows[id].isOn = checked;
         this.flowsChanged.next(this.flows);
+    }
+
+    createFlow(step0: StepTemplate, step1: StepTemplate): number {
+        let flow: Flow = new Flow("Name your flow", false, [new Step(step0), new Step(step1)]);
+        this.flows.push(flow);
+        let id = this.flows.length - 1;
+        return id;
     }
 
     deleteFlow(id: number) {
@@ -49,11 +58,7 @@ export class FlowsService {
 
     cloneFlow(id: number) {
         let newFlow = JSON.parse(JSON.stringify(this.flows[id]));
-        this.flows = [
-            ...this.flows.slice(0, id + 1),
-            newFlow,
-            ...this.flows.slice(id + 1, this.flows.length),
-        ];
+        this.flows = [...this.flows.slice(0, id + 1), newFlow, ...this.flows.slice(id + 1, this.flows.length)];
         this.flowsChanged.next(this.flows);
     }
 }

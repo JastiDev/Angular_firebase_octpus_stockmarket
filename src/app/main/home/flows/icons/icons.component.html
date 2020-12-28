@@ -1,0 +1,27 @@
+<div style="width: 200px; margin-right: 20px; display: flex; align-items: center; font-size: xx-large">
+    <div>
+        <fa-icon *ngIf="flow.steps.length == 0" [icon]="fafa.faQuestionCircle"></fa-icon>
+        <fa-icon *ngIf="flow.steps.length > 0" [icon]="flow.steps[0].template.faIcon" [style.color]="flow.steps[0].template.color"></fa-icon>
+    </div>
+
+    <mat-icon>keyboard_arrow_right</mat-icon>
+
+    <div>
+        <fa-icon *ngIf="flow.steps.length < 2" [icon]="fafa.faQuestionCircle"></fa-icon>
+        <fa-icon *ngIf="flow.steps.length == 2" [icon]="flow.steps[1].template.faIcon" [style.color]="flow.steps[1].template.color"></fa-icon>
+        <fa-icon *ngIf="flow.steps.length == 3" [icon]="flow.steps[1].template.faIcon" [style.color]="flow.steps[1].template.color"> </fa-icon>
+        <div *ngIf="flow.steps.length > 3" style="border: 1px solid grey; border-radius: 20%; font-size: large; padding: 0 10px">
+            {{ flow.steps.length - 2 }}
+        </div>
+    </div>
+
+    <mat-icon *ngIf="flow.steps.length > 2">keyboard_arrow_right</mat-icon>
+
+    <div>
+        <fa-icon
+            *ngIf="flow.steps.length > 2"
+            [icon]="flow.steps[flow.steps.length - 1].template.faIcon"
+            [style.color]="flow.steps[flow.steps.length - 1].template.color"
+        ></fa-icon>
+    </div>
+</div>
