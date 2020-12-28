@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { Flow } from "app/classes/Flow";
-import { Step, StepTemplate } from "app/classes/Step";
-import { FlowsService } from "app/services/flows.service";
+import { StepTemplate } from "app/classes/Step";
 
 @Component({
     selector: "diagram-plus",
