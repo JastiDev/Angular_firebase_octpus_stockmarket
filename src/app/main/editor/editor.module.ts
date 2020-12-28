@@ -22,6 +22,7 @@ import { DetailPanelComponent } from "./detail-panel/detail-panel.component";
 import { DiagramComponent } from "./diagram/diagram.component";
 import { StepComponent } from './diagram/step/step.component';
 import { PlusComponent } from './diagram/plus/plus.component';
+import { ZoomControlComponent } from './zoom-control/zoom-control.component';
 
 const routes: Routes = [
     {
@@ -38,6 +39,7 @@ const routes: Routes = [
         DiagramComponent,
         StepComponent,
         PlusComponent,
+        ZoomControlComponent,
     ],
     imports: [
         RouterModule.forChild(routes),

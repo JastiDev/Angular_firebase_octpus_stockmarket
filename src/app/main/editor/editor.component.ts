@@ -44,6 +44,8 @@ export class EditorComponent implements OnInit {
         };
     }
 
+    easypz;
+
     ngOnInit(): void {
         this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
             if (paramMap.has("flowId")) {
@@ -59,27 +61,7 @@ export class EditorComponent implements OnInit {
             }
         });
 
-        let container: HTMLElement = document.querySelector("#pan-container");
-        let panel: HTMLElement = document.querySelector("#pan-panel");
-        new EasyPZ(
-            container,
-            function (transform) {
-                panel.style.transform = `scale(${transform.scale}) translate(${
-                    transform.translateX - 7500 / transform.scale
-                }px, ${transform.translateY - 7500 / transform.scale}px)`;
-            },
-            {
-                minScale: 0.8,
-                maxScale: 1.5,
-                bounds: {
-                    top: -15000,
-                    right: 15000,
-                    bottom: 15000,
-                    left: -15000,
-                },
-            },
-            ["SIMPLE_PAN", "WHEEL_ZOOM", "PINCH_ZOOM"]
-        );
+        this.makeEasyPZ();
     }
 
     goBack() {
@@ -98,5 +80,96 @@ export class EditorComponent implements OnInit {
     deleteActiveStep() {
         this.flow.deleteStep(this.activeStepId);
         this.setActiveStepId(-1);
+    }
+
+    translateX = -7500;
+    translateY = -7500;
+    scale = 1;
+
+    initTransform() {
+        this.translateX = -7500;
+        this.translateY = -7500;
+        this.scale = 1;
+    }
+
+    transformString(scale, translateX, translateY) {
+        return `scale(${scale}) translate(${translateX / scale}px, ${translateY / scale}px)`;
+    }
+
+    makeEasyPZ() {
+        this.initTransform();
+        if (this.easypz) this.easypz.removeHostListeners();
+
+        const onTransform = (transform: { scale: number; translateX: number; translateY: number }) => {};
+
+        const onPanned = (
+            panData: { x: number; y: number },
+            transform: {
+                scale: number;
+                translateX: number;
+                translateY: number;
+            }
+        ) => {
+            this.translateX += panData.x;
+            this.translateY += panData.y;
+        };
+
+        const onZoomed = (
+            zoomData: {
+                x: number;
+                y: number;
+                scaleChange?: number;
+                absoluteScaleChange?: number;
+                targetX?: number;
+                targetY?: number;
+            },
+            transform: {
+                scale: number;
+                translateX: number;
+                translateY: number;
+            }
+        ) => {
+            let scale = this.scale * zoomData.scaleChange;
+            if (scale > 1.75) scale = 1.75;
+            if (scale < 0.25) scale = 0.25;
+            this.scale = scale;
+        };
+
+        let container: HTMLElement = document.querySelector("#pan-container");
+
+        this.easypz = new EasyPZ(
+            container,
+            onTransform,
+            {
+                minScale: 0.25,
+                maxScale: 1.75,
+                bounds: {
+                    top: -15000,
+                    right: 15000,
+                    bottom: 15000,
+                    left: -15000,
+                },
+            },
+            ["SIMPLE_PAN", "WHEEL_ZOOM", "PINCH_ZOOM"],
+            { WHEEL_ZOOM: { zoomInScaleChange: 0.98, zoomOutScaleChange: 1.02 } },
+            onPanned,
+            onZoomed
+        );
+    }
+
+    zoomPlus() {
+        let scale = this.scale + 0.25;
+        if (scale > 1.75) scale = 1.75;
+        this.scale = scale;
+    }
+
+    zoomMinus() {
+        let scale = this.scale - 0.25;
+        if (scale < 0.25) scale = 0.25;
+        this.scale = scale;
+    }
+
+    zoomRest() {
+        this.makeEasyPZ();
     }
 }

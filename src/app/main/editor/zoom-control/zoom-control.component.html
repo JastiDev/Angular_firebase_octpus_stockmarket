@@ -1,0 +1,12 @@
+<div style="display: flex">
+    <button mat-icon-button id="minus" (click)="minusClicked.emit()">
+        <mat-icon>remove</mat-icon>
+    </button>
+    <button mat-button id="middle" (click)="resetClicked.emit()">
+        <span id="percent">{{ percent | number: "1.0-0" }}%</span>
+        <span id="reset">RESET</span>
+    </button>
+    <button mat-icon-button id="plus" (click)="plusClicked.emit()">
+        <mat-icon>add</mat-icon>
+    </button>
+</div>

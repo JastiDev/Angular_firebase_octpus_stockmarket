@@ -1,4 +1,4 @@
-<div style="width: 200px; margin-right: 20px; display: flex; align-items: center; font-size: xx-large">
+<div style="width: 200px; margin-right: 20px; display: flex; align-items: center; font-size: xx-large; user-select: none">
     <div>
         <fa-icon *ngIf="flow.steps.length == 0" [icon]="fafa.faQuestionCircle"></fa-icon>
         <fa-icon *ngIf="flow.steps.length > 0" [icon]="flow.steps[0].template.faIcon" [style.color]="flow.steps[0].template.color"></fa-icon>

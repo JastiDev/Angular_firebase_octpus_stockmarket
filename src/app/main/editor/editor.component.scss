@@ -36,15 +36,9 @@ mat-toolbar {
     justify-content: center;
     -webkit-box-align: center;
     align-items: center;
-    background-image: -webkit-repeating-radial-gradient(
-        center center,
-        rgba(0, 0, 0, 0.1),
-        rgba(0, 0, 0, 0.1) 1px,
-        transparent 1px,
-        transparent 100%
-    );
+    background-image: -webkit-repeating-radial-gradient(center center, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1) 1px, transparent 1px, transparent 100%);
     background-size: 16px 16px;
-    transform: translate(-7500px, -7500px);
+    transform-origin: calc(7500px + 50vw) calc(7500px + 50vh);
 }
 
 #pan-div {
@@ -78,4 +72,12 @@ mat-toolbar {
     width: 320px;
     min-height: 200px;
     height: 40vh;
+}
+
+#zoom-control {
+    z-index: 1;
+    user-select: none;
+    position: absolute;
+    bottom: 50px;
+    left: 32px;
 }

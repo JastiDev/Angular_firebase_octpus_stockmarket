@@ -1,11 +1,6 @@
 <div style="width: 100%; display: flex; flex-direction: column">
     <mat-toolbar color="primary" style="display: flex; height: 70px">
-        <button
-            mat-icon-button
-            class="example-icon"
-            aria-label="Example icon-button with menu icon"
-            (click)="goBack()"
-        >
+        <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" (click)="goBack()">
             <mat-icon>keyboard_arrow_left</mat-icon>
             <span>Back</span>
         </button>
@@ -23,7 +18,7 @@
 
     <div id="page-body">
         <div id="steps-panel-container">
-            <mat-card style="padding: 5px 0; border-radius: 6px;">
+            <mat-card style="padding: 5px 0; border-radius: 6px">
                 <editor-steps-panel [isMenu]="false"></editor-steps-panel>
             </mat-card>
         </div>
@@ -37,15 +32,19 @@
             ></editor-detail-panel>
         </div>
 
+        <div id="zoom-control">
+            <editor-zoom-control
+                [percent]="scale * 100"
+                (resetClicked)="zoomRest()"
+                (plusClicked)="zoomPlus()"
+                (minusClicked)="zoomMinus()"
+            ></editor-zoom-control>
+        </div>
+
         <div id="pan-container" (click)="onClickPanContainer($event)">
-            <div id="pan-panel">
+            <div id="pan-panel" [style.transform]="transformString(scale, translateX, translateY)">
                 <div id="pan-div">
-                    <editor-diagram
-                        [flow]="flow"
-                        [activeStepId]="activeStepId"
-                        (setActiveStepId)="setActiveStepId($event)"
-                    >
-                    </editor-diagram>
+                    <editor-diagram [flow]="flow" [activeStepId]="activeStepId" (setActiveStepId)="setActiveStepId($event)"> </editor-diagram>
                 </div>
             </div>
         </div>

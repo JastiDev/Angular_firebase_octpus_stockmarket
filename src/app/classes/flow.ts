@@ -14,13 +14,8 @@ export class Flow {
 
     addStep(template: StepTemplate, id: number) {
         let step = new Step(template);
-        console.log(step, id);
         if (id >= 0 && id < this.steps.length) {
-            this.steps = [
-                ...this.steps.slice(0, id),
-                step,
-                ...this.steps.slice(id, this.steps.length),
-            ];
+            this.steps = [...this.steps.slice(0, id), step, ...this.steps.slice(id, this.steps.length)];
         } else {
             this.steps.push(step);
         }
@@ -32,11 +27,7 @@ export class Flow {
             this.steps.push(step);
             this.steps.splice(from, 1);
         } else {
-            this.steps = [
-                ...this.steps.slice(0, to),
-                step,
-                ...this.steps.slice(to, this.steps.length),
-            ];
+            this.steps = [...this.steps.slice(0, to), step, ...this.steps.slice(to, this.steps.length)];
 
             if (from < to) this.steps.splice(from, 1);
             else this.steps.splice(from + 1, 1);
@@ -45,10 +36,7 @@ export class Flow {
 
     deleteStep(id: number) {
         if (id >= 0 && id < this.steps.length) {
-            this.steps = [
-                ...this.steps.slice(0, id),
-                ...this.steps.slice(id + 1, this.steps.length),
-            ];
+            this.steps = [...this.steps.slice(0, id), ...this.steps.slice(id + 1, this.steps.length)];
         }
     }
 }
