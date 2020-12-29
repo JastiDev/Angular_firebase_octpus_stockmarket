@@ -1,9 +1,9 @@
 @mixin fuse-sidebar-theme($theme) {
-
     $background: map-get($theme, background);
 
     fuse-sidebar {
-        background: map-get($background, background);
+        // background: map-get($background, background);
+        background: white;
     }
 
     .fuse-sidebar-overlay {

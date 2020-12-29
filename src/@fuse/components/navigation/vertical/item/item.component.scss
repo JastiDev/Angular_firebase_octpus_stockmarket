@@ -1,14 +1,67 @@
 :host {
-
     .folded:not(.unfolded) & {
-
         .nav-link {
-
             > .nav-link-title,
             > .nav-link-badge {
                 opacity: 0;
                 transition: opacity 200ms ease;
             }
+        }
+    }
+
+    .nav-link {
+        margin: 20px 10px;
+        padding: 0px 10px;
+        border-radius: 8px;
+        font-weight: bolder;
+        color: rgb(102, 102, 102);
+        transition: all 300ms ease-in-out 0s;
+
+        .nav-link-icon {
+            font-size: 24px;
+            margin-right: 24px;
+            font-weight: bolder;
+            color: rgb(102, 102, 102);
+            transition: all 300ms ease-in-out 0s;
+        }
+
+        &:hover {
+            color: black;
+            .nav-link-icon {
+                color: black;
+            }
+        }
+    }
+
+    .nav-link.active {
+        color: rgb(19, 107, 245);
+        background-color: rgb(243, 248, 255);
+        transition: all 300ms ease-in-out 0s;
+        .nav-link-icon {
+            color: rgb(19, 107, 245);
+            transition: all 300ms ease-in-out 0s;
+        }
+
+        &:hover {
+            color: black;
+            .nav-link-icon {
+                color: black;
+            }
+        }
+    }
+
+    .nav-link.makeflow {
+        background-color: black;
+        color: white;
+        transition: all 300ms ease-in-out 0s;
+        .nav-link-icon {
+            color: white;
+            transition: all 300ms ease-in-out 0s;
+            margin-right: 46px;
+        }
+
+        &:hover {
+            opacity: 0.7;
         }
     }
 }

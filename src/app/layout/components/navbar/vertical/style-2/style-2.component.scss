@@ -1,21 +1,18 @@
 @import "src/@fuse/scss/fuse";
 
 fuse-sidebar {
-
     &.navbar-fuse-sidebar {
         overflow: hidden;
 
         &.folded:not(.unfolded) {
-
             navbar {
-
                 navbar-vertical-style-2 {
-
                     .navbar-header {
                         padding: 0 13px;
+                        box-shadow: none;
+                        border-bottom: 1px solid rgab(0, 0, 0, 0.15);
 
                         .logo {
-
                             .logo-text {
                                 opacity: 0;
                                 transition: opacity 200ms ease;
@@ -24,12 +21,9 @@ fuse-sidebar {
                     }
 
                     .navbar-content {
-
                         // Material 2 specific style
                         .material2 {
-
                             .nav-item {
-
                                 .nav-link {
                                     border-radius: 20px;
                                     margin: 0 12px;
@@ -45,7 +39,6 @@ fuse-sidebar {
 }
 
 navbar {
-
     &.vertical-style-2 {
         display: flex;
         flex-direction: column;
@@ -54,9 +47,7 @@ navbar {
         height: 100%;
 
         &.right-navbar {
-
             .toggle-sidebar-opened {
-
                 mat-icon {
                     transform: rotate(180deg);
                 }
@@ -78,7 +69,6 @@ navbar {
             min-height: 64px;
             padding: 0 16px 0 24px;
             transition: padding 200ms ease;
-            @include mat-elevation(1);
 
             .logo {
                 display: flex;
@@ -103,6 +93,5 @@ navbar {
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
         }
-
     }
 }

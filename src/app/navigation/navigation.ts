@@ -2,6 +2,13 @@ import { FuseNavigation } from "@fuse/types";
 
 export const navigation: FuseNavigation[] = [
     {
+        id: "makeflow",
+        title: "MAKE A FLOW",
+        type: "item",
+        icon: "add",
+        url: "/editor",
+    },
+    {
         id: "dashboard",
         title: "Dashboard",
         type: "item",
