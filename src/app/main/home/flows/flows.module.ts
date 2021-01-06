@@ -19,11 +19,12 @@ import { RenameComponent } from "./rename/rename.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { IconsComponent } from "./icons/icons.component";
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
+import { DetailsComponent } from './details/details.component';
 
 const routes: Routes = [{ path: "strategies", component: FlowsComponent }];
 
 @NgModule({
-    declarations: [FlowsComponent, FlowComponent, RenameComponent, IconsComponent],
+    declarations: [FlowsComponent, FlowComponent, RenameComponent, IconsComponent, DetailsComponent],
     imports: [
         RouterModule.forChild(routes),
         CommonModule,

@@ -11,11 +11,7 @@ import { TranslateModule } from "@ngx-translate/core";
 
 import { FuseModule } from "@fuse/fuse.module";
 import { FuseSharedModule } from "@fuse/shared.module";
-import {
-    FuseProgressBarModule,
-    FuseSidebarModule,
-    FuseThemeOptionsModule,
-} from "@fuse/components";
+import { FuseProgressBarModule, FuseSidebarModule, FuseThemeOptionsModule } from "@fuse/components";
 
 import { fuseConfig } from "app/fuse-config";
 import { FakeDbService } from "app/fake-db/fake-db.service";
@@ -32,30 +28,26 @@ import { AngularFireAuthGuardModule } from "@angular/fire/auth-guard";
 import { AngularFireModule } from "@angular/fire";
 import { environment } from "environments/environment";
 import { InMemoryWebApiModule } from "angular-in-memory-web-api";
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 
 const appRoutes: Routes = [
     {
         path: "home",
-        loadChildren: () =>
-            import("./main/home/home.module").then((m) => m.HomeModule),
+        loadChildren: () => import("./main/home/home.module").then((m) => m.HomeModule),
         canActivate: [AuthGuard],
         data: { roles: [UserRole.FreeUser, UserRole.ProUser] },
     },
     {
         path: "pages",
-        loadChildren: () =>
-            import("./main/pages/pages.module").then((m) => m.PagesModule),
+        loadChildren: () => import("./main/pages/pages.module").then((m) => m.PagesModule),
     },
     {
         path: "editor",
-        loadChildren: () =>
-            import("./main/editor/editor.module").then((m) => m.EditorModule),
+        loadChildren: () => import("./main/editor/editor.module").then((m) => m.EditorModule),
     },
     {
         path: "editor/:flowId",
-        loadChildren: () =>
-            import("./main/editor/editor.module").then((m) => m.EditorModule),
+        loadChildren: () => import("./main/editor/editor.module").then((m) => m.EditorModule),
     },
     {
         path: "",

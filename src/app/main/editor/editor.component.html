@@ -1,5 +1,5 @@
 <div style="width: 100%; display: flex; flex-direction: column">
-    <mat-toolbar color="primary" style="display: flex; height: 70px">
+    <mat-toolbar style="display: flex; height: 70px; background-color: white; border-bottom: 1px solid rgb(230, 230, 230)">
         <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" [routerLink]="['/home/strategies']">
             <mat-icon>keyboard_arrow_left</mat-icon>
             <span>Back</span>
@@ -13,7 +13,12 @@
         </div>
 
         <div style="flex: 1"></div>
-        <button mat-raised-button color="accent" slot="end">Save</button>
+
+        <div matTooltip="Details" matTooltipClass="mytooltip" class="info-button" (click)="openDetailsDialog(flowId)">
+            <mat-icon>info</mat-icon>
+        </div>
+
+        <mat-slide-toggle [checked]="flow.isOn" (change)="flow.isOn = $event.checked"></mat-slide-toggle>
     </mat-toolbar>
 
     <div id="page-body">

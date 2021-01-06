@@ -46,6 +46,11 @@ export class FlowsService {
         return id;
     }
 
+    addFlow(flow: Flow): number {
+        this.flows.push(flow);
+        return this.flows.length - 1;
+    }
+
     deleteFlow(id: number) {
         this.flows.splice(id, 1);
         this.flowsChanged.next(this.flows);

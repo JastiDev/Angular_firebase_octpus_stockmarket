@@ -20,9 +20,10 @@ import { MatToolbarModule } from "@angular/material/toolbar";
 import { StepsPanelComponent } from "./steps-panel/steps-panel.component";
 import { DetailPanelComponent } from "./detail-panel/detail-panel.component";
 import { DiagramComponent } from "./diagram/diagram.component";
-import { StepComponent } from './diagram/step/step.component';
-import { PlusComponent } from './diagram/plus/plus.component';
-import { ZoomControlComponent } from './zoom-control/zoom-control.component';
+import { StepComponent } from "./diagram/step/step.component";
+import { PlusComponent } from "./diagram/plus/plus.component";
+import { ZoomControlComponent } from "./zoom-control/zoom-control.component";
+import { MatTooltipModule } from "@angular/material/tooltip";
 
 const routes: Routes = [
     {
@@ -32,15 +33,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    declarations: [
-        EditorComponent,
-        StepsPanelComponent,
-        DetailPanelComponent,
-        DiagramComponent,
-        StepComponent,
-        PlusComponent,
-        ZoomControlComponent,
-    ],
+    declarations: [EditorComponent, StepsPanelComponent, DetailPanelComponent, DiagramComponent, StepComponent, PlusComponent, ZoomControlComponent],
     imports: [
         RouterModule.forChild(routes),
         CommonModule,
@@ -61,6 +54,7 @@ const routes: Routes = [
         MatToolbarModule,
         MatFormFieldModule,
         MatInputModule,
+        MatTooltipModule,
     ],
 })
 export class EditorModule {}

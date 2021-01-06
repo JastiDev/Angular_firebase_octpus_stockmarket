@@ -5,12 +5,10 @@ import { FlowsService } from "app/services/flows.service";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
-import {
-    MatDialog,
-    MatDialogRef,
-    MAT_DIALOG_DATA,
-} from "@angular/material/dialog";
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { RenameComponent } from "./rename/rename.component";
+import { DetailsComponent } from "./details/details.component";
+
 import { Router } from "@angular/router";
 
 @Component({
@@ -23,19 +21,13 @@ export class FlowsComponent implements OnInit {
 
     flows: Flow[] = [];
 
-    constructor(
-        private flowsService: FlowsService,
-        public dialog: MatDialog,
-        private router: Router
-    ) {}
+    constructor(private flowsService: FlowsService, public dialog: MatDialog, private router: Router) {}
 
     ngOnInit(): void {
         this.flows = this.flowsService.flows;
-        this.flowsService.flowsChanged
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((flows: Flow[]) => {
-                this.flows = flows;
-            });
+        this.flowsService.flowsChanged.pipe(takeUntil(this._unsubscribeAll)).subscribe((flows: Flow[]) => {
+            this.flows = flows;
+        });
     }
 
     toggleFlow(checked: boolean, id: number) {
@@ -66,5 +58,13 @@ export class FlowsComponent implements OnInit {
         dialogRef.afterClosed().subscribe((result) => {
             if (result !== undefined) this.flowsService.renameFlow(id, result);
         });
+    }
+
+    openDetailsDialog(id: number): void {
+        const dialogRef = this.dialog.open(DetailsComponent, {
+            data: { id: id },
+        });
+
+        dialogRef.afterClosed().subscribe((result) => {});
     }
 }

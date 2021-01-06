@@ -5,6 +5,8 @@ import { FuseConfigService } from "@fuse/services/config.service";
 import { Flow } from "app/classes/Flow";
 import { FlowsService } from "app/services/flows.service";
 import { Step } from "app/classes/Step";
+import { MatDialog } from "@angular/material/dialog";
+import { DetailsComponent } from "../home/flows/details/details.component";
 
 declare const EasyPZ;
 
@@ -23,7 +25,8 @@ export class EditorComponent implements OnInit {
         private _fuseConfigService: FuseConfigService,
         private activatedRoute: ActivatedRoute,
         private flowsService: FlowsService,
-        private location: Location
+        private location: Location,
+        public dialog: MatDialog
     ) {
         // Configure the layout
         this._fuseConfigService.config = {
@@ -52,12 +55,10 @@ export class EditorComponent implements OnInit {
                 this.mode = "edit";
                 this.flowId = Number(paramMap.get("flowId"));
                 this.flow = this.flowsService.getFlow(this.flowId);
-                console.log(this.mode);
             } else {
                 this.mode = "create";
-                this.flowId = null;
                 this.flow = new Flow("New Strategy", false);
-                console.log(this.mode);
+                this.flowId = this.flowsService.addFlow(this.flow);
             }
         });
 
@@ -171,5 +172,13 @@ export class EditorComponent implements OnInit {
 
     zoomRest() {
         this.makeEasyPZ();
+    }
+
+    openDetailsDialog(id: number): void {
+        const dialogRef = this.dialog.open(DetailsComponent, {
+            data: { id: id },
+        });
+
+        dialogRef.afterClosed().subscribe((result) => {});
     }
 }

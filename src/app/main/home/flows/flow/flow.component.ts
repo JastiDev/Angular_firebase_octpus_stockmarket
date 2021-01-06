@@ -13,6 +13,7 @@ export class FlowComponent implements OnInit {
     @Output() renameClicked = new EventEmitter<any>();
     @Output() cloneClicked = new EventEmitter<any>();
     @Output() deleteClicked = new EventEmitter<any>();
+    @Output() detailsClicked = new EventEmitter<any>();
 
     constructor() {}
 
@@ -34,5 +35,7 @@ export class FlowComponent implements OnInit {
         } else this.deleteClicked.emit();
     }
 
-    onClickInfo() {}
+    onClickInfo() {
+        this.detailsClicked.emit();
+    }
 }
