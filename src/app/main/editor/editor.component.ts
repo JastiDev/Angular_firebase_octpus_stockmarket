@@ -56,7 +56,7 @@ export class EditorComponent implements OnInit {
             } else {
                 this.mode = "create";
                 this.flowId = null;
-                this.flow = new Flow("new flow", false);
+                this.flow = new Flow("New Strategy", false);
                 console.log(this.mode);
             }
         });

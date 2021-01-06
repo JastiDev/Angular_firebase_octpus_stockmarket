@@ -33,4 +33,6 @@ export class FlowComponent implements OnInit {
             event.stopPropagation();
         } else this.deleteClicked.emit();
     }
+
+    onClickInfo() {}
 }

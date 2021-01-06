@@ -1,0 +1,62 @@
+:host {
+    .mat-slide-toggle {
+        margin-top: 4px;
+        &::ng-deep.mat-slide-toggle-bar {
+            height: 28px;
+            width: 50px;
+            border-radius: 25px;
+        }
+
+        &::ng-deep.mat-slide-toggle-thumb-container {
+            position: absolute;
+            top: 4px;
+            left: 2px;
+        }
+
+        &.mat-checked {
+            ::ng-deep.mat-slide-toggle-bar {
+                background-color: green;
+            }
+            ::ng-deep.mat-slide-toggle-bar::after {
+                content: "ON";
+                font-size: 75%;
+                font-weight: 700;
+                color: white;
+                position: absolute;
+                left: 8px;
+                top: 2px;
+            }
+
+            ::ng-deep.mat-slide-toggle-thumb-container {
+                transform: translate3d(26px, 0, 0);
+                .mat-slide-toggle-thumb {
+                    background-color: white;
+                }
+            }
+        }
+        &:not(.mat-checked) {
+            ::ng-deep.mat-slide-toggle-bar::after {
+                content: "OFF";
+                font-size: 75%;
+                font-weight: 700;
+                color: white;
+                position: absolute;
+                right: 6px;
+                top: 2px;
+            }
+        }
+    }
+
+    .info-button {
+        margin-left: 20px;
+        padding: 5px 10px;
+        padding-top: 10px;
+        width: fit-content;
+        border-radius: 6px;
+        cursor: pointer;
+        &:hover {
+            background-color: black;
+            color: white;
+        }
+    }
+}

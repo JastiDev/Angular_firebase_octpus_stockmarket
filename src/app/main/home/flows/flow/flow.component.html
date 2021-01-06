@@ -5,6 +5,11 @@
     </div>
     <div style="margin-left: 50px; display: flex; align-items: center">
         <mat-slide-toggle [checked]="flow.isOn" (change)="toggleChanged.emit($event.checked)"></mat-slide-toggle>
+
+        <div matTooltip="Details" matTooltipClass="mytooltip" class="info-button" (click)="onClickInfo()">
+            <mat-icon>info</mat-icon>
+        </div>
+
         <button mat-icon-button class="ml-12" [matMenuTriggerFor]="menu">
             <mat-icon>keyboard_arrow_down</mat-icon>
         </button>

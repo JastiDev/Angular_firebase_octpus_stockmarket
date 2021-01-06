@@ -23,7 +23,7 @@ export class FlowsService {
                 new Step(stepTemplates[1]),
             ]),
             new Flow("Sell everything", false),
-            new Flow("Name your flow", false),
+            new Flow("New Strategy", false),
         ];
 
         this.flowsChanged.next(this.flows);
@@ -40,7 +40,7 @@ export class FlowsService {
     }
 
     createFlow(step0: StepTemplate, step1: StepTemplate): number {
-        let flow: Flow = new Flow("Name your flow", false, [new Step(step0), new Step(step1)]);
+        let flow: Flow = new Flow("New Strategy", false, [new Step(step0), new Step(step1)]);
         this.flows.push(flow);
         let id = this.flows.length - 1;
         return id;

@@ -1,24 +1,13 @@
 <div style="display: flex; flex-direction: column; align-items: center">
-    <h1 mat-dialog-title>Rename Flow</h1>
+    <h1 mat-dialog-title>Rename Strategy</h1>
     <div mat-dialog-content>
         <mat-form-field>
             <mat-label>title</mat-label>
-            <input
-                matInput
-                [(ngModel)]="data.title"
-                (keydown.enter)="dialogRef.close(data.title)"
-            />
+            <input matInput [(ngModel)]="data.title" (keydown.enter)="dialogRef.close(data.title)" />
         </mat-form-field>
     </div>
     <div mat-dialog-actions>
         <button mat-button (click)="onNoClick()">Cancel</button>
-        <button
-            mat-button
-            color="primary"
-            [mat-dialog-close]="data.title"
-            cdkFocusInitial
-        >
-            Save
-        </button>
+        <button mat-button color="primary" [mat-dialog-close]="data.title" cdkFocusInitial>Save</button>
     </div>
 </div>
