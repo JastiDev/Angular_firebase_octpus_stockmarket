@@ -21,8 +21,8 @@ lock {
                 width: 420px;
                 max-width: 420px;
                 padding: 48px 32px 32px 32px;
-                @include mat-elevation(16);
-
+                @include mat-elevation(2);
+                border-radius: 6px;
                 @include media-breakpoint("xs") {
                     padding: 24px;
                     width: 100%;

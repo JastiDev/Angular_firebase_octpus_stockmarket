@@ -2,18 +2,11 @@
     <button mat-icon-button (click)="onClickClose()">
         <mat-icon>close</mat-icon>
     </button>
-    <mat-card style="border-radius: 6px;">
+    <mat-card style="border-radius: 6px">
         <div style="display: flex; align-items: center">
-            <fa-icon
-                size="2x"
-                [icon]="flow.steps[activeStepId].template.faIcon"
-                [style.color]="flow.steps[activeStepId].template.color"
-            ></fa-icon>
+            <fa-icon size="2x" [icon]="flow.steps[activeStepId].template.faIcon" [style.color]="flow.steps[activeStepId].template.color"></fa-icon>
 
-            <mat-form-field
-                appearance="outline"
-                style="margin-left: 10px; flex: 1"
-            >
+            <mat-form-field appearance="outline" style="margin-left: 10px; flex: 1">
                 <input matInput [(ngModel)]="flow.steps[activeStepId].title" />
                 <mat-icon matSuffix>edit</mat-icon>
             </mat-form-field>
@@ -24,16 +17,75 @@
             {{ flow.steps[activeStepId].template.description }}
         </mat-card-subtitle>
 
+        <mat-card-content>
+            <ng-container *ngIf="flow.steps[activeStepId].template.title == 'Buy'">
+                <div style="display: flex; justify-content: center">
+                    <mat-form-field appearance="outline">
+                        <mat-label>uuid</mat-label>
+                        <input matInput [value]="null" />
+                        <mat-error> uuid is required </mat-error>
+                    </mat-form-field>
+
+                    <button mat-button style="height: 63px">
+                        <mat-icon matSuffix class="secondary-text">save</mat-icon>
+                    </button>
+                </div>
+                <div style="display: flex; justify-content: center">
+                    <mat-form-field appearance="outline">
+                        <mat-label>amount</mat-label>
+                        <input matInput [value]="null" />
+                        <mat-error> amount is required </mat-error>
+                    </mat-form-field>
+
+                    <button mat-button style="height: 63px">
+                        <mat-icon matSuffix class="secondary-text">save</mat-icon>
+                    </button>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="flow.steps[activeStepId].template.title == 'Sell'">
+                <div style="display: flex; justify-content: center">
+                    <mat-form-field appearance="outline">
+                        <mat-label>uuid</mat-label>
+                        <input matInput [value]="null" />
+                        <mat-error> uuid is required </mat-error>
+                    </mat-form-field>
+
+                    <button mat-button style="height: 63px">
+                        <mat-icon matSuffix class="secondary-text">save</mat-icon>
+                    </button>
+                </div>
+                <div style="display: flex; justify-content: center">
+                    <mat-form-field appearance="outline">
+                        <mat-label>amount</mat-label>
+                        <input matInput [value]="null" />
+                        <mat-error> amount is required </mat-error>
+                    </mat-form-field>
+
+                    <button mat-button style="height: 63px">
+                        <mat-icon matSuffix class="secondary-text">save</mat-icon>
+                    </button>
+                </div>
+            </ng-container>
+
+            <ng-container *ngIf="flow.steps[activeStepId].template.title == 'Signal'">
+                <div style="display: flex; justify-content: center">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Wait for (in seconds)</mat-label>
+                        <input matInput type="number" [value]="null" />
+                        <mat-error> Duration is required </mat-error>
+                    </mat-form-field>
+
+                    <button mat-button style="height: 63px">
+                        <mat-icon matSuffix class="secondary-text">save</mat-icon>
+                    </button>
+                </div>
+            </ng-container>
+        </mat-card-content>
+
         <mat-card-footer style="display: flex">
             <div style="flex: 1"></div>
             <div style="margin: 10px">
-                <button
-                    mat-raised-button
-                    color="warn"
-                    (click)="onClickDelete()"
-                >
-                    Delete
-                </button>
+                <button mat-raised-button color="warn" (click)="onClickDelete()">Delete</button>
             </div>
         </mat-card-footer>
     </mat-card>

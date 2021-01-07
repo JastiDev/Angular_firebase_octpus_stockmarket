@@ -1,30 +1,49 @@
 <div class="page-layout simple p-24">
     <div class="my-container">
         <!-- HEADER -->
-        <div class="header p-24" fxLayout="row" fxLayoutAlign="start center">
-            <h1>Create your own strategy</h1>
-            <span>Know exactly what you want to build? Select the steps you want to connect to start your custom setup.</span>
-        </div>
+        <div class="header p-24" style="text-align: center" fxLayout="row" fxLayoutAlign="start center">Welcome to Octopus</div>
         <!-- / HEADER -->
 
         <!-- CONTENT -->
-        <div class="content p-24">
-            <div style="display: flex">
-                <div style="flex: 1">
-                    <dash-select-step [step]="step0" (stepChanged)="step0 = $event"></dash-select-step>
+        <div class="content p-24" style="text-align: center">
+            <mat-card-title>
+                <h1>Create your own strategy</h1>
+                <h4>Know exactly what you want to build? Select the steps you want to connect to start your custom setup.</h4>
+            </mat-card-title>
+            <mat-card-content>
+                <div style="display: flex">
+                    <div style="flex: 1">
+                        <dash-select-step [step]="step0" (stepChanged)="step0 = $event"></dash-select-step>
+                    </div>
+                    <div id="arrow_right">
+                        <mat-icon inline="true">chevron_right</mat-icon>
+                    </div>
+                    <div style="flex: 1">
+                        <dash-select-step [step]="step1" (stepChanged)="step1 = $event"></dash-select-step>
+                    </div>
                 </div>
-                <div id="arrow_right">
-                    <mat-icon inline="true">chevron_right</mat-icon>
-                </div>
-                <div style="flex: 1">
-                    <dash-select-step [step]="step1" (stepChanged)="step1 = $event"></dash-select-step>
-                </div>
-            </div>
 
-            <div *ngIf="step0 && step1" style="display: flex; justify-content: center; padding-top: 100px">
-                <button mat-raised-button color="warn" (click)="onClickMakeFlow()">Make Strategy</button>
-            </div>
+                <div *ngIf="step0 && step1" style="display: flex; justify-content: center; padding-top: 100px">
+                    <button mat-raised-button color="warn" (click)="onClickMakeFlow()">Make Strategy</button>
+                </div>
+            </mat-card-content>
         </div>
+
+        <div class="content p-24 mt-48" style="text-align: center">
+            <mat-card-title>
+                <h1>Get started with our most popular strategies</h1>
+                <h4>These templates can help you start saving time right away, no matter which apps you use</h4>
+            </mat-card-title>
+            <mat-card-content>
+                <div style="display: flex">
+                    <mat-card style="flex: 1; height: 200px; margin: 20px"> Hello </mat-card>
+                    <mat-card style="flex: 1; height: 200px; margin: 20px"> Hello </mat-card>
+                    <mat-card style="flex: 1; height: 200px; margin: 20px"> Hello </mat-card>
+                    <mat-card style="flex: 1; height: 200px; margin: 20px"> Hello </mat-card>
+                </div>
+            </mat-card-content>
+        </div>
+
         <!-- / CONTENT -->
     </div>
 </div>

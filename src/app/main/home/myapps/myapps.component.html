@@ -1,14 +1,49 @@
 <div class="page-layout simple p-24">
     <div class="my-container">
         <!-- HEADER -->
-        <div class="header p-24" fxLayout="row" fxLayoutAlign="start center">
-            <h1>My Apps</h1>
-        </div>
+        <div class="header p-24" fxLayout="row" fxLayoutAlign="start center">My Apps</div>
         <!-- / HEADER -->
 
         <!-- CONTENT -->
-        <div class="content p-24">
-            <mat-card> </mat-card>
+        <div class="content p-24" style="display: flex; justify-content: center">
+            <mat-card [style]="{ width: 'fit-content' }">
+                <mat-card-title> Alpaca API </mat-card-title>
+                <mat-card-content>
+                    <div style="display: flex; justify-content: center; margin-top: 50px">
+                        <mat-form-field appearance="outline" [style]="{ width: '400px' }">
+                            <mat-label>BASE_URL</mat-label>
+                            <input matInput [value]="null" />
+                            <mat-error> Name is required </mat-error>
+                        </mat-form-field>
+
+                        <button mat-button style="height: 63px">
+                            <mat-icon matSuffix class="secondary-text">save</mat-icon>
+                        </button>
+                    </div>
+                    <div style="display: flex; justify-content: center">
+                        <mat-form-field appearance="outline" [style]="{ width: '400px' }">
+                            <mat-label>KEY_ID</mat-label>
+                            <input matInput [value]="null" />
+                            <mat-error> Name is required </mat-error>
+                        </mat-form-field>
+
+                        <button mat-button style="height: 63px">
+                            <mat-icon matSuffix class="secondary-text">save</mat-icon>
+                        </button>
+                    </div>
+                    <div style="display: flex; justify-content: center">
+                        <mat-form-field appearance="outline" [style]="{ width: '400px' }">
+                            <mat-label>SECRET_KEY</mat-label>
+                            <input matInput [value]="null" />
+                            <mat-error> Name is required </mat-error>
+                        </mat-form-field>
+
+                        <button mat-button style="height: 63px">
+                            <mat-icon matSuffix class="secondary-text">save</mat-icon>
+                        </button>
+                    </div>
+                </mat-card-content>
+            </mat-card>
         </div>
         <!-- / CONTENT -->
     </div>
