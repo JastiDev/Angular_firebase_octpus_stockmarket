@@ -3,7 +3,7 @@ import { FuseNavigation } from "@fuse/types";
 export const navigation: FuseNavigation[] = [
     {
         id: "makeflow",
-        title: "MAKE STRATEGY",
+        title: "NEW STRATEGY",
         type: "item",
         icon: "add",
         url: "/editor",

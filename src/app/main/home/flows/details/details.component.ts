@@ -16,7 +16,7 @@ export class DetailsComponent implements OnInit {
         this.flow = this.flowsService.flows[this.data.id];
     }
 
-    tabs = [{ title: "Overview" }, { title: "Usage" }, { title: "Task Log" }, { title: "Activity" }];
+    tabs = [{ title: "Overview" }, { title: "Task Log" }];
     activeTabId = 0;
 }
 

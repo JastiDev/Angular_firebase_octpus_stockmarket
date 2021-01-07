@@ -1,17 +1,17 @@
 @import "src/@fuse/scss/fuse";
 
 login {
-
     #login {
         width: 100%;
-        background: url('/assets/images/backgrounds/dark-material-bg.jpg') no-repeat;
-        background-size: cover;
+        background-color: rgb(241, 244, 245);
+        // background: url('/assets/images/backgrounds/dark-material-bg.jpg') no-repeat;
+        // background-size: cover;
 
         #login-form-wrapper {
             flex: 1 0 auto;
             padding: 32px;
 
-            @include media-breakpoint('xs') {
+            @include media-breakpoint("xs") {
                 padding: 16px;
             }
 
@@ -22,7 +22,7 @@ login {
                 text-align: center;
                 @include mat-elevation(16);
 
-                @include media-breakpoint('xs') {
+                @include media-breakpoint("xs") {
                     padding: 24px;
                     width: 100%;
                 }
@@ -54,13 +54,13 @@ login {
                         margin-top: 8px;
 
                         .remember-me {
-                            margin-bottom: 16px
+                            margin-bottom: 16px;
                         }
 
                         .forgot-password {
                             font-size: 13px;
                             font-weight: 600;
-                            margin-bottom: 16px
+                            margin-bottom: 16px;
                         }
                     }
 
@@ -69,7 +69,7 @@ login {
                         margin: 16px auto;
                         display: block;
 
-                        @include media-breakpoint('xs') {
+                        @include media-breakpoint("xs") {
                             width: 90%;
                         }
                     }
@@ -100,7 +100,7 @@ login {
 
                         &:before,
                         &:after {
-                            content: '';
+                            content: "";
                             display: block;
                             width: 30px;
                             position: absolute;
@@ -119,21 +119,20 @@ login {
                 }
 
                 button {
-
                     &.google,
                     &.facebook {
                         width: 192px;
                         text-transform: none;
-                        color: #FFFFFF;
+                        color: #ffffff;
                         font-size: 13px;
                     }
 
-                    @include media-breakpoint('xs') {
+                    @include media-breakpoint("xs") {
                         width: 80%;
                     }
 
                     &.google {
-                        background-color: #D73D32;
+                        background-color: #d73d32;
                         margin-bottom: 8px;
                     }
 

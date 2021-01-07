@@ -1,17 +1,17 @@
 @import "src/@fuse/scss/fuse";
 
 coming-soon {
-
     #coming-soon {
         width: 100%;
-        background: url('/assets/images/backgrounds/dark-material-bg.jpg') no-repeat;
-        background-size: cover;
+        // background: url('/assets/images/backgrounds/dark-material-bg.jpg') no-repeat;
+        // background-size: cover;
+        background-color: rgb(241, 244, 245);
 
         #coming-soon-form-wrapper {
             flex: 1 0 auto;
             padding: 32px;
 
-            @include media-breakpoint('xs') {
+            @include media-breakpoint("xs") {
                 padding: 16px;
             }
 
@@ -21,7 +21,7 @@ coming-soon {
                 text-align: center;
                 @include mat-elevation(16);
 
-                @include media-breakpoint('xs') {
+                @include media-breakpoint("xs") {
                     width: 100%;
                 }
 
@@ -29,7 +29,7 @@ coming-soon {
                     width: 100%;
                     padding: 32px;
 
-                    @include media-breakpoint('xs') {
+                    @include media-breakpoint("xs") {
                         padding: 24px;
                     }
 
@@ -74,7 +74,7 @@ coming-soon {
                         width: 220px;
                         margin: 16px auto;
 
-                        @include media-breakpoint('xs') {
+                        @include media-breakpoint("xs") {
                             width: 90%;
                         }
                     }
