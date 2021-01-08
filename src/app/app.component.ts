@@ -72,10 +72,7 @@ export class AppComponent implements OnInit, OnDestroy {
         this._translateService.setDefaultLang("en");
 
         // Set the navigation translations
-        this._fuseTranslationLoaderService.loadTranslations(
-            navigationEnglish,
-            navigationTurkish
-        );
+        this._fuseTranslationLoaderService.loadTranslations(navigationEnglish, navigationTurkish);
 
         // Use a language
         this._translateService.use("en");
@@ -131,29 +128,27 @@ export class AppComponent implements OnInit, OnDestroy {
      */
     ngOnInit(): void {
         // Subscribe to config changes
-        this._fuseConfigService.config
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((config) => {
-                this.fuseConfig = config;
+        this._fuseConfigService.config.pipe(takeUntil(this._unsubscribeAll)).subscribe((config) => {
+            this.fuseConfig = config;
 
-                // Boxed
-                if (this.fuseConfig.layout.width === "boxed") {
-                    this.document.body.classList.add("boxed");
-                } else {
-                    this.document.body.classList.remove("boxed");
+            // Boxed
+            if (this.fuseConfig.layout.width === "boxed") {
+                this.document.body.classList.add("boxed");
+            } else {
+                this.document.body.classList.remove("boxed");
+            }
+
+            // Color theme - Use normal for loop for IE11 compatibility
+            for (let i = 0; i < this.document.body.classList.length; i++) {
+                const className = this.document.body.classList[i];
+
+                if (className.startsWith("theme-")) {
+                    this.document.body.classList.remove(className);
                 }
+            }
 
-                // Color theme - Use normal for loop for IE11 compatibility
-                for (let i = 0; i < this.document.body.classList.length; i++) {
-                    const className = this.document.body.classList[i];
-
-                    if (className.startsWith("theme-")) {
-                        this.document.body.classList.remove(className);
-                    }
-                }
-
-                this.document.body.classList.add(this.fuseConfig.colorTheme);
-            });
+            this.document.body.classList.add(this.fuseConfig.colorTheme);
+        });
     }
 
     /**

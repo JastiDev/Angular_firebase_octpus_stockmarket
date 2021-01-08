@@ -7,6 +7,9 @@ import { AuthService } from "app/auth/auth.service";
 import { Router } from "@angular/router";
 import { FuseProgressBarService } from "@fuse/components/progress-bar/progress-bar.service";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { MatIconRegistry } from "@angular/material/icon";
+import { DomSanitizer } from "@angular/platform-browser";
+const googleLogoURL = "https://raw.githubusercontent.com/fireflysemantics/logo/master/Google.svg";
 
 @Component({
     selector: "login",
@@ -30,8 +33,11 @@ export class LoginComponent implements OnInit {
         private _formBuilder: FormBuilder,
         public authService: AuthService,
         private router: Router,
-        private snack: MatSnackBar
+        private snack: MatSnackBar,
+        private matIconRegistry: MatIconRegistry,
+        private domSanitizer: DomSanitizer
     ) {
+        this.matIconRegistry.addSvgIcon("logo", this.domSanitizer.bypassSecurityTrustResourceUrl(googleLogoURL));
         // Configure the layout
         this._fuseConfigService.config = {
             layout: {

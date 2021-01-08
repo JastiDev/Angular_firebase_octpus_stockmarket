@@ -15,7 +15,7 @@
 
         &.mat-checked {
             ::ng-deep.mat-slide-toggle-bar {
-                background-color: green;
+                background-color: rgb(28, 214, 169);
             }
             ::ng-deep.mat-slide-toggle-bar::after {
                 content: "ON";

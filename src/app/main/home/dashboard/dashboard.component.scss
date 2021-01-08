@@ -14,4 +14,86 @@
         letter-spacing: -1px;
         line-height: 45px;
     }
+
+    .popular-card {
+        flex: 1;
+        margin: 10px;
+        border-radius: 10px;
+        transition-property: box-shadow, border-color, background-color;
+        transition-timing-function: ease-in-out;
+        transition-duration: 300ms;
+        -webkit-box-align: stretch;
+        align-items: stretch;
+        flex: 1 1 0%;
+        max-width: 100%;
+        box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px;
+        border: 1px solid rgb(230, 230, 230);
+        background-color: rgb(255, 255, 255);
+        text-align: center;
+        padding: 30px 20px;
+        cursor: pointer;
+
+        .popular-icon-wraper {
+            margin: auto;
+            width: 70px;
+            height: 70px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -webkit-box-pack: center;
+            border-radius: 100%;
+            background-color: white;
+            .popular-icon-outer {
+                position: absolute;
+                inset: 0px;
+                border-radius: 100%;
+                transition: all 300ms ease-in-out 0s;
+                background-color: currentcolor;
+                opacity: 0.15;
+            }
+
+            .popular-icon-inner {
+                opacity: 0.4;
+                transform: scale(0.66666);
+                position: absolute;
+                inset: 0px;
+                border-radius: 100%;
+                transition: all 300ms ease-in-out 0s;
+                background-color: currentcolor;
+            }
+        }
+
+        .popular-title {
+            margin-top: 20px;
+            font-size: large;
+            font-weight: 900;
+            color: black;
+        }
+
+        .popular-description {
+            color: gray;
+        }
+
+        .popular-button {
+            margin: 50px auto;
+            font-size: larger;
+            font-weight: 900;
+            background-color: rgb(19, 107, 245);
+            width: fit-content;
+            padding: 10px 20px;
+            border-radius: 10px;
+            color: white;
+            transition-timing-function: ease-in-out;
+            transition-duration: 300ms;
+        }
+
+        &:hover {
+            box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 30px 0px;
+            .popular-button {
+                background-color: rgb(38, 85, 189);
+            }
+        }
+    }
 }

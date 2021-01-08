@@ -1,12 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from "@angular/core";
-import {
-    AbstractControl,
-    FormBuilder,
-    FormGroup,
-    ValidationErrors,
-    ValidatorFn,
-    Validators,
-} from "@angular/forms";
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from "@angular/forms";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
@@ -16,6 +9,9 @@ import { AuthService } from "app/auth/auth.service";
 import { Router } from "@angular/router";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { FuseProgressBarService } from "@fuse/components/progress-bar/progress-bar.service";
+import { MatIconRegistry } from "@angular/material/icon";
+import { DomSanitizer } from "@angular/platform-browser";
+const googleLogoURL = "https://raw.githubusercontent.com/fireflysemantics/logo/master/Google.svg";
 
 @Component({
     selector: "register",
@@ -36,8 +32,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
         private _formBuilder: FormBuilder,
         public authService: AuthService,
         private router: Router,
-        private snack: MatSnackBar
+        private snack: MatSnackBar,
+        private matIconRegistry: MatIconRegistry,
+        private domSanitizer: DomSanitizer
     ) {
+        this.matIconRegistry.addSvgIcon("logo", this.domSanitizer.bypassSecurityTrustResourceUrl(googleLogoURL));
         // Configure the layout
         this._fuseConfigService.config = {
             layout: {
@@ -72,10 +71,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
             name: ["", Validators.required],
             email: ["", [Validators.required, Validators.email]],
             password: ["", Validators.required],
-            passwordConfirm: [
-                "",
-                [Validators.required, confirmPasswordValidator],
-            ],
+            passwordConfirm: ["", [Validators.required, confirmPasswordValidator]],
         });
 
         // Update the validity of the 'passwordConfirm' field
@@ -84,9 +80,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
             .get("password")
             .valueChanges.pipe(takeUntil(this._unsubscribeAll))
             .subscribe(() => {
-                this.registerForm
-                    .get("passwordConfirm")
-                    .updateValueAndValidity();
+                this.registerForm.get("passwordConfirm").updateValueAndValidity();
             });
     }
 
@@ -126,9 +120,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
  * @param {AbstractControl} control
  * @returns {ValidationErrors | null}
  */
-export const confirmPasswordValidator: ValidatorFn = (
-    control: AbstractControl
-): ValidationErrors | null => {
+export const confirmPasswordValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
     if (!control.parent || !control) {
         return null;
     }

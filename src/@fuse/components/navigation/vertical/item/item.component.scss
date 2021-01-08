@@ -6,7 +6,15 @@
                 opacity: 0;
                 transition: opacity 200ms ease;
             }
+
+            .plusicon {
+                display: block;
+            }
         }
+    }
+
+    .plusicon {
+        display: none;
     }
 
     .nav-link {
@@ -34,24 +42,18 @@
     }
 
     .nav-link.active {
-        color: rgb(19, 107, 245);
-        background-color: rgb(243, 248, 255);
+        color: #5795ff;
+        background-color: #f3f8ff;
         transition: all 300ms ease-in-out 0s;
         .nav-link-icon {
-            color: rgb(19, 107, 245);
+            color: #5795ff;
             transition: all 300ms ease-in-out 0s;
-        }
-
-        &:hover {
-            color: black;
-            .nav-link-icon {
-                color: black;
-            }
         }
     }
 
     .nav-link.makeflow {
-        background-color: black;
+        background-color: #1e044f;
+        text-align: center;
         color: white;
         transition: all 300ms ease-in-out 0s;
         .nav-link-icon {

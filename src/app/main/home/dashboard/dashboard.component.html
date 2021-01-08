@@ -1,11 +1,11 @@
 <div class="page-layout simple p-24">
     <div class="my-container">
         <!-- HEADER -->
-        <div class="header p-24" style="text-align: center" fxLayout="row" fxLayoutAlign="start center">Welcome to Octopus</div>
+        <div class="header p-24" fxLayout="row" fxLayoutAlign="start center">Get started with our most popular strategies</div>
         <!-- / HEADER -->
 
         <!-- CONTENT -->
-        <div class="content p-24" style="text-align: center">
+        <!-- <div class="content p-24" style="text-align: center">
             <mat-card-title>
                 <h1>Create your own strategy</h1>
                 <h4>Know exactly what you want to build? Select the steps you want to connect to start your custom setup.</h4>
@@ -27,21 +27,63 @@
                     <button mat-raised-button color="warn" (click)="onClickMakeFlow()">Make Strategy</button>
                 </div>
             </mat-card-content>
-        </div>
+        </div> -->
 
-        <div class="content p-24 mt-48" style="text-align: center">
-            <mat-card-title>
-                <h1>Get started with our most popular strategies</h1>
-                <h4>These templates can help you start saving time right away, no matter which apps you use</h4>
-            </mat-card-title>
-            <mat-card-content>
-                <div style="display: flex">
-                    <mat-card style="flex: 1; height: 200px; margin: 20px"> Hello </mat-card>
-                    <mat-card style="flex: 1; height: 200px; margin: 20px"> Hello </mat-card>
-                    <mat-card style="flex: 1; height: 200px; margin: 20px"> Hello </mat-card>
-                    <mat-card style="flex: 1; height: 200px; margin: 20px"> Hello </mat-card>
+        <div class="content p-24">
+            <div class="p-24">
+                <h2>These templates can help you start saving time right away, no matter which apps you use</h2>
+            </div>
+
+            <div style="display: flex">
+                <div class="popular-card" (click)="onClickPopularCard()">
+                    <div class="popular-icon-wraper" style="color: rgb(102, 102, 102)">
+                        <div class="popular-icon-outer"></div>
+                        <div class="popular-icon-inner"></div>
+
+                        <fa-icon [icon]="fafa.faPeopleCarry" size="2x"></fa-icon>
+                    </div>
+
+                    <div class="popular-title">Collaborate</div>
+                    <div class="popular-button">Use strategy</div>
+                    <div class="popular-description">Used by 93k people</div>
                 </div>
-            </mat-card-content>
+                <div class="popular-card" (click)="onClickPopularCard()">
+                    <div class="popular-icon-wraper" style="color: rgb(229, 176, 56)">
+                        <div class="popular-icon-outer"></div>
+                        <div class="popular-icon-inner"></div>
+
+                        <fa-icon [icon]="fafa.faShoppingBasket" size="2x"></fa-icon>
+                    </div>
+
+                    <div class="popular-title">Buy Signal Sell</div>
+                    <div class="popular-button">Use strategy</div>
+                    <div class="popular-description">Used by 6.3k people</div>
+                </div>
+                <div class="popular-card" (click)="onClickPopularCard()">
+                    <div class="popular-icon-wraper" style="color: rgb(252, 28, 116)">
+                        <div class="popular-icon-outer"></div>
+                        <div class="popular-icon-inner"></div>
+
+                        <fa-icon [icon]="fafa.faSignal" size="2x"></fa-icon>
+                    </div>
+
+                    <div class="popular-title">Increase</div>
+                    <div class="popular-button">Use strategy</div>
+                    <div class="popular-description">Used by 3k people</div>
+                </div>
+                <div class="popular-card" (click)="onClickPopularCard()">
+                    <div class="popular-icon-wraper" style="color: rgb(63, 182, 215)">
+                        <div class="popular-icon-outer"></div>
+                        <div class="popular-icon-inner"></div>
+
+                        <fa-icon [icon]="fafa.faCheck" size="2x"></fa-icon>
+                    </div>
+
+                    <div class="popular-title">Short term commit</div>
+                    <div class="popular-button">Use strategy</div>
+                    <div class="popular-description">Used by 21k people</div>
+                </div>
+            </div>
         </div>
 
         <!-- / CONTENT -->
