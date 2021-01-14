@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-    baseUrl: 'http://localhost:15000',
+    baseUrl: 'https://api.octopus.markets',
     production: false,
     hmr: false,
     firebaseConfig : {

@@ -60,7 +60,8 @@ export class EditorComponent implements OnInit {
             if(!paramMap.has('flowId')){
                 const newFlow = await this.flowsService.createFlow({
                     title: 'New Strategy',
-                    steps: []
+                    steps: [],
+                    status: 'stopped'
                 })
 
                 this.router.navigate(['/editor', newFlow._id])
