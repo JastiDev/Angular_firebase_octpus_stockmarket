@@ -1,25 +1,18 @@
-import { Component, Inject, OnInit } from "@angular/core";
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { Flow } from "app/classes/Flow";
-import { FlowsService } from "app/services/flows.service";
+import { Component, Inject, OnInit } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Flow } from '../../../../shared/classes/flow';
 
 @Component({
-    selector: "app-details",
-    templateUrl: "./details.component.html",
-    styleUrls: ["./details.component.scss"],
+    selector: 'app-details',
+    templateUrl: './details.component.html',
+    styleUrls: ['./details.component.scss'],
 })
-export class DetailsComponent implements OnInit {
-    constructor(public dialogRef: MatDialogRef<DetailsComponent>, @Inject(MAT_DIALOG_DATA) public data: DialogData, private flowsService: FlowsService) {}
+export class DetailsComponent {
+    constructor(
+        public dialogRef: MatDialogRef<DetailsComponent>,
+        @Inject(MAT_DIALOG_DATA) public flow: Flow
+    ) {}
 
-    flow: Flow;
-    ngOnInit(): void {
-        this.flow = this.flowsService.flows[this.data.id];
-    }
-
-    tabs = [{ title: "Overview" }, { title: "Task Log" }];
+    tabs = [{ title: 'Overview' }, { title: 'Task Log' }];
     activeTabId = 0;
-}
-
-export interface DialogData {
-    id: number;
 }

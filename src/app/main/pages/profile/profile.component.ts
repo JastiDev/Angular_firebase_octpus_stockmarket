@@ -1,12 +1,12 @@
-import { Component, ViewEncapsulation } from "@angular/core";
+import { Component, ViewEncapsulation } from '@angular/core';
 
-import { fuseAnimations } from "@fuse/animations";
-import { ProfileService } from "./profile.service";
+import { fuseAnimations } from '@fuse/animations';
+import { ProfileService } from './profile.service';
 
 @Component({
-    selector: "profile",
-    templateUrl: "./profile.component.html",
-    styleUrls: ["./profile.component.scss"],
+    selector: 'profile',
+    templateUrl: './profile.component.html',
+    styleUrls: ['./profile.component.scss'],
     encapsulation: ViewEncapsulation.None,
     animations: fuseAnimations,
 })

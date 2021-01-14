@@ -1,57 +1,68 @@
-<div style="width: 100%; display: flex; flex-direction: column">
-    <mat-toolbar style="display: flex; height: 70px; background-color: white; border-bottom: 1px solid rgb(230, 230, 230)">
-        <button mat-button [routerLink]="['/home/strategies']">
-            <mat-icon>keyboard_arrow_left</mat-icon>
-            <span>Back</span>
-        </button>
+<ng-template #loading>
+    <div class="py-5 text-center">Loading...</div>
+</ng-template>
 
-        <div style="margin-left: 100px">
-            <mat-form-field>
-                <input type="text" matInput [(ngModel)]="flow.title" />
-                <mat-icon matSuffix>mode_edit</mat-icon>
-            </mat-form-field>
-        </div>
+<ng-template [ngIf]="flow" [ngIfElse]="loading">
+    <div style="width: 100%; display: flex; flex-direction: column">
+        <mat-toolbar style="display: flex; height: 70px; background-color: white; border-bottom: 1px solid rgb(230, 230, 230)">
+            <button mat-button [routerLink]="['/home/strategies']">
+                <mat-icon>keyboard_arrow_left</mat-icon>
+                <span>Back</span>
+            </button>
+    
+            <div style="margin-left: 100px">
+                <mat-form-field>
+                    <input type="text" matInput [(ngModel)]="flow.title" (blur)="flow.update({title: flow.title})" />
+                    <mat-icon matSuffix>mode_edit</mat-icon>
+                </mat-form-field>
+            </div>
+    
+            <div style="flex: 1"></div>
 
-        <div style="flex: 1"></div>
+            <!-- TODO: stylings -->
+            <span *ngIf="flow.unsavedChanges">You have unsaved changes</span>
 
-        <div matTooltip="Details" matTooltipClass="mytooltip" class="info-button" (click)="openDetailsDialog(flowId)">
-            <mat-icon>info</mat-icon>
-        </div>
-
-        <mat-slide-toggle [checked]="flow.isOn" (change)="flow.isOn = $event.checked"></mat-slide-toggle>
-    </mat-toolbar>
-
-    <div id="page-body">
-        <div id="steps-panel-container">
-            <mat-card style="padding: 5px 0; border-radius: 6px">
-                <editor-steps-panel [isMenu]="false"></editor-steps-panel>
-            </mat-card>
-        </div>
-
-        <div id="detail-panel-container">
-            <editor-detail-panel
-                [flow]="flow"
-                [activeStepId]="activeStepId"
-                (setActiveStepId)="setActiveStepId($event)"
-                (deleteClicked)="deleteActiveStep()"
-            ></editor-detail-panel>
-        </div>
-
-        <div id="zoom-control">
-            <editor-zoom-control
-                [percent]="scale * 100"
-                (resetClicked)="zoomRest()"
-                (plusClicked)="zoomPlus()"
-                (minusClicked)="zoomMinus()"
-            ></editor-zoom-control>
-        </div>
-
-        <div id="pan-container" (click)="onClickPanContainer($event)">
-            <div id="pan-panel" [style.transform]="transformString(scale, translateX, translateY)">
-                <div id="pan-div">
-                    <editor-diagram [flow]="flow" [activeStepId]="activeStepId" (setActiveStepId)="setActiveStepId($event)"> </editor-diagram>
+            <button (click)="flow.saveSteps()">Save</button>
+    
+            <div matTooltip="Details" matTooltipClass="mytooltip" class="info-button" (click)="openDetailsDialog()">
+                <mat-icon>info</mat-icon>
+            </div>
+    
+            <mat-slide-toggle [checked]="flow.status === 'active'" (change)="flow.update({status: $event.checked ? 'active' : 'stopped'})"></mat-slide-toggle>
+        </mat-toolbar>
+    
+        <div id="page-body">
+            <div id="steps-panel-container">
+                <mat-card style="padding: 5px 0; border-radius: 6px">
+                    <editor-steps-panel [isMenu]="false"></editor-steps-panel>
+                </mat-card>
+            </div>
+    
+            <div id="detail-panel-container">
+                <editor-detail-panel
+                    [flow]="flow"
+                    [activeStepId]="activeStepId"
+                    (setActiveStepId)="setActiveStepId($event)"
+                    (deleteClicked)="deleteActiveStep()"
+                ></editor-detail-panel>
+            </div>
+    
+            <div id="zoom-control">
+                <editor-zoom-control
+                    [percent]="scale * 100"
+                    (resetClicked)="zoomRest()"
+                    (plusClicked)="zoomPlus()"
+                    (minusClicked)="zoomMinus()"
+                ></editor-zoom-control>
+            </div>
+    
+            <div id="pan-container" (click)="onClickPanContainer($event)">
+                <div id="pan-panel" [style.transform]="transformString(scale, translateX, translateY)">
+                    <div id="pan-div">
+                        <editor-diagram [flow]="flow" [activeStepId]="activeStepId" (setActiveStepId)="setActiveStepId($event)"> </editor-diagram>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</ng-template>

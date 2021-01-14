@@ -1,7 +1,7 @@
 <div id="line_container">
     <div
         id="droptarget"
-        (dragover)="allowDrop($event)"
+        (dragover)="$event.preventDefault()"
         (dragenter)="onDragEnter($event)"
         (dragleave)="onDragLeave($event)"
         (drop)="onDrop($event)"
@@ -18,7 +18,7 @@
     <mat-menu #menu="matMenu">
         <editor-steps-panel
             [isMenu]="true"
-            (templateClicked)="addByTemplate($event)"
+            (addStep)="addStep($event)"
         ></editor-steps-panel>
     </mat-menu>
 </div>

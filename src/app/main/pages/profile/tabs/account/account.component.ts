@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from "@angular/core";
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import {
     AbstractControl,
     FormBuilder,
@@ -6,27 +6,27 @@ import {
     ValidationErrors,
     ValidatorFn,
     Validators,
-} from "@angular/forms";
-import { MatSnackBar } from "@angular/material/snack-bar";
-import { Router } from "@angular/router";
-import { fuseAnimations } from "@fuse/animations";
-import { FuseProgressBarService } from "@fuse/components/progress-bar/progress-bar.service";
-import { User } from "firebase/app";
-import { Subject } from "rxjs";
-import { takeUntil } from "rxjs/operators";
-import { ProfileService } from "../../profile.service";
+} from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+import { fuseAnimations } from '@fuse/animations';
+import { FuseProgressBarService } from '@fuse/components/progress-bar/progress-bar.service';
+import { User } from 'firebase/app';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { ProfileService } from '../../profile.service';
 
 @Component({
-    selector: "profile-account",
-    templateUrl: "./account.component.html",
-    styleUrls: ["./account.component.scss"],
+    selector: 'profile-account',
+    templateUrl: './account.component.html',
+    styleUrls: ['./account.component.scss'],
     encapsulation: ViewEncapsulation.None,
     animations: fuseAnimations,
 })
 export class AccountComponent implements OnInit, OnDestroy {
-    displayName: string = "";
-    email: string = "";
-    password: string = "";
+    displayName = '';
+    email = '';
+    password = '';
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -48,7 +48,7 @@ export class AccountComponent implements OnInit, OnDestroy {
             .subscribe((user: User) => {
                 this.displayName = user.displayName;
                 this.email = user.email;
-                this.password = "";
+                this.password = '';
             });
     }
 
@@ -61,13 +61,13 @@ export class AccountComponent implements OnInit, OnDestroy {
         this._unsubscribeAll.complete();
     }
 
-    changeDisplayName() {
+    changeDisplayName(): void {
         this._profileService.updateProfile(this.displayName);
     }
-    changeEmail() {
+    changeEmail(): void {
         this._profileService.updateEmail(this.email);
     }
-    changePassword() {
+    changePassword(): void {
         this._profileService.updatePassword(this.password);
     }
 }

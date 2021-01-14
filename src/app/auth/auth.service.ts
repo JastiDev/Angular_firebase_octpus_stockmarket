@@ -1,10 +1,10 @@
-import { Injectable, NgZone } from "@angular/core";
-import { AngularFireAuth } from "@angular/fire/auth";
-import { auth, User } from "firebase/app";
-import { Subject } from "rxjs";
-import { UserRole } from "./auth.roles";
-import { Router } from "@angular/router";
-import { MatSnackBar } from "@angular/material/snack-bar";
+import { Injectable, NgZone } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { auth, User } from 'firebase/app';
+import { Subject } from 'rxjs';
+import { UserRole } from './auth.roles';
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 export interface ISignInCredentials {
     email: string;
@@ -22,41 +22,42 @@ export interface IPasswordReset {
     newPassword: string;
 }
 
-@Injectable({ providedIn: "root" })
+@Injectable({ providedIn: 'root' })
 export class AuthService {
     user;
     subjectAuth = new Subject<{ isAuthed: boolean; user: any }>();
 
     constructor(
+        // tslint:disable-next-line: no-shadowed-variable
         private auth: AngularFireAuth,
         private router: Router,
         public ngZone: NgZone,
         private snack: MatSnackBar
     ) {}
 
-    init() {
+    init(): void {
         this.autoLogin();
         this.auth.authState.subscribe((userData: User) => {
             this.setUserData(userData, UserRole.FreeUser);
         });
     }
 
-    private autoLogin() {
-        const userData = JSON.parse(localStorage.getItem("userData"));
-        const userRole = JSON.parse(localStorage.getItem("userRole"));
+    private autoLogin(): void {
+        const userData = JSON.parse(localStorage.getItem('userData'));
+        const userRole = JSON.parse(localStorage.getItem('userRole'));
         this.setUserData(userData, userRole);
     }
 
-    private setUserData(userData, userRole) {
+    private setUserData(userData, userRole): void {
         if (userData) {
             this.user = { ...userData, role: userRole };
-            localStorage.setItem("userData", JSON.stringify(userData));
-            localStorage.setItem("userRole", JSON.stringify(userRole));
+            localStorage.setItem('userData', JSON.stringify(userData));
+            localStorage.setItem('userRole', JSON.stringify(userRole));
             this.subjectAuth.next({ isAuthed: true, user: this.user });
         } else {
             this.user = null;
-            localStorage.setItem("userData", null);
-            localStorage.setItem("userRole", null);
+            localStorage.setItem('userData', null);
+            localStorage.setItem('userRole', null);
             this.subjectAuth.next({ isAuthed: false, user: this.user });
         }
     }
@@ -69,10 +70,10 @@ export class AuthService {
         );
     }
 
-    async signOut() {
+    async signOut(): Promise<void> {
         await this.auth.signOut();
         this.ngZone.run(() => {
-            this.router.navigate(["/pages/auth/login"]);
+            this.router.navigate(['/pages/auth/login']);
         });
     }
 
@@ -92,22 +93,22 @@ export class AuthService {
             });
     }
 
-    updateProfile(displayName: string, photoURL: string = "") {
+    updateProfile(displayName: string, photoURL: string = ''): void {
         this.auth.currentUser
             .then((userData) => {
                 userData
                     .updateProfile({ displayName, photoURL })
                     .then(() => {
                         this.setUserData(userData, UserRole.FreeUser);
-                        this.snack.open("Successfully changed", "Dismiss", {
+                        this.snack.open('Successfully changed', 'Dismiss', {
                             duration: 2000,
-                            horizontalPosition: "right",
+                            horizontalPosition: 'right',
                         });
                     })
                     .catch((error) => {
-                        this.snack.open("Failed: " + error.message, "Dismiss", {
+                        this.snack.open('Failed: ' + error.message, 'Dismiss', {
                             duration: 5000,
-                            horizontalPosition: "right",
+                            horizontalPosition: 'right',
                         });
                     });
                 this.auth.updateCurrentUser(userData);
@@ -117,22 +118,22 @@ export class AuthService {
             });
     }
 
-    updateEmail(email: string) {
+    updateEmail(email: string): void {
         this.auth.currentUser
             .then((userData) => {
                 userData
                     .updateEmail(email)
                     .then(() => {
                         this.setUserData(userData, UserRole.FreeUser);
-                        this.snack.open("Successfully changed", "Dismiss", {
+                        this.snack.open('Successfully changed', 'Dismiss', {
                             duration: 2000,
-                            horizontalPosition: "right",
+                            horizontalPosition: 'right',
                         });
                     })
                     .catch((error) => {
-                        this.snack.open("Failed: " + error.message, "Dismiss", {
+                        this.snack.open('Failed: ' + error.message, 'Dismiss', {
                             duration: 5000,
-                            horizontalPosition: "right",
+                            horizontalPosition: 'right',
                         });
                     });
                 this.auth.updateCurrentUser(userData);
@@ -142,22 +143,22 @@ export class AuthService {
             });
     }
 
-    updatePassword(password: string) {
+    updatePassword(password: string): void {
         this.auth.currentUser
             .then((userData) => {
                 userData
                     .updatePassword(password)
                     .then(() => {
                         this.setUserData(userData, UserRole.FreeUser);
-                        this.snack.open("Successfully changed", "Dismiss", {
+                        this.snack.open('Successfully changed', 'Dismiss', {
                             duration: 2000,
-                            horizontalPosition: "right",
+                            horizontalPosition: 'right',
                         });
                     })
                     .catch((error) => {
-                        this.snack.open("Failed: " + error.message, "Dismiss", {
+                        this.snack.open('Failed: ' + error.message, 'Dismiss', {
                             duration: 5000,
-                            horizontalPosition: "right",
+                            horizontalPosition: 'right',
                         });
                     });
 
@@ -168,35 +169,35 @@ export class AuthService {
             });
     }
 
-    googleAuth() {
+    googleAuth(): void {
         this.auth
             .signInWithPopup(new auth.GoogleAuthProvider())
             .then(({ user }) => {
                 setTimeout(() => {
                     this.ngZone.run(() => {
-                        this.router.navigate([""]);
+                        this.router.navigate(['']);
                     });
                 }, 500);
             })
             .catch((error) => {
-                this.snack.open("Failed: " + error.message, "Dismiss", {
+                this.snack.open('Failed: ' + error.message, 'Dismiss', {
                     duration: 5000,
                 });
             });
     }
 
-    facebookAuth() {
+    facebookAuth(): void {
         this.auth
             .signInWithPopup(new auth.FacebookAuthProvider())
             .then(({ user }) => {
                 setTimeout(() => {
                     this.ngZone.run(() => {
-                        this.router.navigate([""]);
+                        this.router.navigate(['']);
                     });
                 }, 500);
             })
             .catch((error) => {
-                this.snack.open("Failed: " + error.message, "Dismiss", {
+                this.snack.open('Failed: ' + error.message, 'Dismiss', {
                     duration: 5000,
                 });
             });

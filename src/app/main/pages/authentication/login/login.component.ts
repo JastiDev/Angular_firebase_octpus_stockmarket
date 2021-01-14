@@ -1,20 +1,20 @@
-import { Component, OnInit, ViewEncapsulation } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { FuseConfigService } from "@fuse/services/config.service";
-import { fuseAnimations } from "@fuse/animations";
-import { AuthService } from "app/auth/auth.service";
-import { Router } from "@angular/router";
-import { FuseProgressBarService } from "@fuse/components/progress-bar/progress-bar.service";
-import { MatSnackBar } from "@angular/material/snack-bar";
-import { MatIconRegistry } from "@angular/material/icon";
-import { DomSanitizer } from "@angular/platform-browser";
-const googleLogoURL = "https://raw.githubusercontent.com/fireflysemantics/logo/master/Google.svg";
+import { FuseConfigService } from '@fuse/services/config.service';
+import { fuseAnimations } from '@fuse/animations';
+import { AuthService } from 'app/auth/auth.service';
+import { Router } from '@angular/router';
+import { FuseProgressBarService } from '@fuse/components/progress-bar/progress-bar.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
+const googleLogoURL = 'https://raw.githubusercontent.com/fireflysemantics/logo/master/Google.svg';
 
 @Component({
-    selector: "login",
-    templateUrl: "./login.component.html",
-    styleUrls: ["./login.component.scss"],
+    selector: 'login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.scss'],
     encapsulation: ViewEncapsulation.None,
     animations: fuseAnimations,
 })
@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
         private matIconRegistry: MatIconRegistry,
         private domSanitizer: DomSanitizer
     ) {
-        this.matIconRegistry.addSvgIcon("logo", this.domSanitizer.bypassSecurityTrustResourceUrl(googleLogoURL));
+        this.matIconRegistry.addSvgIcon('logo', this.domSanitizer.bypassSecurityTrustResourceUrl(googleLogoURL));
         // Configure the layout
         this._fuseConfigService.config = {
             layout: {
@@ -66,14 +66,14 @@ export class LoginComponent implements OnInit {
      */
     ngOnInit(): void {
         this.loginForm = this._formBuilder.group({
-            email: ["", [Validators.required, Validators.email]],
-            password: ["", Validators.required],
+            email: ['', [Validators.required, Validators.email]],
+            password: ['', Validators.required],
         });
     }
 
-    onSubmit(event) {
+    onSubmit(event): void {
         event.preventDefault();
-        if (!this.loginForm.valid) return;
+        if (!this.loginForm.valid) { return; }
 
         this._fuseProgress.show();
         this.authService
@@ -81,12 +81,12 @@ export class LoginComponent implements OnInit {
             .then((resp) => {
                 this._fuseProgress.hide();
                 setTimeout(() => {
-                    this.router.navigate([""]);
+                    this.router.navigate(['']);
                 }, 500);
             })
             .catch((error) => {
                 this._fuseProgress.hide();
-                this.snack.open("Failed: " + error.message, "Dismiss", {
+                this.snack.open('Failed: ' + error.message, 'Dismiss', {
                     duration: 5000,
                 });
             });

@@ -13,9 +13,9 @@
         <div
             *ngFor="let stepTemplate of stepTemplates; let id = index"
             class="hoverable"
-            (click)="onClickStep(stepTemplate)"
+            (click)="add(stepTemplate.type)"
             [draggable]="!isMenu"
-            (dragstart)="onDragStart($event, stepTemplate)"
+            (dragstart)="onDragStart($event, stepTemplate.type)"
         >
             <mat-card
                 class="icon-circle"
@@ -25,7 +25,7 @@
                     'icon-signal': stepTemplate.title == 'Signal'
                 }"
             >
-                <fa-icon [icon]="stepTemplate.faIcon" size="lg"></fa-icon>
+                <fa-icon [icon]="stepTemplate.icon" size="lg"></fa-icon>
             </mat-card>
 
             <div style="margin-left: 1rem">
