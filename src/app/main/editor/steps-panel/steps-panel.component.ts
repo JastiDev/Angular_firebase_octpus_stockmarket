@@ -1,37 +1,38 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import * as fafa from "@fortawesome/free-solid-svg-icons";
-import { StepTemplate, stepTemplates } from "app/classes/Step";
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import * as fafa from '@fortawesome/free-solid-svg-icons';
+import { IFlowStepType } from 'app/shared/interfaces/IFlow';
+import { STEP_TEMPLATES } from '../../../shared/data/templates';
 
 @Component({
-    selector: "editor-steps-panel",
-    templateUrl: "./steps-panel.component.html",
-    styleUrls: ["./steps-panel.component.scss"],
+    selector: 'editor-steps-panel',
+    templateUrl: './steps-panel.component.html',
+    styleUrls: ['./steps-panel.component.scss'],
 })
 export class StepsPanelComponent implements OnInit {
     @Input() isMenu: boolean;
-    @Output() templateClicked = new EventEmitter<StepTemplate>();
+    @Output() addStep = new EventEmitter<IFlowStepType>();
 
     fafa = fafa;
-    stepTemplates = stepTemplates;
+    stepTemplates = STEP_TEMPLATES;
 
     constructor() {}
     ngOnInit(): void {}
 
-    onClickStep(stepTemplate: StepTemplate) {
-        if (this.isMenu) this.templateClicked.emit(stepTemplate);
+    add(type: IFlowStepType): void {
+        if (this.isMenu) { this.addStep.emit(type); }
     }
 
-    onDragStart(event: DragEvent, stepTemplate: StepTemplate) {
-        let target: HTMLElement = <HTMLElement>event.target;
+    onDragStart(event: DragEvent, type: IFlowStepType): void {
+        const target: HTMLElement = event.target as HTMLElement;
 
-        let icon: Element = target.querySelector(".icon-circle");
+        const icon: Element = target.querySelector('.icon-circle');
 
-        if (this.isMenu == false) {
+        if (this.isMenu === false) {
             event.dataTransfer.setDragImage(icon, 0, 0);
-            event.dataTransfer.setData("dataType", "template");
+            event.dataTransfer.setData('dataType', 'template');
             event.dataTransfer.setData(
-                "dataValue",
-                JSON.stringify(stepTemplate)
+                'dataValue',
+                JSON.stringify(type)
             );
         }
     }

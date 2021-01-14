@@ -1,14 +1,14 @@
-import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import {
     ActivatedRouteSnapshot,
     Resolve,
     RouterStateSnapshot,
-} from "@angular/router";
-import { BehaviorSubject, Observable } from "rxjs";
-import { AuthService } from "app/auth/auth.service";
-import { AngularFireAuth } from "@angular/fire/auth";
-import { User } from "firebase/app";
+} from '@angular/router';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { AuthService } from 'app/auth/auth.service';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { User } from 'firebase/app';
 
 @Injectable()
 export class ProfileService implements Resolve<any> {
@@ -82,15 +82,15 @@ export class ProfileService implements Resolve<any> {
         });
     }
 
-    updateProfile(displayName: string, photoURL: string = "") {
+    updateProfile(displayName: string, photoURL: string = ''): void {
         this.authService.updateProfile(displayName, photoURL);
     }
 
-    updateEmail(email: string) {
+    updateEmail(email: string): void {
         this.authService.updateEmail(email);
     }
 
-    updatePassword(password: string) {
+    updatePassword(password: string): void {
         this.authService.updatePassword(password);
     }
 
@@ -100,7 +100,7 @@ export class ProfileService implements Resolve<any> {
     getTimeline(): Promise<any[]> {
         return new Promise((resolve, reject) => {
             this._httpClient
-                .get("api/profile-timeline")
+                .get('api/profile-timeline')
                 .subscribe((timeline: any) => {
                     this.timeline = timeline;
                     this.timelineOnChanged.next(this.timeline);
@@ -115,7 +115,7 @@ export class ProfileService implements Resolve<any> {
     getAbout(): Promise<any[]> {
         return new Promise((resolve, reject) => {
             this._httpClient
-                .get("api/profile-about")
+                .get('api/profile-about')
                 .subscribe((about: any) => {
                     this.about = about;
                     this.aboutOnChanged.next(this.about);
@@ -130,7 +130,7 @@ export class ProfileService implements Resolve<any> {
     getPhotosVideos(): Promise<any[]> {
         return new Promise((resolve, reject) => {
             this._httpClient
-                .get("api/profile-photos-videos")
+                .get('api/profile-photos-videos')
                 .subscribe((photosVideos: any) => {
                     this.photosVideos = photosVideos;
                     this.photosVideosOnChanged.next(this.photosVideos);

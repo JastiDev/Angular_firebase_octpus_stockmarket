@@ -1,3 +1,11 @@
+<ng-template #loading>
+    <div class="py-5 text-center">Loading...</div>
+</ng-template>
+
+<ng-template #nodata>
+    <div class="py-5 text-center">No flows</div>
+</ng-template>
+
 <div class="page-layout simple p-24">
     <div class="my-container">
         <!-- HEADER -->
@@ -6,18 +14,18 @@
 
         <!-- CONTENT -->
         <div class="content p-24">
-            <ng-container *ngFor="let flow of flows; let i = index">
-                <flows-flow
-                    [flow]="flow"
-                    (toggleChanged)="toggleFlow($event, i)"
-                    (deleteClicked)="tryDeleteFlow(i)"
-                    (cloneClicked)="tryCloneFlow(i)"
-                    (editClicked)="tryEditFlow(i)"
-                    (renameClicked)="tryRenameFlow(i)"
-                    (detailsClicked)="openDetailsDialog(i)"
-                ></flows-flow>
-            </ng-container>
+            <div *ngIf="flows else loading">
+                <div *ngIf="flows.length else nodata">
+                    <ng-container *ngFor="let flow of flows">
+                        <flows-flow
+                            [flow]="flow"
+                            (action)="onFlowAction(flow, $event)"
+                        ></flows-flow>
+                    </ng-container>
+                </div>
+            </div>
         </div>
         <!-- / CONTENT -->
     </div>
 </div>
+

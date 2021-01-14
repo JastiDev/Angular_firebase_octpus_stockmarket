@@ -1,22 +1,22 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from "@angular/core";
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from "@angular/forms";
-import { Subject } from "rxjs";
-import { takeUntil } from "rxjs/operators";
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
-import { FuseConfigService } from "@fuse/services/config.service";
-import { fuseAnimations } from "@fuse/animations";
-import { AuthService } from "app/auth/auth.service";
-import { Router } from "@angular/router";
-import { MatSnackBar } from "@angular/material/snack-bar";
-import { FuseProgressBarService } from "@fuse/components/progress-bar/progress-bar.service";
-import { MatIconRegistry } from "@angular/material/icon";
-import { DomSanitizer } from "@angular/platform-browser";
-const googleLogoURL = "https://raw.githubusercontent.com/fireflysemantics/logo/master/Google.svg";
+import { FuseConfigService } from '@fuse/services/config.service';
+import { fuseAnimations } from '@fuse/animations';
+import { AuthService } from 'app/auth/auth.service';
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { FuseProgressBarService } from '@fuse/components/progress-bar/progress-bar.service';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
+const googleLogoURL = 'https://raw.githubusercontent.com/fireflysemantics/logo/master/Google.svg';
 
 @Component({
-    selector: "register",
-    templateUrl: "./register.component.html",
-    styleUrls: ["./register.component.scss"],
+    selector: 'register',
+    templateUrl: './register.component.html',
+    styleUrls: ['./register.component.scss'],
     encapsulation: ViewEncapsulation.None,
     animations: fuseAnimations,
 })
@@ -36,7 +36,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         private matIconRegistry: MatIconRegistry,
         private domSanitizer: DomSanitizer
     ) {
-        this.matIconRegistry.addSvgIcon("logo", this.domSanitizer.bypassSecurityTrustResourceUrl(googleLogoURL));
+        this.matIconRegistry.addSvgIcon('logo', this.domSanitizer.bypassSecurityTrustResourceUrl(googleLogoURL));
         // Configure the layout
         this._fuseConfigService.config = {
             layout: {
@@ -68,19 +68,19 @@ export class RegisterComponent implements OnInit, OnDestroy {
      */
     ngOnInit(): void {
         this.registerForm = this._formBuilder.group({
-            name: ["", Validators.required],
-            email: ["", [Validators.required, Validators.email]],
-            password: ["", Validators.required],
-            passwordConfirm: ["", [Validators.required, confirmPasswordValidator]],
+            name: ['', Validators.required],
+            email: ['', [Validators.required, Validators.email]],
+            password: ['', Validators.required],
+            passwordConfirm: ['', [Validators.required, confirmPasswordValidator]],
         });
 
         // Update the validity of the 'passwordConfirm' field
         // when the 'password' field changes
         this.registerForm
-            .get("password")
+            .get('password')
             .valueChanges.pipe(takeUntil(this._unsubscribeAll))
             .subscribe(() => {
-                this.registerForm.get("passwordConfirm").updateValueAndValidity();
+                this.registerForm.get('passwordConfirm').updateValueAndValidity();
             });
     }
 
@@ -93,21 +93,21 @@ export class RegisterComponent implements OnInit, OnDestroy {
         this._unsubscribeAll.complete();
     }
 
-    onSubmit(event) {
+    onSubmit(event): void {
         event.preventDefault();
-        if (!this.registerForm.valid) return;
+        if (!this.registerForm.valid) { return; }
 
         this.authService
             .emailSignUp(this.registerForm.value)
             .then((resp) => {
                 this._fuseProgress.hide();
                 setTimeout(() => {
-                    this.router.navigate([""]);
+                    this.router.navigate(['']);
                 }, 500);
             })
             .catch((error) => {
                 this._fuseProgress.hide();
-                this.snack.open("Failed: " + error.message, "Dismiss", {
+                this.snack.open('Failed: ' + error.message, 'Dismiss', {
                     duration: 5000,
                 });
             });
@@ -125,14 +125,14 @@ export const confirmPasswordValidator: ValidatorFn = (control: AbstractControl):
         return null;
     }
 
-    const password = control.parent.get("password");
-    const passwordConfirm = control.parent.get("passwordConfirm");
+    const password = control.parent.get('password');
+    const passwordConfirm = control.parent.get('passwordConfirm');
 
     if (!password || !passwordConfirm) {
         return null;
     }
 
-    if (passwordConfirm.value === "") {
+    if (passwordConfirm.value === '') {
         return null;
     }
 

@@ -3,10 +3,7 @@
 </mat-dialog-actions>
 
 <div mat-dialog-title>
-    <mat-form-field appearance="outline">
-        <mat-label>title</mat-label>
-        <input matInput [(ngModel)]="flow.title" />
-    </mat-form-field>
+    <h1>{{flow.title}}</h1>
     <div>
         <ng-container *ngFor="let tab of tabs; let i = index">
             <button mat-button [ngClass]="{ active: i == activeTabId }" (click)="activeTabId = i">{{ tab.title }}</button>

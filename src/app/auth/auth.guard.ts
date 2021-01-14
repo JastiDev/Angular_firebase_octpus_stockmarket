@@ -4,11 +4,11 @@ import {
     ActivatedRouteSnapshot,
     RouterStateSnapshot,
     CanActivateChild,
-} from "@angular/router";
-import { Injectable } from "@angular/core";
-import { AuthService } from "./auth.service";
+} from '@angular/router';
+import { Injectable } from '@angular/core';
+import { AuthService } from './auth.service';
 
-@Injectable({ providedIn: "root" })
+@Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate, CanActivateChild {
     constructor(private authService: AuthService, private router: Router) {}
 
@@ -21,14 +21,14 @@ export class AuthGuard implements CanActivate, CanActivateChild {
                 if (route.data.roles.includes(this.authService.user.role)) {
                     return true;
                 } else {
-                    this.router.navigate(["/unauthorized"]);
+                    this.router.navigate(['/unauthorized']);
                     return false;
                 }
             } else {
                 return true;
             }
         } else {
-            this.router.navigate(["/pages/auth/login"]);
+            this.router.navigate(['/pages/auth/login']);
             return false;
         }
     }
@@ -42,14 +42,14 @@ export class AuthGuard implements CanActivate, CanActivateChild {
                 if (route.data.roles.includes(this.authService.user.role)) {
                     return true;
                 } else {
-                    this.router.navigate(["/unauthorized"]);
+                    this.router.navigate(['/unauthorized']);
                     return false;
                 }
             } else {
                 return true;
             }
         } else {
-            this.router.navigate(["/pages/auth/login"]);
+            this.router.navigate(['/pages/auth/login']);
             return false;
         }
     }

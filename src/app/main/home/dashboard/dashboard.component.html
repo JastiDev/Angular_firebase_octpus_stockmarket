@@ -34,54 +34,20 @@
                 <h2>These templates can help you start saving time right away, no matter which apps you use</h2>
             </div>
 
-            <div style="display: flex">
-                <div class="popular-card" (click)="onClickPopularCard()">
-                    <div class="popular-icon-wraper" style="color: rgb(102, 102, 102)">
-                        <div class="popular-icon-outer"></div>
-                        <div class="popular-icon-inner"></div>
-
-                        <fa-icon [icon]="fafa.faPeopleCarry" size="2x"></fa-icon>
+            <div class="cards">
+                <div class="cards-item" *ngFor="let c of cards">
+                    <div class="popular-card" (click)="select(c.flowJSON)">
+                        <div class="popular-icon-wraper" [style.color]="c.color">
+                            <div class="popular-icon-outer"></div>
+                            <div class="popular-icon-inner"></div>
+    
+                            <fa-icon [icon]="fafa[c.icon]" size="2x"></fa-icon>
+                        </div>
+    
+                        <div class="popular-title">{{c.title}}</div>
+                        <div class="popular-button">Use strategy</div>
+                        <div class="popular-description">Used by {{c.usedBy}} people</div>
                     </div>
-
-                    <div class="popular-title">Collaborate</div>
-                    <div class="popular-button">Use strategy</div>
-                    <div class="popular-description">Used by 93k people</div>
-                </div>
-                <div class="popular-card" (click)="onClickPopularCard()">
-                    <div class="popular-icon-wraper" style="color: rgb(229, 176, 56)">
-                        <div class="popular-icon-outer"></div>
-                        <div class="popular-icon-inner"></div>
-
-                        <fa-icon [icon]="fafa.faShoppingBasket" size="2x"></fa-icon>
-                    </div>
-
-                    <div class="popular-title">Buy Signal Sell</div>
-                    <div class="popular-button">Use strategy</div>
-                    <div class="popular-description">Used by 6.3k people</div>
-                </div>
-                <div class="popular-card" (click)="onClickPopularCard()">
-                    <div class="popular-icon-wraper" style="color: rgb(252, 28, 116)">
-                        <div class="popular-icon-outer"></div>
-                        <div class="popular-icon-inner"></div>
-
-                        <fa-icon [icon]="fafa.faSignal" size="2x"></fa-icon>
-                    </div>
-
-                    <div class="popular-title">Increase</div>
-                    <div class="popular-button">Use strategy</div>
-                    <div class="popular-description">Used by 3k people</div>
-                </div>
-                <div class="popular-card" (click)="onClickPopularCard()">
-                    <div class="popular-icon-wraper" style="color: rgb(63, 182, 215)">
-                        <div class="popular-icon-outer"></div>
-                        <div class="popular-icon-inner"></div>
-
-                        <fa-icon [icon]="fafa.faCheck" size="2x"></fa-icon>
-                    </div>
-
-                    <div class="popular-title">Short term commit</div>
-                    <div class="popular-button">Use strategy</div>
-                    <div class="popular-description">Used by 21k people</div>
                 </div>
             </div>
         </div>

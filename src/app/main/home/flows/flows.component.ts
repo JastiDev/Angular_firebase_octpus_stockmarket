@@ -1,70 +1,78 @@
-import { Component, Inject, OnInit } from "@angular/core";
-import { Flow } from "app/classes/Flow";
+import { Component, OnInit } from '@angular/core';
 
-import { FlowsService } from "app/services/flows.service";
-import { Subject } from "rxjs";
-import { takeUntil } from "rxjs/operators";
+import { FlowsService } from 'app/services/flows.service';
 
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { RenameComponent } from "./rename/rename.component";
-import { DetailsComponent } from "./details/details.component";
+import { MatDialog } from '@angular/material/dialog';
+import { RenameComponent } from './rename/rename.component';
+import { DetailsComponent } from './details/details.component';
 
-import { Router } from "@angular/router";
+import { Router } from '@angular/router';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { IFlow } from 'app/shared/interfaces/IFlow';
+import { Flow } from '../../../shared/classes/flow';
 
+export enum FlowAction {
+    INFO,
+    EDIT,
+    RENAME,
+    CLONE,
+    DELETE
+}
+
+@UntilDestroy()
 @Component({
-    selector: "app-flows",
-    templateUrl: "./flows.component.html",
-    styleUrls: ["./flows.component.scss"],
+    selector: 'app-flows',
+    templateUrl: './flows.component.html',
+    styleUrls: ['./flows.component.scss'],
 })
 export class FlowsComponent implements OnInit {
-    private _unsubscribeAll = new Subject();
+    flows: Flow[];
 
-    flows: Flow[] = [];
-
-    constructor(private flowsService: FlowsService, public dialog: MatDialog, private router: Router) {}
+    constructor(
+        private flowsService: FlowsService,
+        private dialog: MatDialog,
+        private router: Router
+    ) {}
 
     ngOnInit(): void {
-        this.flows = this.flowsService.flows;
-        this.flowsService.flowsChanged.pipe(takeUntil(this._unsubscribeAll)).subscribe((flows: Flow[]) => {
-            this.flows = flows;
-        });
+        this.flowsService.flows$.pipe(untilDestroyed(this)).subscribe(flows => {
+            this.flows = flows
+        })
+
+        this.flowsService.fetchFlows() // fetch from the server
     }
 
-    toggleFlow(checked: boolean, id: number) {
-        this.flowsService.toggleFlow(checked, id);
-    }
+    onFlowAction(flow: Flow, action: FlowAction): void{
+        switch(action){
+            case FlowAction.INFO: {
+                this.dialog.open(DetailsComponent, {
+                    data: flow
+                })
+                break
+            }
+            case FlowAction.EDIT: {
+                this.router.navigate(['/editor', flow._id])
+                break
+            }
+            case FlowAction.RENAME: {
+                this.dialog.open(RenameComponent, {
+                    width: '250px',
+                    data: flow
+                })
+                break
+            }
+            case FlowAction.CLONE: {
+                const newFlow: IFlow = JSON.parse(flow.toJSON())
+                delete newFlow._id
+                newFlow.title = `${newFlow.title} (clone)`
 
-    tryRenameFlow(id: number) {
-        this.openRenameDialog(id);
-    }
-
-    tryDeleteFlow(id: number) {
-        this.flowsService.deleteFlow(id);
-    }
-
-    tryEditFlow(id: number) {
-        this.router.navigate(["editor", id]);
-    }
-
-    tryCloneFlow(id: number) {
-        this.flowsService.cloneFlow(id);
-    }
-
-    openRenameDialog(id: number): void {
-        const dialogRef = this.dialog.open(RenameComponent, {
-            width: "250px",
-            data: { title: this.flows[id].title },
-        });
-        dialogRef.afterClosed().subscribe((result) => {
-            if (result !== undefined) this.flowsService.renameFlow(id, result);
-        });
-    }
-
-    openDetailsDialog(id: number): void {
-        const dialogRef = this.dialog.open(DetailsComponent, {
-            data: { id: id },
-        });
-
-        dialogRef.afterClosed().subscribe((result) => {});
+                this.flowsService.createFlow(newFlow)
+                break
+            }
+            case FlowAction.DELETE: {
+                this.flowsService.deleteFlow(flow._id)
+                break
+            }
+        }
     }
 }

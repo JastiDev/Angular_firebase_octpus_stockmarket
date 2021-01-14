@@ -1,0 +1,147 @@
+import { Injectable } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'environments/environment';
+import { catchError, map } from 'rxjs/operators';
+import { IFlow } from '../shared/interfaces/IFlow';
+import { throwError, Observable } from 'rxjs';
+import { IAccount } from '../shared/interfaces/IAccount'
+
+enum HttpMethod{
+  GET,
+  POST,
+  PUT,
+  DELETE
+}
+
+interface HttpResponse<T> {
+  message?: string
+  data?: T
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ApiService {
+  tokenId?: string
+
+  constructor(
+    private auth: AngularFireAuth,
+    private http: HttpClient
+  ) {}
+
+  private async getHeaders(): Promise<Record<string, string>>{
+    if(!this.tokenId){
+      const user = await this.auth.currentUser
+      this.tokenId = await (user ? user.getIdToken() : await new Promise(r => this.auth.onIdTokenChanged(u => r(u.getIdToken()))))
+    }
+
+    if(!this.tokenId){
+      // TODO: display this
+      console.error('You are not authorized')
+      return
+    }
+
+    return {
+      'Authorization': `Bearer ${this.tokenId}`
+    }
+  }
+
+  private catchError({error, message}): Observable<never> {
+    const msg = error && error.message ? error.message : message
+
+    if(msg){
+      // TODO: display this
+      console.error(`Error: ${msg}`)
+    }
+
+    return throwError(msg)
+  }
+
+  private mapResponse<T>({message, data}: HttpResponse<T>): T {
+    if(message){
+      // TODO: display this
+      console.log(message)
+    }
+
+    return data
+  }
+
+  private async request<T>(method: HttpMethod, url: string, body?: any): Promise<T>{
+    switch(method){
+      case HttpMethod.GET: {
+        return this.http.get<HttpResponse<T>>(`${environment.baseUrl}/v1${url}`, {headers: await this.getHeaders()}).pipe(
+          map(this.mapResponse),
+          catchError(this.catchError)
+        ).toPromise()
+      }
+      case HttpMethod.POST: {
+        return this.http.post<HttpResponse<T>>(`${environment.baseUrl}/v1${url}`, body, {headers: await this.getHeaders()}).pipe(
+          map(this.mapResponse),
+          catchError(this.catchError)
+        ).toPromise()
+      }
+      case HttpMethod.PUT: {
+        return this.http.put<HttpResponse<T>>(`${environment.baseUrl}/v1${url}`, body, {headers: await this.getHeaders()}).pipe(
+          map(this.mapResponse),
+          catchError(this.catchError)
+        ).toPromise()
+      }
+      case HttpMethod.DELETE: {
+        return this.http.delete<HttpResponse<T>>(`${environment.baseUrl}/v1${url}`, {headers: await this.getHeaders()}).pipe(
+          map(this.mapResponse),
+          catchError(this.catchError)
+        ).toPromise()
+      }
+    }
+  }
+
+  /**
+   * Returns all user's flows
+   */
+  getFlows(): Promise<IFlow[]>{
+    return this.request(HttpMethod.GET, '/flow')
+  }
+
+  /**
+   * Creates new flow
+   */
+  createFlow(data: IFlow): Promise<IFlow>{
+    return this.request(HttpMethod.POST, '/flow', data)
+  }
+
+  /**
+   * Updates a flow
+   */
+  updateFlow(id: string, data: IFlow): Promise<IFlow>{
+    return this.request(HttpMethod.PUT, `/flow/${id}`, data)
+  }
+  
+  /**
+   * Deletes a flow
+   */
+  deleteFlow(id: string): Promise<IFlow>{
+    return this.request(HttpMethod.DELETE, `/flow/${id}`)
+  }
+
+  /**
+   * Returns a single flow
+   */
+  getFlow(id: string): Promise<IFlow>{
+    return this.request(HttpMethod.GET, `/flow/${id}`)
+  }
+
+  /**
+   * Returns user's account
+   */
+  getAccount(): Promise<IAccount>{
+    return this.request(HttpMethod.GET, '/account')
+  }
+
+  /**
+   * Updates user's account
+   */
+  updateAccount(data: IAccount): Promise<IAccount>{
+    return this.request(HttpMethod.PUT, '/account', data)
+  }
+}

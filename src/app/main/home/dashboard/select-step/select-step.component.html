@@ -1,11 +1,11 @@
 <mat-form-field appearance="outline" style="width: 100%">
     <mat-label>Connect this step...</mat-label>
     <mat-icon matPrefix *ngIf="!step">search</mat-icon>
-    <fa-icon matPrefix *ngIf="step" [icon]="step.faIcon" [style.color]="step.color" style="margin-right: 20px"></fa-icon>
+    <fa-icon matPrefix *ngIf="step" [icon]="step.type | stepType: 'icon'" [style.color]="step.color" style="margin-right: 20px"></fa-icon>
 
     <mat-select (selectionChange)="onChange($event)">
         <mat-option *ngFor="let option of stepTemplates" [value]="option">
-            <fa-icon [icon]="option.faIcon" [style.color]="option.color" style="margin-right: 20px"></fa-icon>
+            <fa-icon [icon]="option.icon" [style.color]="option.color" style="margin-right: 20px"></fa-icon>
             <span>{{ option.title }}</span>
         </mat-option>
     </mat-select>

@@ -55,7 +55,7 @@
         "max-line-length": [
             true,
             {
-                "limit": 180,
+                "limit": 240,
                 "ignore-pattern": "^import |^export | implements"
             }
         ],
@@ -98,11 +98,7 @@
             true,
             "single"
         ],
-        "semicolon": {
-            "options": [
-                "always"
-            ]
-        },
+        "semicolon": false,
         "space-before-function-paren": {
             "options": {
                 "anonymous": "never",
@@ -155,16 +151,7 @@
             "allow-pascal-case",
             "allow-leading-underscore"
         ],
-        "whitespace": {
-            "options": [
-                "check-branch",
-                "check-decl",
-                "check-operator",
-                "check-separator",
-                "check-type",
-                "check-typecast"
-            ]
-        }
+        "whitespace": false
     },
     "rulesDirectory": [
         "codelyzer"

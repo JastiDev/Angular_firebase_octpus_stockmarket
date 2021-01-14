@@ -1,55 +1,49 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { Flow } from "app/classes/Flow";
-import { StepTemplate } from "app/classes/Step";
+import { Component, Input } from '@angular/core';
+import { IFlowStepType } from 'app/shared/interfaces/IFlow';
+import { Flow } from '../../../../shared/classes/flow';
 
 @Component({
-    selector: "diagram-plus",
-    templateUrl: "./plus.component.html",
-    styleUrls: ["./plus.component.scss"],
+    selector: 'diagram-plus',
+    templateUrl: './plus.component.html',
+    styleUrls: ['./plus.component.scss'],
 })
-export class PlusComponent implements OnInit {
+export class PlusComponent {
     @Input() isLast: boolean;
     @Input() stepId: number;
     @Input() flow: Flow;
 
-    active: boolean = false;
-    constructor() {}
-    ngOnInit(): void {}
+    active = false;
 
-    onDragEnter(event) {
-        let element: HTMLElement = event.target;
-        if (element.id === "droptarget") {
+    onDragEnter(event): void {
+        const element: HTMLElement = event.target;
+        if (element.id === 'droptarget') {
             this.active = true;
         }
     }
 
-    onDragLeave(event) {
-        let element: HTMLElement = event.target;
-        if (element.id === "droptarget") {
+    onDragLeave(event): void {
+        const element: HTMLElement = event.target;
+        if (element.id === 'droptarget') {
             this.active = false;
         }
     }
 
-    allowDrop(event: DragEvent) {
-        event.preventDefault();
-    }
-
-    onDrop(event: DragEvent) {
+    onDrop(event: DragEvent): void {
         event.preventDefault();
         this.active = false;
 
-        let dataType = event.dataTransfer.getData("dataType");
-        if (dataType === "template") {
-            let template = JSON.parse(event.dataTransfer.getData("dataValue"));
-            this.addByTemplate(template);
-        } else if (dataType === "stepId") {
-            let stepId = JSON.parse(event.dataTransfer.getData("dataValue"));
+        const dataType = event.dataTransfer.getData('dataType');
+        if (dataType === 'template') {
+            const type = JSON.parse(event.dataTransfer.getData('dataValue'));
+            this.addStep(type);
+        } else if (dataType === 'stepId') {
+            const stepId = JSON.parse(event.dataTransfer.getData('dataValue'));
 
-            this.flow.moveStep(stepId, this.stepId);
+            // this.flow.moveStep(stepId, this.stepId);
         }
     }
 
-    addByTemplate(template: StepTemplate) {
-        this.flow.addStep(template, this.stepId);
+    addStep(type: IFlowStepType): void {
+        this.flow.addStep(type, this.stepId);
     }
 }

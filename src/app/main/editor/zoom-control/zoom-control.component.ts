@@ -1,9 +1,9 @@
-import { Component, EventEmitter, Output, OnInit, Input } from "@angular/core";
+import { Component, EventEmitter, Output, OnInit, Input } from '@angular/core';
 
 @Component({
-    selector: "editor-zoom-control",
-    templateUrl: "./zoom-control.component.html",
-    styleUrls: ["./zoom-control.component.scss"],
+    selector: 'editor-zoom-control',
+    templateUrl: './zoom-control.component.html',
+    styleUrls: ['./zoom-control.component.scss'],
 })
 export class ZoomControlComponent implements OnInit {
     @Input() percent: number;

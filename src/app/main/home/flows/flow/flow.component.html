@@ -1,12 +1,11 @@
 <mat-card class="mt-12 card" style="display: flex; align-items: stretch; border: 1px solid lightgray; box-shadow: none">
-    <div (click)="onClickFlow()" style="flex: 1; display: flex; align-items: center; cursor: pointer">
-        <!-- <flows-icons [flow]="flow"></flows-icons> -->
+    <a href="#" [routerLink]="['/editor', flow._id]" style="flex: 1; display: flex; align-items: center; cursor: pointer">
         <strong>{{ flow.title }}</strong>
-    </div>
+    </a>
     <div style="margin-left: 50px; display: flex; align-items: center">
-        <mat-slide-toggle [checked]="flow.isOn" (change)="toggleChanged.emit($event.checked)"></mat-slide-toggle>
+        <mat-slide-toggle [checked]="flow.status === 'active'" (change)="flow.update({status: $event.checked ? 'active' : 'stopped'})"></mat-slide-toggle>
 
-        <div matTooltip="Details" matTooltipClass="mytooltip" class="info-button" (click)="onClickInfo()">
+        <div matTooltip="Details" matTooltipClass="mytooltip" class="info-button" (click)="action.emit(FlowAction.INFO)">
             <mat-icon>info</mat-icon>
         </div>
 
@@ -14,21 +13,21 @@
             <mat-icon>keyboard_arrow_down</mat-icon>
         </button>
 
-        <mat-menu #menu="matMenu" (closed)="span.innerText = 'Trash'">
+        <mat-menu #menu="matMenu">
             <div style="width: 250px">
-                <button mat-menu-item (click)="editClicked.emit()">
+                <button mat-menu-item (click)="action.emit(FlowAction.EDIT)">
                     <mat-icon>edit</mat-icon>
                     <span>Edit</span>
                 </button>
-                <button mat-menu-item (click)="renameClicked.emit()">
+                <button mat-menu-item (click)="action.emit(FlowAction.RENAME)">
                     <mat-icon>title</mat-icon>
                     <span>Rename</span>
                 </button>
-                <button mat-menu-item (click)="cloneClicked.emit()">
+                <button mat-menu-item (click)="action.emit(FlowAction.CLONE)">
                     <mat-icon>file_copy</mat-icon>
                     <span>Clone</span>
                 </button>
-                <button mat-menu-item (click)="onClickDelete($event, span)">
+                <button mat-menu-item (click)="action.emit(FlowAction.DELETE)">
                     <mat-icon>delete</mat-icon>
                     <span #span>Trash</span>
                 </button>

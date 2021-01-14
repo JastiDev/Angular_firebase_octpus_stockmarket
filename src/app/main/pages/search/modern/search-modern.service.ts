@@ -1,11 +1,11 @@
-import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import {
     ActivatedRouteSnapshot,
     Resolve,
     RouterStateSnapshot,
-} from "@angular/router";
-import { BehaviorSubject, Observable } from "rxjs";
+} from '@angular/router';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable()
 export class SearchModernService implements Resolve<any> {
@@ -45,7 +45,7 @@ export class SearchModernService implements Resolve<any> {
      */
     getSearchData(): Promise<any[]> {
         return new Promise((resolve, reject) => {
-            this._httpClient.get("api/search").subscribe((data: any) => {
+            this._httpClient.get('api/search').subscribe((data: any) => {
                 this.data = data;
                 this.dataOnChanged.next(this.data);
                 resolve(this.data);

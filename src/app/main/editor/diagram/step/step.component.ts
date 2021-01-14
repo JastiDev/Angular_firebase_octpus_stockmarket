@@ -1,32 +1,28 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { Step } from "app/classes/Step";
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { IFlowStep } from 'app/shared/interfaces/IFlow';
 
 @Component({
-    selector: "diagram-step",
-    templateUrl: "./step.component.html",
-    styleUrls: ["./step.component.scss"],
+    selector: 'diagram-step',
+    templateUrl: './step.component.html',
+    styleUrls: ['./step.component.scss'],
 })
-export class StepComponent implements OnInit {
-    @Input() step: Step;
+export class StepComponent {
+    @Input() step: IFlowStep;
     @Input() stepId: number;
     @Input() active: boolean;
     @Output() stepClicked = new EventEmitter<any>();
 
-    constructor() {}
-
-    ngOnInit(): void {}
-
-    onClickStep() {
+    onClickStep(): void {
         this.stepClicked.emit();
     }
 
-    onDragStart(event: DragEvent) {
-        let target: HTMLElement = <HTMLElement>event.target;
+    onDragStart(event: DragEvent): void {
+        const target: HTMLElement = event.target as HTMLElement;
 
-        let icon: Element = target.querySelector(".icon-circle");
+        const icon: Element = target.querySelector('.icon-circle');
 
         event.dataTransfer.setDragImage(icon, 0, 0);
-        event.dataTransfer.setData("dataType", "stepId");
-        event.dataTransfer.setData("dataValue", JSON.stringify(this.stepId));
+        event.dataTransfer.setData('dataType', 'stepId');
+        event.dataTransfer.setData('dataValue', JSON.stringify(this.stepId));
     }
 }
