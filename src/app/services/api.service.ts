@@ -28,7 +28,7 @@ export class ApiService {
 
   constructor(
     private auth: AngularFireAuth,
-      private http: HttpClient,
+    private http: HttpClient,
     private snackbar: MatSnackBar
   ) {}
 

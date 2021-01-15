@@ -23,7 +23,7 @@ export class RenameComponent {
     submit(): void{
         // TODO: invalid form show error
         if (this.form.invalid) {
-            this.snackbar.open("Invalid form data", "close", { horizontalPosition: "end", verticalPosition: "top", duration: 3000, panelClass: ["red-snackbar"] });
+            this.snackbar.open('Invalid form data', 'close', { horizontalPosition: 'end', verticalPosition: 'top', duration: 3000, panelClass: ['red-snackbar'] });
             return;
         }
 

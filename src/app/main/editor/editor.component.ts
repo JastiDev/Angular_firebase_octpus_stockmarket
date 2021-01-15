@@ -75,7 +75,7 @@ export class EditorComponent implements OnInit {
 
             if(!this.flow){
                 // TODO: handle error
-                this.snackbar.open("Strategy not found with id: " + flowId, "close", { horizontalPosition: "end", verticalPosition: "top", duration: 5000, panelClass: ["red-snackbar"] });
+                this.snackbar.open('Strategy not found with id: ' + flowId, 'close', { horizontalPosition: 'end', verticalPosition: 'top', duration: 5000, panelClass: ['red-snackbar'] });
                 this.router.navigate(['/home/strategies']);
                 return
             }
