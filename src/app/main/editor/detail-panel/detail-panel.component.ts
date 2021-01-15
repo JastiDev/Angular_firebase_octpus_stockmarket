@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { IFlowStep } from 'app/shared/interfaces/IFlow';
+import { IFlowStep, SIGNAL_TYPES } from 'app/shared/interfaces/IFlow';
 import { Flow } from '../../../shared/classes/flow';
 
 @Component({
@@ -9,6 +9,8 @@ import { Flow } from '../../../shared/classes/flow';
     styleUrls: ['./detail-panel.component.scss'],
 })
 export class DetailPanelComponent implements OnChanges {
+    signalTypes = SIGNAL_TYPES
+
     form?: FormGroup
     step?: IFlowStep
 
@@ -34,9 +36,21 @@ export class DetailPanelComponent implements OnChanges {
             this.form = this.fb.group({
                 ticker: [this.step.ticker, Validators.required],
                 ...this.step.type === 'signal'
-                ? { waitFor: [this.step.waitFor, Validators.required] }
+                ? {
+                    signalType: [this.step.signalType || SIGNAL_TYPES[0], Validators.required],
+                    signalValue: [this.step.signalValue || '', Validators.required]
+                }
                 : { amount: [this.step.amount, [Validators.required, Validators.pattern(/\d{1,}/), Validators.min(1), Validators.max(9999)]] }
             })
+
+            if(this.step.type){
+                this.form.get('signalType').valueChanges.subscribe(() => {
+                    this.form.get('signalValue').setValue('')
+                    this.form.get('signalValue').markAsPristine()
+                    this.form.get('signalValue').markAsUntouched()
+                })
+            }
+
         }
     }
 

@@ -31,11 +31,19 @@
                         <mat-error> amount is required </mat-error>
                     </mat-form-field>
                 </ng-container>
-                <ng-container *ngIf="form.get('waitFor')">
+                <ng-container *ngIf="form.get('signalType')">
                     <mat-form-field appearance="outline">
-                        <mat-label>Wait for (in seconds)</mat-label>
-                        <input autocomplete="off" matInput type="number" formControlName="waitFor" />
-                        <mat-error> Duration is required </mat-error>
+                        <mat-label>Signal Type</mat-label>
+                        <mat-select formControlName="signalType">
+                            <mat-option *ngFor="let type of signalTypes" [value]="type">{{type | signalType}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </ng-container>
+                <ng-container *ngIf="form.get('signalValue') && form.get('signalType')?.value">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{form.get('signalType').value | signalType}}</mat-label>
+                        <input autocomplete="off" matInput type="number" formControlName="signalValue" />
+                        <mat-error> This field is required </mat-error>
                     </mat-form-field>
                 </ng-container>
             </mat-card-content>
