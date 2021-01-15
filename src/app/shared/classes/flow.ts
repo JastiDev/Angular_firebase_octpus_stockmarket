@@ -84,8 +84,8 @@ export class Flow {
     return JSON.stringify(_.pick(this, ['_id', 'title', 'status', 'steps']))
   }
   
-  addChildToStep(id:number, childType: IFlowStepType): void { 
-    if (!this.steps[id].children) this.steps[id].children = [];
+  addChildToStep(id: number, childType: IFlowStepType): void { 
+    if (!this.steps[id].children) { this.steps[id].children = []; }
 
     const step: IFlowStep = {
       type: childType,

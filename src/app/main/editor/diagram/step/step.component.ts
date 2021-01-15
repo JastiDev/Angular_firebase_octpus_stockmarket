@@ -14,6 +14,8 @@ export class StepComponent {
     @Input() activeStepId: number;
     @Output() stepClicked = new EventEmitter<any>();
 
+    activeExpand = false;
+
     onClickStep(): void {
         this.stepClicked.emit();
     }
@@ -29,17 +31,16 @@ export class StepComponent {
     }
 
 
-    activeExpand = false;
     onDragEnter(event: any): void {
         const element: HTMLElement = event.target;
-        if (element.classList.contains("step-container")) { 
+        if (element.classList.contains('step-container')) { 
             this.activeExpand = true;
         }
     }
 
     onDragLeave(event: any): void {
         const element: HTMLElement = event.target;
-        if (element.classList.contains("step-container")) { 
+        if (element.classList.contains('step-container')) { 
             this.activeExpand = false;
         }
     }
