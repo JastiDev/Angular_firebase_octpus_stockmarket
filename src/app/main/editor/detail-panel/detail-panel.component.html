@@ -1,28 +1,28 @@
 <ng-template #loading>
     <!-- TODO: loader -->
-    <div class="text-center py-5">Loading..</div>
+    <mat-spinner color="accent"></mat-spinner>
 </ng-template>
 
 <div id="step-detail-panel" *ngIf="activeStepId > -1">
     <button mat-icon-button (click)="close()">
         <mat-icon>close</mat-icon>
     </button>
-    <mat-card style="border-radius: 6px" *ngIf="step else loading">
+    <mat-card style="border-radius: 6px" *ngIf="step; else loading">
         <form [formGroup]="form">
             <div style="display: flex; align-items: center">
                 <fa-icon size="2x" [icon]="step.type | stepType: 'icon'" [style.color]="step.type | stepType: 'color'"></fa-icon>
-    
+
                 <mat-form-field appearance="outline" style="margin-left: 10px; flex: 1">
                     <input matInput formControlName="ticker" />
                     <mat-icon matSuffix>edit</mat-icon>
                 </mat-form-field>
             </div>
-    
+
             <mat-card-subtitle>
-                <strong>{{ step.type | stepType: 'title' }} : </strong>
-                {{ step.type | stepType: 'description' }}
+                <strong>{{ step.type | stepType: "title" }} : </strong>
+                {{ step.type | stepType: "description" }}
             </mat-card-subtitle>
-    
+
             <mat-card-content>
                 <ng-container *ngIf="form.get('amount')">
                     <mat-form-field appearance="outline">
@@ -39,10 +39,10 @@
                     </mat-form-field>
                 </ng-container>
             </mat-card-content>
-    
-            <mat-card-footer style="display: flex; justify-content: flex-end;margin: 0;">
+
+            <mat-card-footer style="display: flex; justify-content: flex-end; margin: 0">
                 <button mat-raised-button color="warn" (click)="delete()">Delete</button>
-                <button mat-raised-button [disabled]="form.invalid" color="primary" style="margin-left: 1rem;" (click)="save()">Save</button>
+                <button mat-raised-button [disabled]="form.invalid" color="primary" style="margin-left: 1rem" (click)="save()">Save</button>
             </mat-card-footer>
         </form>
     </mat-card>

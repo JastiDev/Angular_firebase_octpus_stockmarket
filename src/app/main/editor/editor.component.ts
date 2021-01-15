@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DetailsComponent } from '../home/flows/details/details.component';
 import { Router } from '@angular/router';
 import { Flow } from '../../shared/classes/flow';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 declare const EasyPZ;
 
@@ -34,7 +35,8 @@ export class EditorComponent implements OnInit {
         private router: Router,
         private flowsService: FlowsService,
         private location: Location,
-        public dialog: MatDialog
+        public dialog: MatDialog,
+        private snackbar: MatSnackBar
     ) {
         // Configure the layout
         this._fuseConfigService.config = {
@@ -68,10 +70,13 @@ export class EditorComponent implements OnInit {
                 return
             }
 
-            this.flow = await this.flowsService.getFlow(paramMap.get('flowId'))
+            const flowId = paramMap.get('flowId');
+            this.flow = await this.flowsService.getFlow(flowId);
 
             if(!this.flow){
                 // TODO: handle error
+                this.snackbar.open("Strategy not found with id: " + flowId, "close", { horizontalPosition: "end", verticalPosition: "top", duration: 5000, panelClass: ["red-snackbar"] });
+                this.router.navigate(['/home/strategies']);
                 return
             }
 
