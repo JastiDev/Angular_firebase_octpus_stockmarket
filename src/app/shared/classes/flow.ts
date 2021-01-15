@@ -83,4 +83,18 @@ export class Flow {
   toJSON(): string{
     return JSON.stringify(_.pick(this, ['_id', 'title', 'status', 'steps']))
   }
+  
+  addChildToStep(id:number, childType: IFlowStepType): void { 
+    if (!this.steps[id].children) this.steps[id].children = [];
+
+    const step: IFlowStep = {
+      type: childType,
+      ticker: '',
+      state: 'waiting'
+    }
+    this.steps[id].children.push(step)
+    
+    this.unsavedChanges = true
+  }
+
 }

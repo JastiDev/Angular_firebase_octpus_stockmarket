@@ -8,6 +8,7 @@ export interface IFlowStep {
   waitFor?: number
   createdAt?: Date
   executedAt?: Date
+  children?: IFlowStep[]
 }
 
 export interface IFlow {

@@ -14,7 +14,8 @@ export class DiagramComponent {
     fafa = fafa;
 
     handleClickStep(id: number): void {
-        if (this.activeStepId === id) { this.setActiveStepId.next(-1); }
-        else { this.setActiveStepId.next(id); }
+        // if (this.activeStepId === id) { this.setActiveStepId.next(-1); }
+        // else 
+        this.setActiveStepId.next(id);        
     }
 }

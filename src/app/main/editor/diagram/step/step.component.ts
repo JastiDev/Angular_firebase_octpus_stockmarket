@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { IFlowStep } from 'app/shared/interfaces/IFlow';
+import { Flow } from 'app/shared/classes/flow';
+import { IFlowStep, IFlowStepType } from 'app/shared/interfaces/IFlow';
 
 @Component({
     selector: 'diagram-step',
@@ -7,9 +8,10 @@ import { IFlowStep } from 'app/shared/interfaces/IFlow';
     styleUrls: ['./step.component.scss'],
 })
 export class StepComponent {
+    @Input() flow: Flow;
     @Input() step: IFlowStep;
     @Input() stepId: number;
-    @Input() active: boolean;
+    @Input() activeStepId: number;
     @Output() stepClicked = new EventEmitter<any>();
 
     onClickStep(): void {
@@ -24,5 +26,35 @@ export class StepComponent {
         event.dataTransfer.setDragImage(icon, 0, 0);
         event.dataTransfer.setData('dataType', 'stepId');
         event.dataTransfer.setData('dataValue', JSON.stringify(this.stepId));
+    }
+
+
+    activeExpand = false;
+    onDragEnter(event: any): void {
+        const element: HTMLElement = event.target;
+        if (element.classList.contains("step-container")) { 
+            this.activeExpand = true;
+        }
+    }
+
+    onDragLeave(event: any): void {
+        const element: HTMLElement = event.target;
+        if (element.classList.contains("step-container")) { 
+            this.activeExpand = false;
+        }
+    }
+    
+    onDrop(event: DragEvent): void {
+        event.preventDefault();
+        this.stepClicked.emit();
+        this.activeExpand = false;
+        const dataType = event.dataTransfer.getData('dataType');
+        if (dataType === 'template') {
+            const type: IFlowStepType = JSON.parse(event.dataTransfer.getData('dataValue'));
+            this.flow.addChildToStep(this.stepId, type);
+        } else if (dataType === 'stepId') {
+            const stepId = JSON.parse(event.dataTransfer.getData('dataValue'));
+            // this.flow.moveStep(stepId, this.stepId);
+        }
     }
 }

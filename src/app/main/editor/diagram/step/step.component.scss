@@ -1,16 +1,91 @@
+
+@mixin on-circle($item-count, $circle-size, $item-size) {
+    position: relative;
+    width:  $circle-size;
+    height: $circle-size;
+    padding: 0;
+    border-radius: 50%; 
+    list-style: none;       
+    
+    .circle-child {
+        position: absolute;
+        top:  50%; 
+        left: 50%;
+        user-select: none;
+        pointer-events: none;
+        border-radius: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 0 0;
+
+        width:  $item-size;
+        height: $item-size;
+        margin: -($item-size / 2);
+
+        $angle: (360 / $item-count);
+        $rot: 0;
+    
+        @for $i from 1 through $item-count {
+            &:nth-of-type(#{$i+1}) {
+            transform: 
+                rotate($rot * 1deg) 
+                translate($circle-size / 2) 
+                rotate($rot * -1deg);
+            }
+    
+            $rot: $rot + $angle;
+        }
+    }
+}
+
+
 .step-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    opacity: 0.3;
+    width: 80px;
+    height: 80px;
+    
+    transition-property: width, height;
+    transition-timing-function: ease-in-out;
+    transition-duration: 600ms;
+    // transition-delay: 500ms;
 
+    .circle-child {
+        display: none;
+    }
+
+    &.active{
+        opacity: 1;
+    }
+    
+    &.activeExpand {
+        @include on-circle($item-count: 12, $circle-size: 120px, $item-size: 30px); 
+        width: 160px;
+        height: 160px;
+        .circle-child {
+            display: flex;
+        }
+    }
+    
+
+    span{
+        user-select: none;
+        pointer-events: none;
+    }
+    
     .icon-circle {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        cursor: pointer;
+        user-select: none;
+        pointer-events: none;
         border-radius: 50%;
         font-size: larger;
         width: 50px;
@@ -29,4 +104,9 @@
         color: white;
         background-color: blue;
     }
+
+    .children-count {
+        font-size: smaller;
+    }
 }
+
