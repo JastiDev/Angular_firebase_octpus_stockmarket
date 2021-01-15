@@ -146,4 +146,15 @@
         background-color: white;
         border-radius: 10px;
     }
+
+    .unsaved-text {
+        font-size: small;
+        color: grey;
+        font-style: italic;
+    }
+
+    .save-button {
+        margin-left: 10px;
+        margin-right: 50px;
+    }
 }

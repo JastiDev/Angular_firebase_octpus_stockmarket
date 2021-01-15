@@ -1,10 +1,16 @@
 <div
     class="step-container"
-    [ngStyle]="{
-        opacity: active ? 1 : 0.3
+    [ngClass]="{
+        stepContainer: true,
+        active: (activeStepId==stepId || activeStepId==-1),
+        activeExpand: activeExpand || (activeStepId==stepId && step.children)
     }"
     (click)="onClickStep()"
     (dragstart)="onDragStart($event)"
+    (dragover)="$event.preventDefault()"
+    (dragenter)="onDragEnter($event)"
+    (dragleave)="onDragLeave($event)"
+    (drop)="onDrop($event)"
     draggable="true"
 >
     <mat-card
@@ -16,10 +22,30 @@
         }"
     >
         <fa-icon [icon]="step.type | stepType: 'icon'"></fa-icon>
+        <label class="children-count">{{step.children?.length || ""}}</label>
     </mat-card>
 
     <strong style="color: blue; word-break: break-all">
         {{ step.ticker }}
     </strong>
     <span style="font-size: small">{{ step.type | stepType: 'title' }}</span>
+
+
+    <ng-container *ngFor="let child of step.children">
+        <mat-card 
+            class="circle-child"
+            [ngClass]="{
+                'icon-buy': child.type === 'buy',
+                'icon-sell': child.type === 'sell',
+                'icon-signal': child.type === 'signal'
+            }"
+        >
+            <fa-icon [icon]="child.type | stepType: 'icon'" [color]="child.color">
+            </fa-icon>
+        </mat-card>
+        
+    </ng-container>
+        
+    
 </div>
+

@@ -6,6 +6,7 @@ import { catchError, map } from 'rxjs/operators';
 import { IFlow } from '../shared/interfaces/IFlow';
 import { throwError, Observable } from 'rxjs';
 import { IAccount } from '../shared/interfaces/IAccount'
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 enum HttpMethod{
   GET,
@@ -27,7 +28,8 @@ export class ApiService {
 
   constructor(
     private auth: AngularFireAuth,
-    private http: HttpClient
+    private http: HttpClient,
+    private snackbar: MatSnackBar
   ) {}
 
   private async getHeaders(): Promise<Record<string, string>>{
@@ -38,8 +40,8 @@ export class ApiService {
 
     if(!this.tokenId){
       // TODO: display this
-      console.error('You are not authorized')
-      return
+      this.snackbar.open('You are not authorized', 'close', { horizontalPosition: 'end', verticalPosition: 'top', duration: 3000, panelClass: ['red-snackbar'] });
+      return;
     }
 
     return {
@@ -52,7 +54,7 @@ export class ApiService {
 
     if(msg){
       // TODO: display this
-      console.error(`Error: ${msg}`)
+      this.snackbar.open(`Error: ${msg}`, 'close', { horizontalPosition: 'end', verticalPosition: 'top', duration: 3000, panelClass: ['red-snackbar'] });
     }
 
     return throwError(msg)
@@ -61,7 +63,7 @@ export class ApiService {
   private mapResponse<T>({message, data}: HttpResponse<T>): T {
     if(message){
       // TODO: display this
-      console.log(message)
+      this.snackbar.open(message, 'close', { horizontalPosition: 'end', verticalPosition: 'top', duration: 3000, panelClass: ['red-snackbar'] });
     }
 
     return data

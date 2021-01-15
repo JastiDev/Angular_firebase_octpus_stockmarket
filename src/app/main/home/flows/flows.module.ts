@@ -14,6 +14,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import { RenameComponent } from './rename/rename.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -43,7 +44,8 @@ const routes: Routes = [{ path: 'strategies', canActivate: [AuthGuard], componen
         MatFormFieldModule,
         MatInputModule,
         MatTooltipModule,
-
+        MatProgressBarModule,
+        
         FontAwesomeModule,
     ],
 })

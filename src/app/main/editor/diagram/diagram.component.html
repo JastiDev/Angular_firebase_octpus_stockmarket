@@ -10,10 +10,12 @@
         ></diagram-plus>
 
         <diagram-step
+            [flow]="flow"
             [stepId]="id"
             [step]="step"
-            [active]="activeStepId == id || activeStepId == -1"
+            [activeStepId]="activeStepId"
             (stepClicked)="handleClickStep(id)"
+            (childDropped)="handleDropChild(id, $event)"
         >
         </diagram-step>
     </ng-container>

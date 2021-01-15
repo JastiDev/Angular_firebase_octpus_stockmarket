@@ -11,6 +11,7 @@ export interface IFlowStep {
   executedAt?: Date
   signalType?: 'price_below' | 'price_above' | 'wait_seconds'
   signalValue?: number
+  children?: IFlowStep[]
 }
 
 export interface IFlow {

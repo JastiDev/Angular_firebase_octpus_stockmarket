@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { IFlowStep, SIGNAL_TYPES } from 'app/shared/interfaces/IFlow';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Flow } from '../../../shared/classes/flow';
 
 @Component({
@@ -20,7 +21,8 @@ export class DetailPanelComponent implements OnChanges {
     @Output() deleteClicked = new EventEmitter<any>();
 
     constructor(
-        private fb: FormBuilder
+        private fb: FormBuilder,
+        private snackbar: MatSnackBar
     ){}
 
     ngOnChanges(changes): void {
@@ -65,7 +67,8 @@ export class DetailPanelComponent implements OnChanges {
 
     save(): void {
         // TODO: handle error
-        if(this.form.invalid){
+        if (this.form.invalid) {
+            this.snackbar.open('Invalid form data', 'close', { horizontalPosition: 'end', verticalPosition: 'top', duration: 3000, panelClass: ['red-snackbar'] });
             return
         }
 

@@ -5,12 +5,31 @@
 @import "app/app.theme";
 
 .my-container {
-    max-width: 1024px;
-    width: 100%;
-    margin: 0 auto;
+  max-width: 1024px;
+  width: 100%;
+  margin: 0 auto;
 }
 
 .mytooltip {
-    color: white;
-    font-size: medium;
+  color: white;
+  font-size: medium;
+}
+
+.green-snackbar {
+  background-color: green !important;
+  color: white !important;
+}
+.green-snackbar button {
+  background-color: green !important;
+  color: white !important;
+  border: none;
+}
+.red-snackbar {
+  background-color: darkred !important;
+  color: white !important;
+}
+.red-snackbar button {
+  background-color: darkred !important;
+  color: white !important;
+  border: none;
 }

@@ -1,6 +1,6 @@
 <!-- TODO loader -->
 <ng-template #loading>
-    Loading...
+    <mat-spinner color="accent"></mat-spinner>
 </ng-template>
 
 <div class="page-layout simple p-24">
@@ -10,33 +10,36 @@
         <!-- / HEADER -->
 
         <!-- CONTENT -->
-        <div class="content p-24" *ngIf="account else loading">
+        <div class="content p-24" *ngIf="account; else loading">
             <mat-card [style]="{ width: 'fit-content' }" class="p-24" *ngFor="let app of account.apps">
                 <mat-card-title style="display: flex; align-items: center">
                     <img src="assets/images/alpaca.jpeg" class="app-img" />
                     <span>Alpaca API</span>
-
-                    <button (click)="save()">Save</button>
+                    <div style="flex: 1"></div>
+                    <button mat-stroked-button (click)="save()" color="accent">
+                        <mat-icon>save</mat-icon>
+                        Save
+                    </button>
                 </mat-card-title>
                 <mat-card-content>
                     <div style="display: flex; justify-content: center; margin-top: 50px">
                         <mat-form-field appearance="outline" [style]="{ width: '400px' }">
                             <mat-label>BASE_URL</mat-label>
-                            <input matInput value="{{app.baseUrl}}" />
+                            <input matInput value="{{ app.baseUrl }}" />
                             <mat-error> Base url is required </mat-error>
                         </mat-form-field>
                     </div>
                     <div style="display: flex; justify-content: center">
                         <mat-form-field appearance="outline" [style]="{ width: '400px' }">
                             <mat-label>KEY_ID</mat-label>
-                            <input matInput value="{{app.key}}" />
+                            <input matInput value="{{ app.key }}" />
                             <mat-error> Key id is required </mat-error>
                         </mat-form-field>
                     </div>
                     <div style="display: flex; justify-content: center">
                         <mat-form-field appearance="outline" [style]="{ width: '400px' }">
                             <mat-label>SECRET_KEY</mat-label>
-                            <input matInput value="{{app.secret}}" />
+                            <input matInput value="{{ app.secret }}" />
                             <mat-error> Secret key is required </mat-error>
                         </mat-form-field>
                     </div>
