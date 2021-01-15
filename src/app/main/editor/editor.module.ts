@@ -25,6 +25,7 @@ import { PlusComponent } from './diagram/plus/plus.component';
 import { ZoomControlComponent } from './zoom-control/zoom-control.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { SharedModule } from '../../shared/shared.module';
+import { MatSelectModule } from '@angular/material/select';
 
 const routes: Routes = [
     {
@@ -54,9 +55,8 @@ const routes: Routes = [
         MatFormFieldModule,
         MatInputModule,
         MatToolbarModule,
-        MatFormFieldModule,
-        MatInputModule,
         MatTooltipModule,
+        MatSelectModule
     ],
 })
 export class EditorModule {}
