@@ -9,36 +9,35 @@
     </button>
     <mat-card style="border-radius: 6px" *ngIf="step; else loading">
         <form [formGroup]="form">
-            <div style="display: flex; align-items: center">
+            <div style="margin: 20px 10px; display: flex; align-items: center">
                 <fa-icon size="2x" [icon]="step.type | stepType: 'icon'" [style.color]="step.type | stepType: 'color'"></fa-icon>
-
-                <mat-form-field appearance="outline" style="margin-left: 10px; flex: 1">
-                    <input matInput formControlName="ticker" />
-                    <mat-icon matSuffix>edit</mat-icon>
-                </mat-form-field>
+                <strong style="color: grey; margin-left: 20px">{{ step.type | stepType: "title" }}</strong>
             </div>
 
             <mat-card-subtitle>
-                <strong>{{ step.type | stepType: "title" }} : </strong>
                 {{ step.type | stepType: "description" }}
             </mat-card-subtitle>
 
-            <mat-card-content>
-                <ng-container *ngIf="form.get('amount')">
-                    <mat-form-field appearance="outline">
-                        <mat-label>Amount (# of stocks)</mat-label>
-                        <input autocomplete="off" matInput type="number" formControlName="amount" />
-                        <mat-error> amount is required </mat-error>
-                    </mat-form-field>
-                </ng-container>
-                <ng-container *ngIf="form.get('waitFor')">
-                    <mat-form-field appearance="outline">
-                        <mat-label>Wait for (in seconds)</mat-label>
-                        <input autocomplete="off" matInput type="number" formControlName="waitFor" />
-                        <mat-error> Duration is required </mat-error>
-                    </mat-form-field>
-                </ng-container>
-            </mat-card-content>
+            <mat-form-field appearance="outline">
+                <mat-label>Title</mat-label>
+                <input matInput formControlName="ticker" />
+                <mat-icon matSuffix>edit</mat-icon>
+            </mat-form-field>
+
+            <ng-container *ngIf="form.get('amount')">
+                <mat-form-field appearance="outline">
+                    <mat-label>Amount (# of stocks)</mat-label>
+                    <input autocomplete="off" matInput type="number" formControlName="amount" />
+                    <mat-error> amount is required </mat-error>
+                </mat-form-field>
+            </ng-container>
+            <ng-container *ngIf="form.get('waitFor')">
+                <mat-form-field appearance="outline">
+                    <mat-label>Wait for (in seconds)</mat-label>
+                    <input autocomplete="off" matInput type="number" formControlName="waitFor" />
+                    <mat-error> Duration is required </mat-error>
+                </mat-form-field>
+            </ng-container>
 
             <mat-card-footer style="display: flex; justify-content: flex-end; margin: 0">
                 <button mat-raised-button color="warn" (click)="delete()">Delete</button>

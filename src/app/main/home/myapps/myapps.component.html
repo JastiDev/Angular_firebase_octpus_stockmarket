@@ -15,8 +15,11 @@
                 <mat-card-title style="display: flex; align-items: center">
                     <img src="assets/images/alpaca.jpeg" class="app-img" />
                     <span>Alpaca API</span>
-
-                    <button (click)="save()">Save</button>
+                    <div style="flex: 1"></div>
+                    <button mat-stroked-button (click)="save()" color="accent">
+                        <mat-icon>save</mat-icon>
+                        Save
+                    </button>
                 </mat-card-title>
                 <mat-card-content>
                     <div style="display: flex; justify-content: center; margin-top: 50px">

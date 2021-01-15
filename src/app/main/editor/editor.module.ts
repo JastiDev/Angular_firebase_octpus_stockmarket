@@ -17,6 +17,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import { StepsPanelComponent } from './steps-panel/steps-panel.component';
 import { DetailPanelComponent } from './detail-panel/detail-panel.component';
@@ -58,7 +59,8 @@ const routes: Routes = [
         MatFormFieldModule,
         MatInputModule,
         MatTooltipModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        MatProgressBarModule
     ],
 })
 export class EditorModule {}
