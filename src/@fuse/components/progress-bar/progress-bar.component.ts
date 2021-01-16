@@ -1,20 +1,20 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from "@angular/core";
-import { Subject } from "rxjs";
-import { takeUntil } from "rxjs/operators";
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
-import { FuseProgressBarService } from "@fuse/components/progress-bar/progress-bar.service";
+import { FuseProgressBarService } from '@fuse/components/progress-bar/progress-bar.service';
 
 @Component({
-    selector: "fuse-progress-bar",
-    templateUrl: "./progress-bar.component.html",
-    styleUrls: ["./progress-bar.component.scss"],
+    selector: 'fuse-progress-bar',
+    templateUrl: './progress-bar.component.html',
+    styleUrls: ['./progress-bar.component.scss'],
     encapsulation: ViewEncapsulation.None,
 })
 export class FuseProgressBarComponent implements OnInit, OnDestroy {
     bufferValue: number;
-    mode: "determinate" | "indeterminate" | "buffer" | "query";
+    mode: 'determinate' | 'indeterminate' | 'buffer' | 'query';
     value: number;
-    visible: boolean = true;
+    visible = true;
 
     // Private
     private _unsubscribeAll: Subject<any>;

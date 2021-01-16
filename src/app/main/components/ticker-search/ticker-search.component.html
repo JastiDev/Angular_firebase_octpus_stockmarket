@@ -1,0 +1,10 @@
+<mat-form-field appearance="outline" style="width: 100%">
+    <mat-label>Ticker</mat-label>
+    <input matInput type="text" placeholder="search ticker" [matAutocomplete]="auto" [formControl]="searchControl" />
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [panelWidth]="'400px'">
+        <mat-option *ngIf="isLoading">Loading...</mat-option>
+        <ng-container *ngIf="!isLoading">
+            <mat-option *ngFor="let ticker of filteredArr" [value]="ticker.symbol"> {{ ticker.symbol }}, {{ ticker.name }} </mat-option>
+        </ng-container>
+    </mat-autocomplete>
+</mat-form-field>

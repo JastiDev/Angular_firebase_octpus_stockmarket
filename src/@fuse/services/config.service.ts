@@ -1,15 +1,15 @@
-import { Inject, Injectable, InjectionToken } from "@angular/core";
-import { ResolveEnd, Router } from "@angular/router";
-import { Platform } from "@angular/cdk/platform";
-import { BehaviorSubject, Observable } from "rxjs";
-import { filter } from "rxjs/operators";
-import * as _ from "lodash";
+import { Inject, Injectable, InjectionToken } from '@angular/core';
+import { ResolveEnd, Router } from '@angular/router';
+import { Platform } from '@angular/cdk/platform';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { filter } from 'rxjs/operators';
+import * as _ from 'lodash';
 
 // Create the injection token for the custom settings
-export const FUSE_CONFIG = new InjectionToken("fuseCustomConfig");
+export const FUSE_CONFIG = new InjectionToken('fuseCustomConfig');
 
 @Injectable({
-    providedIn: "root",
+    providedIn: 'root',
 })
 export class FuseConfigService {
     // Private
@@ -79,7 +79,7 @@ export class FuseConfigService {
             this._defaultConfig.customScrollbars = false;
         }
 
-        this._defaultConfig.layout.toolbar.position = "above";
+        this._defaultConfig.layout.toolbar.position = 'above';
 
         // Set the config from the default config
         this._configSubject = new BehaviorSubject(_.cloneDeep(this._defaultConfig));

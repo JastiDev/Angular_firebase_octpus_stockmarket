@@ -11,13 +11,13 @@
         <form [formGroup]="form">
             <div style="margin: 20px 10px; display: flex; align-items: center">
                 <fa-icon size="2x" [icon]="step.type | stepType: 'icon'" [style.color]="step.type | stepType: 'color'"></fa-icon>
-                <strong style="color: grey; margin-left: 20px">{{ step.type | stepType: "title" }}</strong>
+                <strong style="color: grey; margin-left: 20px">{{ step.type | stepType: 'title' }}</strong>
             </div>
 
             <mat-card-subtitle>
-                {{ step.type | stepType: "description" }}
+                {{ step.type | stepType: 'description' }}
             </mat-card-subtitle>
-    
+
             <mat-card-content>
                 <mat-form-field appearance="outline">
                     <mat-label>Title</mat-label>
@@ -35,20 +35,22 @@
                     <mat-form-field appearance="outline">
                         <mat-label>Signal Type</mat-label>
                         <mat-select formControlName="signalType">
-                            <mat-option *ngFor="let type of signalTypes" [value]="type">{{type | signalType}}</mat-option>
+                            <mat-option *ngFor="let type of signalTypes" [value]="type">{{ type | signalType }}</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </ng-container>
                 <ng-container *ngIf="form.get('signalValue') && form.get('signalType')?.value">
                     <mat-form-field appearance="outline">
-                        <mat-label>{{form.get('signalType').value | signalType}}</mat-label>
+                        <mat-label>{{ form.get('signalType').value | signalType }}</mat-label>
                         <input autocomplete="off" matInput type="number" formControlName="signalValue" />
                         <mat-error> This field is required </mat-error>
                     </mat-form-field>
                 </ng-container>
+
+                <main-ticker-search style="width: 100%"></main-ticker-search>
             </mat-card-content>
-    
-            <mat-card-footer style="display: flex; justify-content: flex-end;margin: 0;">
+
+            <mat-card-footer style="display: flex; justify-content: flex-end; margin: 0">
                 <button mat-raised-button color="warn" (click)="delete()">Delete</button>
                 <button mat-raised-button [disabled]="form.invalid" color="primary" style="margin-left: 1rem" (click)="save()">Save</button>
             </mat-card-footer>

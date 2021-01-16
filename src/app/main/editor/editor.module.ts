@@ -5,6 +5,9 @@ import { EditorComponent } from './editor.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
+import { TickerSearchModule } from 'app/main/components/ticker-search/ticker-search.module';
+
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
@@ -46,6 +49,8 @@ const routes: Routes = [
         ReactiveFormsModule,
         FontAwesomeModule,
 
+        TickerSearchModule,
+
         MatCardModule,
         MatListModule,
         MatButtonModule,
@@ -60,7 +65,7 @@ const routes: Routes = [
         MatTooltipModule,
         MatSelectModule,
         MatProgressSpinnerModule,
-        MatProgressBarModule
+        MatProgressBarModule,
     ],
 })
 export class EditorModule {}
