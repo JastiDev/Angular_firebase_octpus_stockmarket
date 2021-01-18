@@ -2,78 +2,66 @@ import { Injectable } from '@angular/core';
 import { IFlow } from 'app/shared/interfaces/IFlow';
 import { Subject } from 'rxjs';
 import { ApiService } from './api.service';
-import * as _ from 'lodash'
-import { Flow } from '../shared/classes/flow';
+import * as _ from 'lodash';
 
 @Injectable({
     providedIn: 'root',
 })
 export class FlowsService {
-    flows: Flow[];
-    flows$ = new Subject<Flow[]>();
+    flows: IFlow[];
+    flows$ = new Subject<IFlow[]>();
 
-    constructor(
-        private apiService: ApiService
-    ) {}
+    constructor(private apiService: ApiService) {}
 
-    private next(data?: Flow | Flow[]): void{
-        if(data){
-            if(Array.isArray(data)){
-                this.flows = data
-            }else{
-                this.flows = (this.flows || []).concat(data)
+    private next(data?: IFlow | IFlow[]): void {
+        if (data) {
+            if (Array.isArray(data)) {
+                this.flows = data;
+            } else {
+                this.flows = (this.flows || []).concat(data);
             }
         }
 
-        this.flows$.next(this.flows)
+        this.flows$.next(this.flows);
     }
 
-    async fetchFlows(): Promise<void>{
-        const rawFlows = await this.apiService.getFlows()
-        
-        this.next(rawFlows.map(v => new Flow(v, this.apiService)))
+    async fetchFlows(): Promise<void> {
+        const flows = await this.apiService.getFlows();
+        this.next(flows);
     }
 
-    async createFlow(data: IFlow): Promise<Flow>{
-        const rawFlow = await this.apiService.createFlow(data)
-        const flow = new Flow(rawFlow, this.apiService)
+    async createFlow(data: IFlow): Promise<IFlow> {
+        const flow = await this.apiService.createFlow(data);
+        this.next(flow);
 
-        this.next(flow)
-
-        return flow
+        return flow;
     }
 
-    async updateFlow(_id: string, data: Partial<IFlow>): Promise<Flow> {
-        const updatedFlow = new Flow(
-            await this.apiService.updateFlow(_id, data),
-            this.apiService
-        )
+    async updateFlow(_id: string, data: Partial<IFlow>): Promise<IFlow> {
+        const updatedFlow = await this.apiService.updateFlow(_id, data);
 
-        this.next(this.flows.map(f => f._id === _id ? f : updatedFlow))
+        this.next(this.flows.map((f) => (f._id === _id ? f : updatedFlow)));
 
-        return updatedFlow
+        return updatedFlow;
     }
 
     async deleteFlow(_id: string): Promise<void> {
-        await this.apiService.deleteFlow(_id)
+        await this.apiService.deleteFlow(_id);
 
-        this.next(this.flows.filter(f => f._id !== _id))
+        this.next(this.flows.filter((f) => f._id !== _id));
     }
 
-    async getFlow(_id: string): Promise<Flow> {
-        const localFlow = _.find(this.flows, {_id})
+    async getFlow(_id: string): Promise<IFlow> {
+        const localFlow = _.find(this.flows, { _id });
 
-        if(localFlow){
-            return Promise.resolve(localFlow)
+        if (localFlow) {
+            return Promise.resolve(localFlow);
         }
 
-        const flow = new Flow(
-            await this.apiService.getFlow(_id),
-            this.apiService
-        )
+        const flow = await this.apiService.getFlow(_id);
 
-        this.next(flow)
+        this.next(flow);
 
-        return flow
+        return flow;
     }
 }

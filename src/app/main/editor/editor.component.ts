@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Location } from '@angular/common';
 import { FuseConfigService } from '@fuse/services/config.service';
@@ -6,8 +6,10 @@ import { FlowsService } from 'app/services/flows.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DetailsComponent } from '../home/flows/details/details.component';
 import { Router } from '@angular/router';
-import { Flow } from '../../shared/classes/flow';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { FlowService } from 'app/services/flow.service';
+import { Subscription } from 'rxjs';
+import { IFlow } from 'app/shared/interfaces/IFlow';
 
 declare const EasyPZ;
 
@@ -16,18 +18,15 @@ declare const EasyPZ;
     templateUrl: './editor.component.html',
     styleUrls: ['./editor.component.scss'],
 })
-export class EditorComponent implements OnInit {
-    flow: Flow;
-
-    flowId: number;
-
+export class EditorComponent implements OnInit, OnDestroy {
     easypz;
-
-    activeStepId = -1;
-
     translateX = -7500;
     translateY = -7500;
     scale = 1;
+
+    flow: IFlow;
+    flowId: string;
+    subsFlow: Subscription;
 
     constructor(
         private _fuseConfigService: FuseConfigService,
@@ -36,7 +35,8 @@ export class EditorComponent implements OnInit {
         private flowsService: FlowsService,
         private location: Location,
         public dialog: MatDialog,
-        private snackbar: MatSnackBar
+        private snackbar: MatSnackBar,
+        public flowService: FlowService
     ) {
         // Configure the layout
         this._fuseConfigService.config = {
@@ -59,47 +59,52 @@ export class EditorComponent implements OnInit {
 
     ngOnInit(): void {
         this.activatedRoute.paramMap.subscribe(async (paramMap: ParamMap) => {
-            if(!paramMap.has('flowId')){
+            if (!paramMap.has('flowId')) {
                 const newFlow = await this.flowsService.createFlow({
                     title: 'New Strategy',
                     steps: [],
-                    status: 'stopped'
-                })
+                    status: 'stopped',
+                });
 
-                this.router.navigate(['/editor', newFlow._id])
-                return
+                this.router.navigate(['/editor', newFlow._id]);
+                return;
             }
 
             const flowId = paramMap.get('flowId');
-            this.flow = await this.flowsService.getFlow(flowId);
+            const flow = await this.flowsService.getFlow(flowId);
 
-            if(!this.flow){
+            if (!flow) {
                 // TODO: handle error
                 this.snackbar.open('Strategy not found with id: ' + flowId, 'close', { horizontalPosition: 'end', verticalPosition: 'top', duration: 5000, panelClass: ['red-snackbar'] });
                 this.router.navigate(['/home/strategies']);
-                return
+                return;
             }
+
+            this.flowService.setFlow(flowId, flow);
 
             setTimeout(() => {
                 this.makeEasyPZ();
             }, 4);
         });
+
+        this.subsFlow = this.flowService.flow$.subscribe(({ flowId, flow }) => {
+            this.flowId = flowId;
+            this.flow = flow;
+        });
+    }
+
+    ngOnDestroy(): void {
+        this.subsFlow.unsubscribe();
     }
 
     goBack(): void {
         this.location.back();
     }
-    setActiveStepId(id: number): void {
-        this.activeStepId = id;
-    }
 
     onClickPanContainer(event): void {
-        if (event.target.id.slice(0, 3) === 'pan') { this.setActiveStepId(-1); }
-    }
-
-    deleteActiveStep(): void {
-        this.flow.deleteStep(this.activeStepId);
-        this.setActiveStepId(-1);
+        if (event.target.id.slice(0, 3) === 'pan') {
+            this.flowService.setActiveStep(-1, null);
+        }
     }
 
     initTransform(): void {
@@ -114,7 +119,9 @@ export class EditorComponent implements OnInit {
 
     makeEasyPZ(): void {
         this.initTransform();
-        if (this.easypz) { this.easypz.removeHostListeners(); }
+        if (this.easypz) {
+            this.easypz.removeHostListeners();
+        }
 
         const onTransform = (transform: { scale: number; translateX: number; translateY: number }) => {};
 
@@ -146,8 +153,12 @@ export class EditorComponent implements OnInit {
             }
         ) => {
             let scale = this.scale * zoomData.scaleChange;
-            if (scale > 1.75) { scale = 1.75; }
-            if (scale < 0.25) { scale = 0.25; }
+            if (scale > 1.75) {
+                scale = 1.75;
+            }
+            if (scale < 0.25) {
+                scale = 0.25;
+            }
             this.scale = scale;
         };
 
@@ -175,13 +186,17 @@ export class EditorComponent implements OnInit {
 
     zoomPlus(): void {
         let scale = this.scale + 0.25;
-        if (scale > 1.75) { scale = 1.75; }
+        if (scale > 1.75) {
+            scale = 1.75;
+        }
         this.scale = scale;
     }
 
     zoomMinus(): void {
         let scale = this.scale - 0.25;
-        if (scale < 0.25) { scale = 0.25; }
+        if (scale < 0.25) {
+            scale = 0.25;
+        }
         this.scale = scale;
     }
 
@@ -191,7 +206,7 @@ export class EditorComponent implements OnInit {
 
     openDetailsDialog(): void {
         this.dialog.open(DetailsComponent, {
-            data: this.flow
-        })
+            data: this.flow,
+        });
     }
 }

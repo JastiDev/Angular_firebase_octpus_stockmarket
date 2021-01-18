@@ -18,7 +18,6 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import { RenameComponent } from './rename/rename.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { IconsComponent } from './icons/icons.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DetailsComponent } from './details/details.component';
 import { AuthGuard } from '../../../auth/auth.guard';
@@ -26,7 +25,7 @@ import { AuthGuard } from '../../../auth/auth.guard';
 const routes: Routes = [{ path: 'strategies', canActivate: [AuthGuard], component: FlowsComponent }];
 
 @NgModule({
-    declarations: [FlowsComponent, FlowComponent, RenameComponent, IconsComponent, DetailsComponent],
+    declarations: [FlowsComponent, FlowComponent, RenameComponent, DetailsComponent],
     imports: [
         RouterModule.forChild(routes),
         CommonModule,
@@ -45,7 +44,7 @@ const routes: Routes = [{ path: 'strategies', canActivate: [AuthGuard], componen
         MatInputModule,
         MatTooltipModule,
         MatProgressBarModule,
-        
+
         FontAwesomeModule,
     ],
 })

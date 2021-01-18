@@ -2,23 +2,11 @@
     <mat-icon style="color: orange">flash_on</mat-icon>
 
     <!-- render each steps into diagram -->
-    <ng-container *ngFor="let step of flow.steps; let id = index">
-        <diagram-plus
-            [isLast]="false"
-            [stepId]="id"
-            [flow]="flow"
-        ></diagram-plus>
+    <ng-container *ngFor="let step of flow?.steps; let id = index">
+        <diagram-plus [isLast]="false" [stepId]="id"></diagram-plus>
 
-        <diagram-step
-            [flow]="flow"
-            [stepId]="id"
-            [step]="step"
-            [activeStepId]="activeStepId"
-            (stepClicked)="handleClickStep(id)"
-            (childDropped)="handleDropChild(id, $event)"
-        >
-        </diagram-step>
+        <!-- <diagram-step [flow]="flow" [stepId]="id" [step]="step"> </diagram-step> -->
     </ng-container>
 
-    <diagram-plus [isLast]="true" [stepId]="-1" [flow]="flow"></diagram-plus>
+    <diagram-plus [isLast]="true" [stepId]="-1"></diagram-plus>
 </div>

@@ -1,36 +1,40 @@
-import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { IFlowStep, SIGNAL_TYPES } from 'app/shared/interfaces/IFlow';
+import { IFlow, IFlowStep, SIGNAL_TYPES } from 'app/shared/interfaces/IFlow';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Flow } from '../../../shared/classes/flow';
+import { FlowService } from 'app/services/flow.service';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'editor-detail-panel',
     templateUrl: './detail-panel.component.html',
     styleUrls: ['./detail-panel.component.scss'],
 })
-export class DetailPanelComponent implements OnChanges {
+export class DetailPanelComponent implements OnInit, OnDestroy {
     signalTypes = SIGNAL_TYPES;
 
     form?: FormGroup;
-    step?: IFlowStep;
 
-    @Input() flow: Flow;
-    @Input() activeStepId: number;
-    @Output() setActiveStepId = new EventEmitter<number>();
-    @Output() deleteClicked = new EventEmitter<any>();
+    flow: IFlow;
+    flowId: string;
 
-    constructor(private fb: FormBuilder, private snackbar: MatSnackBar) {}
+    step: IFlowStep;
+    stepId: number;
 
-    ngOnChanges(changes): void {
-        if (changes.activeStepId) {
-            const { currentValue } = changes.activeStepId;
+    subsFlow: Subscription;
+    subsStep: Subscription;
 
-            if (currentValue < 0) {
-                return;
-            }
+    constructor(private fb: FormBuilder, private snackbar: MatSnackBar, public flowService: FlowService) {}
 
-            this.step = this.flow.steps[currentValue];
+    ngOnInit(): void {
+        this.subsFlow = this.flowService.flow$.subscribe(({ flowId, flow }) => {
+            this.flow = flow;
+            this.flowId = flowId;
+        });
+
+        this.subsStep = this.flowService.activeStep$.subscribe(({ activeStepId, activeStep }) => {
+            this.step = activeStep;
+            this.stepId = activeStepId;
 
             this.form = this.fb.group({
                 ticker: [this.step.ticker, Validators.required],
@@ -42,22 +46,27 @@ export class DetailPanelComponent implements OnChanges {
                     : { amount: [this.step.amount, [Validators.required, Validators.pattern(/\d{1,}/), Validators.min(1), Validators.max(9999)]] }),
             });
 
-            if (this.step.type === 'signal') {
-                this.form.get('signalType').valueChanges.subscribe(() => {
+            if (this.step.type) {
+                this.form.get('signalType')?.valueChanges.subscribe(() => {
                     this.form.get('signalValue').setValue('');
                     this.form.get('signalValue').markAsPristine();
                     this.form.get('signalValue').markAsUntouched();
                 });
             }
-        }
+        });
+    }
+
+    ngOnDestroy(): void {
+        this.subsFlow.unsubscribe();
+        this.subsStep.unsubscribe();
     }
 
     close(): void {
-        this.setActiveStepId.emit(-1);
+        this.flowService.setActiveStep(-1, null);
     }
 
     delete(): void {
-        this.flow.deleteStep(this.activeStepId);
+        this.flowService.deleteActiveStep();
         this.close();
     }
 
@@ -68,7 +77,7 @@ export class DetailPanelComponent implements OnChanges {
             return;
         }
 
-        this.flow.updateStep(this.activeStepId, this.form.value);
+        this.flowService.updateStep(this.stepId, this.form.value);
         this.close();
     }
 }

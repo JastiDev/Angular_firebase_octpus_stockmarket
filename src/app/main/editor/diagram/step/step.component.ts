@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Flow } from 'app/shared/classes/flow';
-import { IFlowStep, IFlowStepType } from 'app/shared/interfaces/IFlow';
+import { IFlow, IFlowStep, IFlowStepType } from 'app/shared/interfaces/IFlow';
+import { FlowService } from 'app/services/flow.service';
 
 @Component({
     selector: 'diagram-step',
@@ -8,16 +8,20 @@ import { IFlowStep, IFlowStepType } from 'app/shared/interfaces/IFlow';
     styleUrls: ['./step.component.scss'],
 })
 export class StepComponent {
-    @Input() flow: Flow;
+    @Input() flow: IFlow;
     @Input() step: IFlowStep;
     @Input() stepId: number;
-    @Input() activeStepId: number;
-    @Output() stepClicked = new EventEmitter<any>();
 
     activeExpand = false;
 
-    onClickStep(): void {
-        this.stepClicked.emit();
+    constructor(public panelService: FlowService) {}
+
+    onClickStep(event: MouseEvent): void {
+        this.panelService.setActiveStep(this.stepId, this.step);
+    }
+
+    onClickChild(child: IFlowStep, id: number): void {
+        this.panelService.setActiveChild(this.stepId, id, this.step);
     }
 
     onDragStart(event: DragEvent): void {
@@ -30,24 +34,24 @@ export class StepComponent {
         event.dataTransfer.setData('dataValue', JSON.stringify(this.stepId));
     }
 
-
     onDragEnter(event: any): void {
         const element: HTMLElement = event.target;
-        if (element.classList.contains('step-container')) { 
+        if (element.classList.contains('step-container')) {
             this.activeExpand = true;
         }
     }
 
     onDragLeave(event: any): void {
         const element: HTMLElement = event.target;
-        if (element.classList.contains('step-container')) { 
+        if (element.classList.contains('step-container')) {
             this.activeExpand = false;
         }
     }
-    
+
     onDrop(event: DragEvent): void {
         event.preventDefault();
-        this.stepClicked.emit();
+        this.panelService.setActiveStep(this.stepId, this.step);
+
         this.activeExpand = false;
         const dataType = event.dataTransfer.getData('dataType');
         if (dataType === 'template') {

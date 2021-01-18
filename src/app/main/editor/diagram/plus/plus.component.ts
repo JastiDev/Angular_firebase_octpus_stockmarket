@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
+import { FlowService } from 'app/services/flow.service';
 import { IFlowStepType } from 'app/shared/interfaces/IFlow';
-import { Flow } from '../../../../shared/classes/flow';
 
 @Component({
     selector: 'diagram-plus',
@@ -10,9 +10,10 @@ import { Flow } from '../../../../shared/classes/flow';
 export class PlusComponent {
     @Input() isLast: boolean;
     @Input() stepId: number;
-    @Input() flow: Flow;
 
     active = false;
+
+    constructor(private flowService: FlowService) {}
 
     onDragEnter(event): void {
         const element: HTMLElement = event.target;
@@ -44,6 +45,6 @@ export class PlusComponent {
     }
 
     addStep(type: IFlowStepType): void {
-        this.flow.addStep(type, this.stepId);
+        this.flowService.addStep(type, this.stepId);
     }
 }

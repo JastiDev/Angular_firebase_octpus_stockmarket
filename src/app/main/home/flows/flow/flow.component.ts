@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FlowService } from 'app/services/flow.service';
+import { IFlow } from 'app/shared/interfaces/IFlow';
 import { FlowAction } from '../flows.component';
-import { Flow } from '../../../../shared/classes/flow';
 
 @Component({
     selector: 'flows-flow',
@@ -8,8 +9,10 @@ import { Flow } from '../../../../shared/classes/flow';
     styleUrls: ['./flow.component.scss'],
 })
 export class FlowComponent {
-    FlowAction = FlowAction
+    FlowAction = FlowAction;
 
-    @Input() flow: Flow;
+    @Input() flow: IFlow;
     @Output() action = new EventEmitter<FlowAction>();
+
+    constructor(public flowService: FlowService) {}
 }

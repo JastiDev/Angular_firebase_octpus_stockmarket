@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Flow } from '../../../../shared/classes/flow';
+import { IFlow } from 'app/shared/interfaces/IFlow';
 
 @Component({
     selector: 'app-details',
@@ -8,10 +8,7 @@ import { Flow } from '../../../../shared/classes/flow';
     styleUrls: ['./details.component.scss'],
 })
 export class DetailsComponent {
-    constructor(
-        public dialogRef: MatDialogRef<DetailsComponent>,
-        @Inject(MAT_DIALOG_DATA) public flow: Flow
-    ) {}
+    constructor(public dialogRef: MatDialogRef<DetailsComponent>, @Inject(MAT_DIALOG_DATA) public flow: IFlow) {}
 
     tabs = [{ title: 'Overview' }, { title: 'Task Log' }];
     activeTabId = 0;

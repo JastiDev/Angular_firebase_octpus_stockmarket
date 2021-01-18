@@ -2,16 +2,9 @@
     class="step-container"
     [ngClass]="{
         stepContainer: true,
-        active: (activeStepId==stepId || activeStepId==-1),
-        activeExpand: activeExpand || (activeStepId==stepId && step.children)
+        active: panelService.activeStepId == stepId || panelService.activeStepId == -1,
+        activeExpand: activeExpand || (panelService.activeStepId == stepId && step.children)
     }"
-    (click)="onClickStep()"
-    (dragstart)="onDragStart($event)"
-    (dragover)="$event.preventDefault()"
-    (dragenter)="onDragEnter($event)"
-    (dragleave)="onDragLeave($event)"
-    (drop)="onDrop($event)"
-    draggable="true"
 >
     <mat-card
         class="icon-circle"
@@ -20,9 +13,16 @@
             'icon-sell': step.type === 'sell',
             'icon-signal': step.type === 'signal'
         }"
+        (click)="onClickStep($event)"
+        (dragstart)="onDragStart($event)"
+        (dragover)="$event.preventDefault()"
+        (dragenter)="onDragEnter($event)"
+        (dragleave)="onDragLeave($event)"
+        (drop)="onDrop($event)"
+        draggable="true"
     >
         <fa-icon [icon]="step.type | stepType: 'icon'"></fa-icon>
-        <label class="children-count">{{step.children?.length || ""}}</label>
+        <label class="children-count">{{ step.children?.length || '' }}</label>
     </mat-card>
 
     <strong style="color: blue; word-break: break-all">
@@ -30,9 +30,9 @@
     </strong>
     <span style="font-size: small">{{ step.type | stepType: 'title' }}</span>
 
-
-    <ng-container *ngFor="let child of step.children">
-        <mat-card 
+    <ng-container *ngFor="let child of step.children; let id = index">
+        <mat-card
+            (click)="onClickChild(child, id)"
             class="circle-child"
             [ngClass]="{
                 'icon-buy': child.type === 'buy',
@@ -40,12 +40,8 @@
                 'icon-signal': child.type === 'signal'
             }"
         >
-            <fa-icon [icon]="child.type | stepType: 'icon'" [color]="child.color">
-            </fa-icon>
+            {{ id + 1 }}
+            <!-- <fa-icon [icon]="child.type | stepType: 'icon'"> </fa-icon> -->
         </mat-card>
-        
     </ng-container>
-        
-    
 </div>
-
