@@ -1,9 +1,9 @@
 <div
+    *ngIf="step"
     class="step-container"
     [ngClass]="{
         stepContainer: true,
-        active: panelService.activeStepId == stepId || panelService.activeStepId == -1,
-        activeExpand: activeExpand || (panelService.activeStepId == stepId && step.children)
+        active: activeStepId == stepId || activeStepId == -1
     }"
 >
     <mat-card
@@ -22,7 +22,7 @@
         draggable="true"
     >
         <fa-icon [icon]="step.type | stepType: 'icon'"></fa-icon>
-        <label class="children-count">{{ step.children?.length || '' }}</label>
+        <label class="children-count">{{ '' }}</label>
     </mat-card>
 
     <strong style="color: blue; word-break: break-all">
@@ -30,7 +30,7 @@
     </strong>
     <span style="font-size: small">{{ step.type | stepType: 'title' }}</span>
 
-    <ng-container *ngFor="let child of step.children; let id = index">
+    <!-- <ng-container *ngFor="let child of step.children; let id = index">
         <mat-card
             (click)="onClickChild(child, id)"
             class="circle-child"
@@ -40,8 +40,7 @@
                 'icon-signal': child.type === 'signal'
             }"
         >
-            {{ id + 1 }}
-            <!-- <fa-icon [icon]="child.type | stepType: 'icon'"> </fa-icon> -->
+            {{ id + 1 }}            
         </mat-card>
-    </ng-container>
+    </ng-container> -->
 </div>

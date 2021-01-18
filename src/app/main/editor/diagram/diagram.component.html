@@ -5,7 +5,7 @@
     <ng-container *ngFor="let step of flow?.steps; let id = index">
         <diagram-plus [isLast]="false" [stepId]="id"></diagram-plus>
 
-        <!-- <diagram-step [flow]="flow" [stepId]="id" [step]="step"> </diagram-step> -->
+        <diagram-step [step]="step" [stepId]="id" [activeStepId]="activeStepId"> </diagram-step>
     </ng-container>
 
     <diagram-plus [isLast]="true" [stepId]="-1"></diagram-plus>

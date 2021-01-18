@@ -706,10 +706,8 @@ const matPresetColors = [
     '#78909c', '#607d8b', '#546e7a', '#455a64', '#37474f', '#263238', '#cfd8dc', '#b0bec5', '#78909c', '#455a64'
 ];
 
-/**
- // Color palettes from the Material Design spec.
- // See https://www.google.com/design/spec/style/color.html
- */
+//   Color palettes from the Material Design spec.
+//   See https://www.google.com/design/spec/style/color.html
 export class MatColors
 {
     public static all = matColors;

@@ -6,23 +6,20 @@ import * as Prism from 'prismjs/prism';
 import '@fuse/components/highlight/prism-languages';
 
 @Component({
-    selector : 'fuse-highlight',
-    template : '',
-    styleUrls: ['./highlight.component.scss']
+    selector: 'fuse-highlight',
+    template: '',
+    styleUrls: ['./highlight.component.scss'],
 })
-export class FuseHighlightComponent implements OnInit, OnDestroy
-{
+export class FuseHighlightComponent implements OnInit, OnDestroy {
     // Source
-    @ContentChild('source', {static: true})
+    @ContentChild('source', { static: true })
     source: ElementRef;
 
     // Lang
-    @Input('lang')
-    lang: string;
+    @Input() lang: string;
 
     // Path
-    @Input('path')
-    path: string;
+    @Input() path: string;
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -33,11 +30,7 @@ export class FuseHighlightComponent implements OnInit, OnDestroy
      * @param {ElementRef} _elementRef
      * @param {HttpClient} _httpClient
      */
-    constructor(
-        private _elementRef: ElementRef,
-        private _httpClient: HttpClient
-    )
-    {
+    constructor(private _elementRef: ElementRef, private _httpClient: HttpClient) {
         // Set the private defaults
         this._unsubscribeAll = new Subject();
     }
@@ -49,30 +42,26 @@ export class FuseHighlightComponent implements OnInit, OnDestroy
     /**
      * On init
      */
-    ngOnInit(): void
-    {
+    ngOnInit(): void {
         // If there is no language defined, return...
-        if ( !this.lang )
-        {
+        if (!this.lang) {
             return;
         }
 
         // If the path is defined...
-        if ( this.path )
-        {
+        if (this.path) {
             // Get the source
-            this._httpClient.get(this.path, {responseType: 'text'})
+            this._httpClient
+                .get(this.path, { responseType: 'text' })
                 .pipe(takeUntil(this._unsubscribeAll))
                 .subscribe((response) => {
-
                     // Highlight it
                     this.highlight(response);
                 });
         }
 
         // If the path is not defined and the source element exists...
-        if ( !this.path && this.source )
-        {
+        if (!this.path && this.source) {
             // Highlight it
             this.highlight(this.source.nativeElement.value);
         }
@@ -81,8 +70,7 @@ export class FuseHighlightComponent implements OnInit, OnDestroy
     /**
      * On destroy
      */
-    ngOnDestroy(): void
-    {
+    ngOnDestroy(): void {
         // Unsubscribe from all subscriptions
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
@@ -97,8 +85,7 @@ export class FuseHighlightComponent implements OnInit, OnDestroy
      *
      * @param sourceCode
      */
-    highlight(sourceCode): void
-    {
+    highlight(sourceCode): void {
         // Split the source into lines
         const sourceLines = sourceCode.split('\n');
 
@@ -106,13 +93,11 @@ export class FuseHighlightComponent implements OnInit, OnDestroy
         // code if they are blank lines. This way, the html
         // can be formatted properly while using fuse-highlight
         // component
-        if ( !sourceLines[0].trim() )
-        {
+        if (!sourceLines[0].trim()) {
             sourceLines.shift();
         }
 
-        if ( !sourceLines[sourceLines.length - 1].trim() )
-        {
+        if (!sourceLines[sourceLines.length - 1].trim()) {
             sourceLines.pop();
         }
 
@@ -125,14 +110,12 @@ export class FuseHighlightComponent implements OnInit, OnDestroy
 
         // Iterate through all the lines
         sourceLines.forEach((line, index) => {
-
             // Trim the beginning white space depending on the index
             // and concat the source code
             source = source + line.substr(indexOfFirstChar, line.length);
 
             // If it's not the last line...
-            if ( index !== sourceLines.length - 1 )
-            {
+            if (index !== sourceLines.length - 1) {
                 // Add a line break at the end
                 source = source + '\n';
             }
@@ -142,8 +125,6 @@ export class FuseHighlightComponent implements OnInit, OnDestroy
         const highlightedCode = Prism.highlight(source, Prism.languages[this.lang]);
 
         // Replace the innerHTML of the component with the highlighted code
-        this._elementRef.nativeElement.innerHTML =
-            '<pre><code class="highlight language-' + this.lang + '">' + highlightedCode + '</code></pre>';
+        this._elementRef.nativeElement.innerHTML = '<pre><code class="highlight language-' + this.lang + '">' + highlightedCode + '</code></pre>';
     }
 }
-

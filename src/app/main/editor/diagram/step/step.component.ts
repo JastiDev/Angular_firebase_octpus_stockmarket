@@ -1,27 +1,31 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { IFlow, IFlowStep, IFlowStepType } from 'app/shared/interfaces/IFlow';
 import { FlowService } from 'app/services/flow.service';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'diagram-step',
     templateUrl: './step.component.html',
     styleUrls: ['./step.component.scss'],
 })
-export class StepComponent {
-    @Input() flow: IFlow;
-    @Input() step: IFlowStep;
+export class StepComponent implements OnInit, OnDestroy {
     @Input() stepId: number;
+    @Input() step: IFlowStep;
+    @Input() activeStepId: number;
 
     activeExpand = false;
 
-    constructor(public panelService: FlowService) {}
+    constructor(private flowService: FlowService) {}
+
+    ngOnInit(): void {}
+    ngOnDestroy(): void {}
 
     onClickStep(event: MouseEvent): void {
-        this.panelService.setActiveStep(this.stepId, this.step);
+        this.flowService.setActiveStep(this.stepId, this.step);
     }
 
     onClickChild(child: IFlowStep, id: number): void {
-        this.panelService.setActiveChild(this.stepId, id, this.step);
+        // this.flowService.setActiveChild(this.stepId, id, this.step);
     }
 
     onDragStart(event: DragEvent): void {
@@ -50,13 +54,13 @@ export class StepComponent {
 
     onDrop(event: DragEvent): void {
         event.preventDefault();
-        this.panelService.setActiveStep(this.stepId, this.step);
+        this.flowService.setActiveStep(this.stepId, this.step);
 
         this.activeExpand = false;
         const dataType = event.dataTransfer.getData('dataType');
         if (dataType === 'template') {
             const type: IFlowStepType = JSON.parse(event.dataTransfer.getData('dataValue'));
-            this.flow.addChildToStep(this.stepId, type);
+            // this.flow.addChildToStep(this.stepId, type);
         } else if (dataType === 'stepId') {
             const stepId = JSON.parse(event.dataTransfer.getData('dataValue'));
             // this.flow.moveStep(stepId, this.stepId);

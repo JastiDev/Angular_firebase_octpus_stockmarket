@@ -1,27 +1,21 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
-export interface Locale
-{
+export interface Locale {
     lang: string;
-    data: Object;
+    data: object;
 }
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
-export class FuseTranslationLoaderService
-{
+export class FuseTranslationLoaderService {
     /**
      * Constructor
      *
      * @param {TranslateService} _translateService
      */
-    constructor(
-        private _translateService: TranslateService
-    )
-    {
-    }
+    constructor(private _translateService: TranslateService) {}
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
@@ -32,8 +26,7 @@ export class FuseTranslationLoaderService
      *
      * @param {Locale} args
      */
-    loadTranslations(...args: Locale[]): void
-    {
+    loadTranslations(...args: Locale[]): void {
         const locales = [...args];
 
         locales.forEach((locale) => {

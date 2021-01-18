@@ -21,16 +21,16 @@ export class FlowService {
     constructor(private apiService: ApiService) {}
 
     /** Flow */
-    private nextFlow() {
+    private nextFlow(): void {
         this.flow$.next({ flowId: this.flowId, flow: this.flow });
     }
 
-    private initActiveStep() {
+    private initActiveStep(): void {
         this.activeStepId = -1;
         this.activeStep = null;
     }
 
-    setFlow(flowId: string, flow: IFlow) {
+    setFlow(flowId: string, flow: IFlow): void {
         this.flowId = flowId;
         this.flow = flow;
         this.initActiveStep();
@@ -52,14 +52,15 @@ export class FlowService {
 
         if (id >= 0 && id < this.flow.steps.length) {
             this.flow.steps = [...this.flow.steps.slice(0, id), step, ...this.flow.steps.slice(id, this.flow.steps.length)];
+            this.nextFlow();
             this.setActiveStep(id, step);
         } else {
             this.flow.steps.push(step);
+            this.nextFlow();
             this.setActiveStep(this.flow.steps.length - 1, step);
         }
 
         this.unsavedChanges = true;
-        this.nextFlow();
     }
 
     moveStep(from: number, to: number): void {
@@ -78,9 +79,9 @@ export class FlowService {
         }
 
         this.unsavedChanges = true;
+        this.nextFlow();
         this.initActiveStep();
         this.nextActiveStep();
-        this.nextFlow();
     }
 
     updateStep(id: number, data: Partial<IFlowStep>): void {
@@ -132,18 +133,18 @@ export class FlowService {
     // }
 
     /** ActiveStep */
-    private nextActiveStep() {
+    private nextActiveStep(): void {
         this.activeStep$.next({ activeStepId: this.activeStepId, activeStep: this.activeStep });
     }
 
-    setActiveStep(activeStepId: number, activeStep: IFlowStep) {
+    setActiveStep(activeStepId: number, activeStep: IFlowStep): void {
         this.activeStepId = activeStepId;
         this.activeStep = activeStep;
 
         this.nextActiveStep();
     }
 
-    deleteActiveStep() {
+    deleteActiveStep(): void {
         this.deleteStep(this.activeStepId);
     }
 }

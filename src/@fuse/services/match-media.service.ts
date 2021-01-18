@@ -32,6 +32,8 @@ export class FuseMatchMediaService {
      *
      * @private
      */
+
+    /* tslint:disable:deprecation */
     private _init(): void {
         this._mediaObserver.media$.pipe(debounceTime(500), distinctUntilChanged()).subscribe((change: MediaChange) => {
             if (this.activeMediaQuery !== change.mqAlias) {

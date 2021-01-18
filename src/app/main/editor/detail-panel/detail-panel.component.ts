@@ -35,6 +35,9 @@ export class DetailPanelComponent implements OnInit, OnDestroy {
         this.subsStep = this.flowService.activeStep$.subscribe(({ activeStepId, activeStep }) => {
             this.step = activeStep;
             this.stepId = activeStepId;
+            if (!this.step) {
+                return;
+            }
 
             this.form = this.fb.group({
                 ticker: [this.step.ticker, Validators.required],

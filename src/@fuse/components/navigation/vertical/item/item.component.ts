@@ -43,11 +43,7 @@ export class FuseNavVerticalItemComponent implements OnInit, OnDestroy {
      */
     ngOnInit(): void {
         // Subscribe to navigation item
-        merge(
-            this._fuseNavigationService.onNavigationItemAdded,
-            this._fuseNavigationService.onNavigationItemUpdated,
-            this._fuseNavigationService.onNavigationItemRemoved
-        )
+        merge(this._fuseNavigationService.onNavigationItemAdded, this._fuseNavigationService.onNavigationItemUpdated, this._fuseNavigationService.onNavigationItemRemoved)
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(() => {
                 // Mark for check
@@ -64,9 +60,11 @@ export class FuseNavVerticalItemComponent implements OnInit, OnDestroy {
         this._unsubscribeAll.complete();
     }
 
-    getClass(item: FuseNavigationItem) {
-        if (item.id == 'makeflow') {
+    getClass(item: FuseNavigationItem): any {
+        if (item.id === 'makeflow') {
             return { makeflow: true };
-        } else { return item.classes; }
+        } else {
+            return item.classes;
+        }
     }
 }
