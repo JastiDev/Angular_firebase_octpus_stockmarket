@@ -1,0 +1,135 @@
+@mixin on-circle($item-count, $circle-size, $item-size) {
+    position: relative;
+    width: $circle-size;
+    height: $circle-size;
+    padding: 0;
+    border-radius: 50%;
+    list-style: none;
+
+    .child {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        padding: 0 0;
+
+        width: $item-size;
+        height: $item-size;
+        margin: -($item-size / 2);
+
+        $angle: (360 / $item-count);
+        $rot: 90;
+
+        @for $i from 1 through $item-count {
+            &:nth-of-type(#{$i}) {
+                transform: rotate($rot * 1deg) translate($circle-size / 2) rotate($rot * -1deg);
+            }
+
+            $rot: $rot + $angle;
+        }
+    }
+}
+
+.group-container {
+    width: 80px;
+    height: 80px;
+    border: none;
+    border-radius: 50%;
+    opacity: 0.3;
+
+    transition-property: width, height;
+    transition-timing-function: ease-in-out;
+    transition-duration: 600ms;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+    .center-container,
+    .children-container {
+        position: absolute;
+    }
+
+    .center-container {
+        cursor: pointer;
+        text-align: center;
+
+        .center-icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: larger;
+            width: 50px;
+            height: 50px;
+
+            .children-count {
+                font-size: smaller;
+                pointer-events: none;
+                user-select: none;
+            }
+        }
+    }
+
+    .children-container {
+        width: 0;
+        height: 0;
+        overflow: hidden;
+        user-select: none;
+        pointer-events: none;
+    }
+}
+
+.group-container.step-buy {
+    border-color: orange !important;
+    .center-icon,
+    .child {
+        color: white;
+        background-color: orange;
+    }
+}
+
+.group-container.step-sell {
+    border-color: green !important;
+    .center-icon,
+    .child {
+        color: white;
+        background-color: green;
+    }
+}
+
+.group-container.step-signal {
+    border-color: blue !important;
+    .center-icon,
+    .child {
+        color: white;
+        background-color: blue;
+    }
+}
+
+.group-container.has-active {
+    width: 160px;
+    height: 160px;
+    border: 3px solid;
+    opacity: 1;
+
+    .children-container {
+        @include on-circle($item-count: 12, $circle-size: 120px, $item-size: 30px);
+        overflow: visible;
+
+        .child {
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            pointer-events: all;
+            opacity: 0.7;
+        }
+        .child.child-active {
+            opacity: 1;
+        }
+    }
+}

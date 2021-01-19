@@ -32,7 +32,7 @@ export class DetailPanelComponent implements OnInit, OnDestroy {
             this.flowId = flowId;
 
             this.stepId = this.flow.steps.findIndex((step) => step.active);
-            if (this.stepId == -1) {
+            if (this.stepId === -1) {
                 this.step = null;
             } else {
                 this.step = this.flow.steps[this.stepId];

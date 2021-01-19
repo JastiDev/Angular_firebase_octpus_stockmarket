@@ -29,18 +29,4 @@
         {{ step.ticker }}
     </strong>
     <span style="font-size: small">{{ step.type | stepType: 'title' }}</span>
-
-    <!-- <ng-container *ngFor="let child of step.children; let id = index">
-        <mat-card
-            (click)="onClickChild(child, id)"
-            class="circle-child"
-            [ngClass]="{
-                'icon-buy': child.type === 'buy',
-                'icon-sell': child.type === 'sell',
-                'icon-signal': child.type === 'signal'
-            }"
-        >
-            {{ id + 1 }}            
-        </mat-card>
-    </ng-container> -->
 </div>

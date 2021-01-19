@@ -1,0 +1,16 @@
+<div class="group-container" [ngClass]="getClass(steps[0].type, hasActive)">
+    <div class="center-container" (click)="onClickStep(steps[0])" (drop)="onDropChild($event)" (dragover)="$event.preventDefault()">
+        <mat-card class="center-icon">
+            <fa-icon [icon]="steps[0].type | stepType: 'icon'"></fa-icon>
+            <label class="children-count">{{ steps.length }}</label>
+        </mat-card>
+
+        <span style="font-size: small">{{ steps[0].type | stepType: 'title' }}</span>
+    </div>
+
+    <div class="children-container">
+        <ng-container *ngFor="let step of steps; let i = index">
+            <div class="child" [ngClass]="{ 'child-active': step.active }" (click)="onClickStep(step)">{{ i + 1 }}</div>
+        </ng-container>
+    </div>
+</div>

@@ -2,17 +2,17 @@
     <mat-icon style="color: orange">flash_on</mat-icon>
 
     <!-- render each steps into diagram -->
-    <!-- <ng-container *ngFor="let group of groups; let order = index">
-        <diagram-plus [isLast]="false" [order]="order"></diagram-plus>
-
-        <diagram-step-group [steps]="group.steps"></diagram-step-group>
-    </ng-container> -->
-
-    <ng-container *ngFor="let step of flow?.steps; let order = index">
+    <ng-container *ngFor="let group of groups; let order = index">
         <diagram-plus [isLast]="false" [order]="order - 0.5"></diagram-plus>
 
-        <diagram-step [step]="step"></diagram-step>
+        <ng-container *ngIf="group.steps.length == 1">
+            <diagram-step [step]="group.steps[0]"></diagram-step>
+        </ng-container>
+
+        <ng-container *ngIf="group.steps.length > 1">
+            <diagram-step-group [steps]="group.steps"></diagram-step-group>
+        </ng-container>
     </ng-container>
 
-    <diagram-plus [isLast]="true" [order]="flow?.steps.length"></diagram-plus>
+    <diagram-plus [isLast]="true" [order]="groups.length"></diagram-plus>
 </div>

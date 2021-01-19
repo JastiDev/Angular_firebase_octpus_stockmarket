@@ -29,10 +29,10 @@ export class StepComponent implements OnInit, OnDestroy {
     onDragStart(event: DragEvent): void {
         const target: HTMLElement = event.target as HTMLElement;
 
-        const icon: Element = target.querySelector('.icon-circle');
+        const icon: Element = target;
 
         event.dataTransfer.setDragImage(icon, 0, 0);
-        event.dataTransfer.setData('dataType', 'stepId');
+        event.dataTransfer.setData('dataType', 'step');
         event.dataTransfer.setData('dataValue', JSON.stringify(this.step));
     }
 
@@ -58,9 +58,10 @@ export class StepComponent implements OnInit, OnDestroy {
         const dataType = event.dataTransfer.getData('dataType');
         if (dataType === 'template') {
             const type: IFlowStepType = JSON.parse(event.dataTransfer.getData('dataValue'));
-            // this.flow.addChildToStep(this.stepId, type);
-        } else if (dataType === 'stepId') {
-            const stepId = JSON.parse(event.dataTransfer.getData('dataValue'));
+
+            if (type === this.step.type) { this.flowService.addStep(type, this.step.order); }
+        } else if (dataType === 'step') {
+            const step = JSON.parse(event.dataTransfer.getData('dataValue'));
             // this.flow.moveStep(stepId, this.stepId);
         }
     }

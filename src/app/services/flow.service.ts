@@ -50,10 +50,14 @@ export class FlowService {
         this.nextFlow();
     }
 
-    sortStepsByOrder() {
+    sortStepsByOrder(): void {
         this.flow.steps.sort((x, y) => {
-            if (x.order > y.order) return 1;
-            if (x.order === y.order) return 0;
+            if (x.order > y.order) {
+                return 1;
+            }
+            if (x.order === y.order) {
+                return 0;
+            }
             return -1;
         });
         let order = 0;
@@ -62,7 +66,9 @@ export class FlowService {
             const order0 = this.flow.steps[i].order;
             let j = i;
             while (j < this.flow.steps.length) {
-                if (this.flow.steps[j].order != order0) break;
+                if (this.flow.steps[j].order !== order0) {
+                    break;
+                }
                 this.flow.steps[j].order = order;
                 j++;
             }
@@ -132,13 +138,15 @@ export class FlowService {
 
     setActiveStep(step: IFlowStep): void {
         this.initActiveStep();
-        if (step) step.active = true;
+        if (step) {
+            step.active = true;
+        }
 
         this.nextFlow();
     }
 
     deleteActiveStep(): void {
-        let activeStepId = this.flow.steps.findIndex((step) => step.active);
+        const activeStepId = this.flow.steps.findIndex((step) => step.active);
         this.deleteStep(activeStepId);
     }
 }
