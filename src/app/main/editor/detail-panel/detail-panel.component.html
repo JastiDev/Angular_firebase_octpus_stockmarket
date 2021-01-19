@@ -3,7 +3,7 @@
     <mat-spinner color="accent"></mat-spinner>
 </ng-template>
 
-<div id="step-detail-panel" *ngIf="stepId > -1">
+<div id="step-detail-panel" *ngIf="step">
     <button mat-icon-button (click)="close()">
         <mat-icon>close</mat-icon>
     </button>
@@ -19,11 +19,8 @@
             </mat-card-subtitle>
 
             <mat-card-content>
-                <mat-form-field appearance="outline">
-                    <mat-label>Title</mat-label>
-                    <input matInput formControlName="ticker" />
-                    <mat-icon matSuffix>edit</mat-icon>
-                </mat-form-field>
+                <main-ticker-search style="width: 100%" formControlName="ticker"></main-ticker-search>
+
                 <ng-container *ngIf="form.get('amount')">
                     <mat-form-field appearance="outline">
                         <mat-label>Amount (# of stocks)</mat-label>
@@ -46,13 +43,13 @@
                         <mat-error> This field is required </mat-error>
                     </mat-form-field>
                 </ng-container>
-
-                <main-ticker-search style="width: 100%"></main-ticker-search>
             </mat-card-content>
 
             <mat-card-footer style="display: flex; justify-content: flex-end; margin: 0">
                 <button type="button" mat-raised-button color="warn" (click)="delete()">Delete</button>
-                <button type="button" mat-raised-button [disabled]="form.invalid" color="primary" style="margin-left: 1rem" (click)="save()">Save</button>
+                <button type="button" mat-raised-button [disabled]="form.invalid" color="primary" style="margin-left: 1rem" (click)="save()">
+                    Save
+                </button>
             </mat-card-footer>
         </form>
     </mat-card>

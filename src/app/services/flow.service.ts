@@ -12,6 +12,7 @@ export class FlowService {
     private flowId: string;
     flow$ = new Subject<{ flowId: string; flow: IFlow }>();
 
+    activeStep: IFlowStep;
     unsavedChanges = false;
 
     constructor(private apiService: ApiService) {}
@@ -21,10 +22,14 @@ export class FlowService {
         this.flow$.next({ flowId: this.flowId, flow: this.flow });
     }
 
+    getFlow(): IFlow {
+        return this.flow;
+    }
+
     setFlow(flowId: string, flow: IFlow): void {
         this.flowId = flowId;
         this.flow = flow;
-        this.initActiveStep();
+        this.activeStep = null;
         this.nextFlow();
     }
 
@@ -35,6 +40,7 @@ export class FlowService {
 
     addStep(type: IFlowStepType, order: number): void {
         const step: IFlowStep = {
+            _id: Date.now(),
             type,
             order,
             ticker: '',
@@ -42,11 +48,12 @@ export class FlowService {
         };
 
         this.flow.steps.push(step);
-        this.initActiveStep();
-        this.setActiveStep(step);
         this.sortStepsByOrder();
 
+        this.activeStep = step;
+
         this.unsavedChanges = true;
+
         this.nextFlow();
     }
 
@@ -93,13 +100,13 @@ export class FlowService {
         }
 
         this.unsavedChanges = true;
-        this.initActiveStep();
+        this.activeStep = null;
         this.nextFlow();
     }
 
-    updateStep(id: number, data: Partial<IFlowStep>): void {
+    updateStep(id: any, data: Partial<IFlowStep>): void {
         this.flow.steps = _.map(this.flow.steps, (v, i) => {
-            if (i === id) {
+            if (v._id === id) {
                 return _.merge(v, data);
             }
             return v;
@@ -110,43 +117,25 @@ export class FlowService {
         this.nextFlow();
     }
 
-    deleteStep(id: number): void {
-        if (id >= 0 && id < this.flow.steps.length) {
-            this.flow.steps = [...this.flow.steps.slice(0, id), ...this.flow.steps.slice(id + 1, this.flow.steps.length)];
-        }
+    deleteStep(id: any): void {
+        this.flow.steps = this.flow.steps.filter((step) => step._id !== id);
 
         this.unsavedChanges = true;
 
-        this.initActiveStep();
+        this.activeStep = null;
         this.sortStepsByOrder();
         this.nextFlow();
     }
 
     saveSteps(): void {
+        this.flow.steps.forEach((step) => {
+            if (typeof step._id === 'number') {
+                // this number _id is generated on the frontend temporarily
+                delete step._id;
+            }
+        });
         this.updateFlow(this.flow, { steps: this.flow.steps });
 
         this.unsavedChanges = false;
-    }
-
-    /** ActiveStep */
-
-    private initActiveStep(): void {
-        this.flow?.steps.forEach((step) => {
-            step.active = false;
-        });
-    }
-
-    setActiveStep(step: IFlowStep): void {
-        this.initActiveStep();
-        if (step) {
-            step.active = true;
-        }
-
-        this.nextFlow();
-    }
-
-    deleteActiveStep(): void {
-        const activeStepId = this.flow.steps.findIndex((step) => step.active);
-        this.deleteStep(activeStepId);
     }
 }

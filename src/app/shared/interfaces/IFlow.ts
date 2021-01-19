@@ -3,6 +3,7 @@ export const SIGNAL_TYPES = ['price_below', 'price_above', 'wait_seconds'];
 export type IFlowStepType = 'buy' | 'sell' | 'signal';
 
 export interface IFlowStep {
+    _id?: any;
     ticker?: string;
     state?: 'waiting' | 'executed' | 'failed';
     type?: IFlowStepType;
@@ -12,7 +13,6 @@ export interface IFlowStep {
     signalType?: 'price_below' | 'price_above' | 'wait_seconds';
     signalValue?: number;
     order?: any;
-    active?: boolean;
 }
 
 export interface IFlow {

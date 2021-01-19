@@ -11,19 +11,13 @@ import { Subscription } from 'rxjs';
 export class StepComponent implements OnInit, OnDestroy {
     @Input() step: IFlowStep;
 
-    activeExpand = false;
-
-    constructor(private flowService: FlowService) {}
+    constructor(public flowService: FlowService) {}
 
     ngOnInit(): void {}
     ngOnDestroy(): void {}
 
     onClickStep(event: MouseEvent): void {
-        this.flowService.setActiveStep(this.step);
-    }
-
-    onClickChild(child: IFlowStep, id: number): void {
-        // this.flowService.setActiveChild(this.stepId, id, this.step);
+        this.flowService.activeStep = this.step;
     }
 
     onDragStart(event: DragEvent): void {
@@ -39,27 +33,26 @@ export class StepComponent implements OnInit, OnDestroy {
     onDragEnter(event: any): void {
         const element: HTMLElement = event.target;
         if (element.classList.contains('step-container')) {
-            this.activeExpand = true;
         }
     }
 
     onDragLeave(event: any): void {
         const element: HTMLElement = event.target;
         if (element.classList.contains('step-container')) {
-            this.activeExpand = false;
         }
     }
 
     onDrop(event: DragEvent): void {
         event.preventDefault();
-        this.flowService.setActiveStep(this.step);
+        this.flowService.activeStep = this.step;
 
-        this.activeExpand = false;
         const dataType = event.dataTransfer.getData('dataType');
         if (dataType === 'template') {
             const type: IFlowStepType = JSON.parse(event.dataTransfer.getData('dataValue'));
 
-            if (type === this.step.type) { this.flowService.addStep(type, this.step.order); }
+            if (type === this.step.type) {
+                this.flowService.addStep(type, this.step.order);
+            }
         } else if (dataType === 'step') {
             const step = JSON.parse(event.dataTransfer.getData('dataValue'));
             // this.flow.moveStep(stepId, this.stepId);

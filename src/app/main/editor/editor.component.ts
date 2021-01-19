@@ -108,7 +108,7 @@ export class EditorComponent implements OnInit, OnDestroy {
 
     onClickPanContainer(event): void {
         if (event.target.id.slice(0, 3) === 'pan') {
-            this.flowService.setActiveStep(null);
+            this.flowService.activeStep = null;
         }
     }
 

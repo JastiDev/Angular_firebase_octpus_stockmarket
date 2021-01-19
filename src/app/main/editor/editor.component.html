@@ -30,7 +30,10 @@
                 <mat-icon>info</mat-icon>
             </div>
 
-            <mat-slide-toggle [checked]="flow.status === 'active'" (change)="flowService.updateFlow(flow, { status: $event.checked ? 'active' : 'stopped' })"></mat-slide-toggle>
+            <mat-slide-toggle
+                [checked]="flow.status === 'active'"
+                (change)="flowService.updateFlow(flow, { status: $event.checked ? 'active' : 'stopped' })"
+            ></mat-slide-toggle>
         </mat-toolbar>
 
         <div id="page-body">
@@ -41,11 +44,16 @@
             </div>
 
             <div id="detail-panel-container">
-                <editor-detail-panel></editor-detail-panel>
+                <editor-detail-panel [step]="flowService.activeStep"></editor-detail-panel>
             </div>
 
             <div id="zoom-control">
-                <editor-zoom-control [percent]="scale * 100" (resetClicked)="zoomRest()" (plusClicked)="zoomPlus()" (minusClicked)="zoomMinus()"></editor-zoom-control>
+                <editor-zoom-control
+                    [percent]="scale * 100"
+                    (resetClicked)="zoomRest()"
+                    (plusClicked)="zoomPlus()"
+                    (minusClicked)="zoomMinus()"
+                ></editor-zoom-control>
             </div>
 
             <div id="pan-container" (click)="onClickPanContainer($event)">

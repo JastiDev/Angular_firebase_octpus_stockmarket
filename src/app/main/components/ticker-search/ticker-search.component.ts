@@ -1,22 +1,49 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, forwardRef, OnDestroy, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subscription } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 @Component({
     selector: 'main-ticker-search',
     templateUrl: './ticker-search.component.html',
     styleUrls: ['./ticker-search.component.scss'],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => TickerSearchComponent),
+            multi: true,
+        },
+    ],
 })
-export class TickerSearchComponent implements OnInit, OnDestroy {
+export class TickerSearchComponent implements OnInit, OnDestroy, ControlValueAccessor {
     searchControl = new FormControl();
     filteredArr: IRespTicker[];
     isLoading = false;
     errMsg: string;
     subscription: Subscription;
 
+    value: string;
+
+    onChange: any = () => {};
+    onTouch: any = () => {};
+
     constructor(private http: HttpClient) {}
+
+    // programmatically writing the value
+    writeValue(value: any): void {
+        this.value = value;
+    }
+    // method to be triggered on UI change
+    registerOnChange(fn: any): void {
+        this.onChange = fn;
+    }
+    // method to be triggered on component touch
+    registerOnTouched(fn: any): void {
+        this.onTouch = fn;
+    }
 
     ngOnInit(): void {
         this.subscription = this.searchControl.valueChanges.pipe(debounceTime(500)).subscribe((x) => {
@@ -43,6 +70,10 @@ export class TickerSearchComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         this.subscription.unsubscribe();
+    }
+
+    onSelect(event: MatAutocompleteSelectedEvent): void {
+        this.onChange(event.option.value);
     }
 }
 

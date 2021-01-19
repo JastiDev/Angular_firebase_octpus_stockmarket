@@ -1,7 +1,7 @@
 <mat-form-field appearance="outline" style="width: 100%">
     <mat-label>Ticker</mat-label>
-    <input matInput type="text" placeholder="search ticker" [matAutocomplete]="auto" [formControl]="searchControl" />
-    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [panelWidth]="'400px'">
+    <input matInput type="text" placeholder="search ticker" [matAutocomplete]="auto" [formControl]="searchControl" [value]="value" />
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [panelWidth]="'400px'" (optionSelected)="onSelect($event)">
         <mat-option *ngIf="isLoading">Loading...</mat-option>
         <ng-container *ngIf="!isLoading">
             <mat-option *ngFor="let ticker of filteredArr" [value]="ticker.symbol"> {{ ticker.symbol }}, {{ ticker.name }} </mat-option>

@@ -7,21 +7,15 @@ import { IFlowStep, IFlowStepType } from 'app/shared/interfaces/IFlow';
     templateUrl: './step-group.component.html',
     styleUrls: ['./step-group.component.scss'],
 })
-export class StepGroupComponent implements OnInit, OnChanges {
+export class StepGroupComponent implements OnInit {
     @Input() steps: IFlowStep[];
 
-    hasActive = false;
+    dragover = false;
+    private isAnimating = false;
 
-    constructor(private flowService: FlowService) {}
+    constructor(public flowService: FlowService) {}
 
-    ngOnChanges(changes: SimpleChanges): void {
-        const steps: IFlowStep[] = changes.steps.currentValue;
-        this.hasActive = steps.findIndex((step) => step.active) > -1;
-    }
-
-    ngOnInit(): void {
-        console.log('ngOnInit');
-    }
+    ngOnInit(): void {}
 
     getClass(type: IFlowStepType, hasActive: boolean): any {
         return {
@@ -33,7 +27,35 @@ export class StepGroupComponent implements OnInit, OnChanges {
     }
 
     onClickStep(step: IFlowStep): void {
-        this.flowService.setActiveStep(step);
+        this.flowService.activeStep = step;
+    }
+
+    onDragEnter(event: any): void {
+        if (this.isAnimating) {
+            return;
+        }
+        const element: HTMLElement = event.target;
+        if (element.classList.contains('group-container')) {
+            this.isAnimating = true;
+            setTimeout(() => {
+                this.isAnimating = false;
+            }, 600);
+            this.dragover = true;
+        }
+    }
+
+    onDragLeave(event: any): void {
+        if (this.isAnimating) {
+            return;
+        }
+        const element: HTMLElement = event.target;
+        if (element.classList.contains('group-container')) {
+            this.isAnimating = true;
+            setTimeout(() => {
+                this.isAnimating = false;
+            }, 600);
+            this.dragover = false;
+        }
     }
 
     onDropChild(event): void {
@@ -50,5 +72,9 @@ export class StepGroupComponent implements OnInit, OnChanges {
             const step = JSON.parse(event.dataTransfer.getData('dataValue'));
             // this.flow.moveStep(stepId, this.stepId);
         }
+    }
+
+    hasActive(steps: IFlowStep[], activeStep: IFlowStep): boolean {
+        return activeStep && steps.findIndex((step) => step._id === activeStep._id) > -1;
     }
 }

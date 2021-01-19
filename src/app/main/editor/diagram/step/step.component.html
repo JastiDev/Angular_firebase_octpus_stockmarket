@@ -3,7 +3,7 @@
     class="step-container"
     [ngClass]="{
         stepContainer: true,
-        active: step.active
+        active: flowService.activeStep?._id == step._id
     }"
 >
     <mat-card
