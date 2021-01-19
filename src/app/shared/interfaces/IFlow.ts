@@ -12,6 +12,7 @@ export interface IFlowStep {
     signalType?: 'price_below' | 'price_above' | 'wait_seconds';
     signalValue?: number;
     order?: any;
+    active?: boolean;
 }
 
 export interface IFlow {

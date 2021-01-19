@@ -75,7 +75,12 @@ export class EditorComponent implements OnInit, OnDestroy {
 
             if (!flow) {
                 // TODO: handle error
-                this.snackbar.open('Strategy not found with id: ' + flowId, 'close', { horizontalPosition: 'end', verticalPosition: 'top', duration: 5000, panelClass: ['red-snackbar'] });
+                this.snackbar.open('Strategy not found with id: ' + flowId, 'close', {
+                    horizontalPosition: 'end',
+                    verticalPosition: 'top',
+                    duration: 5000,
+                    panelClass: ['red-snackbar'],
+                });
                 this.router.navigate(['/home/strategies']);
                 return;
             }
@@ -103,7 +108,7 @@ export class EditorComponent implements OnInit, OnDestroy {
 
     onClickPanContainer(event): void {
         if (event.target.id.slice(0, 3) === 'pan') {
-            this.flowService.setActiveStep(-1, null);
+            this.flowService.setActiveStep(null);
         }
     }
 

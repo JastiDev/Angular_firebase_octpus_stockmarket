@@ -9,9 +9,7 @@ import { Subscription } from 'rxjs';
     styleUrls: ['./step.component.scss'],
 })
 export class StepComponent implements OnInit, OnDestroy {
-    @Input() stepId: number;
     @Input() step: IFlowStep;
-    @Input() activeStepId: number;
 
     activeExpand = false;
 
@@ -21,7 +19,7 @@ export class StepComponent implements OnInit, OnDestroy {
     ngOnDestroy(): void {}
 
     onClickStep(event: MouseEvent): void {
-        this.flowService.setActiveStep(this.stepId, this.step);
+        this.flowService.setActiveStep(this.step);
     }
 
     onClickChild(child: IFlowStep, id: number): void {
@@ -35,7 +33,7 @@ export class StepComponent implements OnInit, OnDestroy {
 
         event.dataTransfer.setDragImage(icon, 0, 0);
         event.dataTransfer.setData('dataType', 'stepId');
-        event.dataTransfer.setData('dataValue', JSON.stringify(this.stepId));
+        event.dataTransfer.setData('dataValue', JSON.stringify(this.step));
     }
 
     onDragEnter(event: any): void {
@@ -54,7 +52,7 @@ export class StepComponent implements OnInit, OnDestroy {
 
     onDrop(event: DragEvent): void {
         event.preventDefault();
-        this.flowService.setActiveStep(this.stepId, this.step);
+        this.flowService.setActiveStep(this.step);
 
         this.activeExpand = false;
         const dataType = event.dataTransfer.getData('dataType');

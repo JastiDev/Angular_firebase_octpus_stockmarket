@@ -12,10 +12,6 @@ export class FlowService {
     private flowId: string;
     flow$ = new Subject<{ flowId: string; flow: IFlow }>();
 
-    private activeStepId: number;
-    private activeStep: IFlowStep;
-    activeStep$ = new Subject<{ activeStepId: number; activeStep: IFlowStep }>();
-
     unsavedChanges = false;
 
     constructor(private apiService: ApiService) {}
@@ -25,17 +21,11 @@ export class FlowService {
         this.flow$.next({ flowId: this.flowId, flow: this.flow });
     }
 
-    private initActiveStep(): void {
-        this.activeStepId = -1;
-        this.activeStep = null;
-    }
-
     setFlow(flowId: string, flow: IFlow): void {
         this.flowId = flowId;
         this.flow = flow;
         this.initActiveStep();
         this.nextFlow();
-        this.nextActiveStep();
     }
 
     updateFlow(flow: IFlow, data: Partial<IFlow>): void {
@@ -43,24 +33,42 @@ export class FlowService {
         this.apiService.updateFlow(flow._id, data);
     }
 
-    addStep(type: IFlowStepType, id: number): void {
+    addStep(type: IFlowStepType, order: number): void {
         const step: IFlowStep = {
             type,
+            order,
             ticker: '',
             state: 'waiting',
         };
 
-        if (id >= 0 && id < this.flow.steps.length) {
-            this.flow.steps = [...this.flow.steps.slice(0, id), step, ...this.flow.steps.slice(id, this.flow.steps.length)];
-            this.nextFlow();
-            this.setActiveStep(id, step);
-        } else {
-            this.flow.steps.push(step);
-            this.nextFlow();
-            this.setActiveStep(this.flow.steps.length - 1, step);
-        }
+        this.flow.steps.push(step);
+        this.initActiveStep();
+        this.setActiveStep(step);
+        this.sortStepsByOrder();
 
         this.unsavedChanges = true;
+        this.nextFlow();
+    }
+
+    sortStepsByOrder() {
+        this.flow.steps.sort((x, y) => {
+            if (x.order > y.order) return 1;
+            if (x.order === y.order) return 0;
+            return -1;
+        });
+        let order = 0;
+        let i = 0;
+        while (i < this.flow.steps.length) {
+            const order0 = this.flow.steps[i].order;
+            let j = i;
+            while (j < this.flow.steps.length) {
+                if (this.flow.steps[j].order != order0) break;
+                this.flow.steps[j].order = order;
+                j++;
+            }
+            order++;
+            i = j;
+        }
     }
 
     moveStep(from: number, to: number): void {
@@ -79,9 +87,8 @@ export class FlowService {
         }
 
         this.unsavedChanges = true;
-        this.nextFlow();
         this.initActiveStep();
-        this.nextActiveStep();
+        this.nextFlow();
     }
 
     updateStep(id: number, data: Partial<IFlowStep>): void {
@@ -89,13 +96,12 @@ export class FlowService {
             if (i === id) {
                 return _.merge(v, data);
             }
-
             return v;
         });
 
+        this.sortStepsByOrder();
         this.unsavedChanges = true;
         this.nextFlow();
-        this.setActiveStep(id, this.flow.steps[id]);
     }
 
     deleteStep(id: number): void {
@@ -103,12 +109,11 @@ export class FlowService {
             this.flow.steps = [...this.flow.steps.slice(0, id), ...this.flow.steps.slice(id + 1, this.flow.steps.length)];
         }
 
-        this.initActiveStep();
-
         this.unsavedChanges = true;
 
+        this.initActiveStep();
+        this.sortStepsByOrder();
         this.nextFlow();
-        this.nextActiveStep();
     }
 
     saveSteps(): void {
@@ -117,34 +122,23 @@ export class FlowService {
         this.unsavedChanges = false;
     }
 
-    // addChildToStep(id: number, childType: IFlowStepType): void {
-    //     if (!this.flow.steps[id].children) {
-    //         this.flow.steps[id].children = [];
-    //     }
-
-    //     const step: IFlowStep = {
-    //         type: childType,
-    //         ticker: '',
-    //         state: 'waiting',
-    //     };
-    //     this.flow.steps[id].children.push(step);
-
-    //     this.unsavedChanges = true;
-    // }
-
     /** ActiveStep */
-    private nextActiveStep(): void {
-        this.activeStep$.next({ activeStepId: this.activeStepId, activeStep: this.activeStep });
+
+    private initActiveStep(): void {
+        this.flow?.steps.forEach((step) => {
+            step.active = false;
+        });
     }
 
-    setActiveStep(activeStepId: number, activeStep: IFlowStep): void {
-        this.activeStepId = activeStepId;
-        this.activeStep = activeStep;
+    setActiveStep(step: IFlowStep): void {
+        this.initActiveStep();
+        if (step) step.active = true;
 
-        this.nextActiveStep();
+        this.nextFlow();
     }
 
     deleteActiveStep(): void {
-        this.deleteStep(this.activeStepId);
+        let activeStepId = this.flow.steps.findIndex((step) => step.active);
+        this.deleteStep(activeStepId);
     }
 }

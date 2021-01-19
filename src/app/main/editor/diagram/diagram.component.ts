@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import * as fafa from '@fortawesome/free-solid-svg-icons';
 import { FlowService } from 'app/services/flow.service';
-import { IFlow, IFlowStep } from 'app/shared/interfaces/IFlow';
+import { IFlow, IFlowStep, IFlowStepType } from 'app/shared/interfaces/IFlow';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -16,9 +16,7 @@ export class DiagramComponent implements OnInit, OnDestroy {
     flowId: string;
     subsFlow: Subscription;
 
-    activeStepId: number;
-    activeStep: IFlowStep;
-    subsActiveStep: Subscription;
+    groups: IStepGroup[] = [];
 
     constructor(public flowService: FlowService) {}
 
@@ -26,17 +24,31 @@ export class DiagramComponent implements OnInit, OnDestroy {
         this.subsFlow = this.flowService.flow$.subscribe(({ flowId, flow }) => {
             this.flow = flow;
             this.flowId = flowId;
-        });
 
-        this.subsActiveStep = this.flowService.activeStep$.subscribe(({ activeStepId, activeStep }) => {
-            this.activeStep = activeStep;
-            this.activeStepId = activeStepId;
-            console.log(this.activeStepId);
+            this.groups = [];
+            let i = 0;
+            while (i < flow.steps.length) {
+                let step0 = flow.steps[i];
+                let group = { type: step0.type, steps: [step0] };
+                let j = i + 1;
+                while (j < flow.steps.length) {
+                    let step1 = flow.steps[j];
+                    if (step1.order !== step0.order) break;
+                    group.steps.push(step1);
+                    j++;
+                }
+                this.groups.push(group);
+                i = j;
+            }
         });
     }
 
     ngOnDestroy(): void {
         this.subsFlow.unsubscribe();
-        this.subsActiveStep.unsubscribe();
     }
+}
+
+interface IStepGroup {
+    type: IFlowStepType;
+    steps: IFlowStep[];
 }

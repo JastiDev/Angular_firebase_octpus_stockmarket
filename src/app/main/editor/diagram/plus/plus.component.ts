@@ -9,7 +9,7 @@ import { IFlowStepType } from 'app/shared/interfaces/IFlow';
 })
 export class PlusComponent {
     @Input() isLast: boolean;
-    @Input() stepId: number;
+    @Input() order: number;
 
     active = false;
 
@@ -45,6 +45,6 @@ export class PlusComponent {
     }
 
     addStep(type: IFlowStepType): void {
-        this.flowService.addStep(type, this.stepId);
+        this.flowService.addStep(type, this.order);
     }
 }

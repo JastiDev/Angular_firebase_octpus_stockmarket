@@ -21,6 +21,10 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSelectModule } from '@angular/material/select';
+
+import { SharedModule } from '../../shared/shared.module';
 
 import { StepsPanelComponent } from './steps-panel/steps-panel.component';
 import { DetailPanelComponent } from './detail-panel/detail-panel.component';
@@ -28,9 +32,7 @@ import { DiagramComponent } from './diagram/diagram.component';
 import { StepComponent } from './diagram/step/step.component';
 import { PlusComponent } from './diagram/plus/plus.component';
 import { ZoomControlComponent } from './zoom-control/zoom-control.component';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { SharedModule } from '../../shared/shared.module';
-import { MatSelectModule } from '@angular/material/select';
+import { StepGroupComponent } from './diagram/step-group/step-group.component';
 
 const routes: Routes = [
     {
@@ -40,7 +42,16 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    declarations: [EditorComponent, StepsPanelComponent, DetailPanelComponent, DiagramComponent, StepComponent, PlusComponent, ZoomControlComponent],
+    declarations: [
+        EditorComponent,
+        StepsPanelComponent,
+        DetailPanelComponent,
+        DiagramComponent,
+        StepComponent,
+        PlusComponent,
+        ZoomControlComponent,
+        StepGroupComponent,
+    ],
     imports: [
         RouterModule.forChild(routes),
         CommonModule,
