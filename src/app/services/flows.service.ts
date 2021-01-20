@@ -1,8 +1,10 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { IFlow } from 'app/shared/interfaces/IFlow';
 import { Subject } from 'rxjs';
 import { ApiService } from './api.service';
 import * as _ from 'lodash';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Injectable({
     providedIn: 'root',
@@ -11,7 +13,7 @@ export class FlowsService {
     flows: IFlow[];
     flows$ = new Subject<IFlow[]>();
 
-    constructor(private apiService: ApiService) {}
+    constructor(private apiService: ApiService, public ngZone: NgZone, private router: Router, private snackbar: MatSnackBar) {}
 
     private next(data?: IFlow | IFlow[]): void {
         if (data) {
@@ -59,6 +61,21 @@ export class FlowsService {
         }
 
         const flow = await this.apiService.getFlow(_id);
+
+        if (!flow) {
+            this.ngZone.run(() => {
+                this.router.navigate(['/pages/auth/login']);
+            });
+            // TODO: handle error
+            this.snackbar.open('Strategy not found with id: ' + _id, 'close', {
+                horizontalPosition: 'end',
+                verticalPosition: 'top',
+                duration: 5000,
+                panelClass: ['red-snackbar'],
+            });
+            this.router.navigate(['/home/strategies']);
+            return;
+        }
 
         this.next(flow);
 

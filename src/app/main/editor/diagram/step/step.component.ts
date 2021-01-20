@@ -8,14 +8,11 @@ import { Subscription } from 'rxjs';
     templateUrl: './step.component.html',
     styleUrls: ['./step.component.scss'],
 })
-export class StepComponent implements OnInit, OnDestroy {
+export class StepComponent {
     @Input() step: IFlowStep;
 
     dragCount = 0;
     constructor(public flowService: FlowService) {}
-
-    ngOnInit(): void {}
-    ngOnDestroy(): void {}
 
     onClickStep(event: MouseEvent): void {
         this.flowService.activeStep = this.step;
@@ -49,7 +46,7 @@ export class StepComponent implements OnInit, OnDestroy {
             const type: IFlowStepType = JSON.parse(event.dataTransfer.getData('dataValue'));
 
             if (type === 'signal') {
-                this.flowService.addStep(type, this.step.order);
+                this.flowService.addChild(type, this.step._id);
             }
         } else if (dataType === 'step') {
             const step = JSON.parse(event.dataTransfer.getData('dataValue'));

@@ -2,30 +2,33 @@
     class="group-container"
     id="group"
     [ngClass]="{
-        'step-buy': steps[0].type === 'buy',
-        'step-sell': steps[0].type === 'sell',
-        'step-signal': steps[0].type === 'signal',
-        expand: dragCounter > 0 || hasActive(steps, flowService.activeStep),
-        active: !flowService.activeStep || hasActive(steps, flowService.activeStep)
+        'step-buy': step.type === 'buy',
+        'step-sell': step.type === 'sell',
+        'step-signal': step.type === 'signal',
+        expand: dragCounter > 0 || hasActive(step, flowService.activeStep),
+        active: !flowService.activeStep || hasActive(step, flowService.activeStep)
     }"
     (dragenter)="onDragEnter($event)"
     (dragleave)="onDragLeave($event)"
     (dragover)="$event.preventDefault()"
     (drop)="onDropChild($event)"
-    (click)="$event.target.id == 'group' ? onClickStep(steps[0]) : null"
+    (click)="$event.target.id == 'group' ? onClickStep(step) : null"
 >
     <div class="center-container">
         <mat-card class="center-icon">
-            <fa-icon [icon]="steps[0].type | stepType: 'icon'"></fa-icon>
-            <label class="children-count">{{ steps.length }}</label>
+            <fa-icon [icon]="step.type | stepType: 'icon'"></fa-icon>
+            <label class="children-count">{{ step.children.length }}</label>
         </mat-card>
 
-        <span style="font-size: small">{{ steps[0].type | stepType: 'title' }}</span>
+        <strong style="color: blue; word-break: break-all">
+            {{ step.ticker }}
+        </strong>
+        <span *ngIf="!step.ticker" style="font-size: small">{{ step.type | stepType: 'title' }}</span>
     </div>
 
     <div class="children-container">
-        <ng-container *ngFor="let step of steps; let i = index">
-            <div class="child" [ngClass]="{ 'child-active': step._id == flowService.activeStep?._id }" (click)="onClickStep(step)">{{ i + 1 }}</div>
+        <ng-container *ngFor="let child of step.children; let i = index">
+            <div class="child" [ngClass]="{ 'child-active': child._id == flowService.activeStep?._id }" (click)="onClickStep(child)">{{ i + 1 }}</div>
         </ng-container>
     </div>
 </div>

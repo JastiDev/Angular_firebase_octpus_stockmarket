@@ -9,16 +9,13 @@
         (onMenuOpen)="active = true"
         (onMenuClose)="active = false"
     ></div>
-    <div id="line" *ngIf="!isLast"></div>
+    <div id="line" *ngIf="position > -1"></div>
 
     <mat-icon id="active_icon" *ngIf="active">add</mat-icon>
 
-    <mat-icon [ngClass]="{ icon: !isLast, visible_icon: isLast }">add</mat-icon>
+    <mat-icon [ngClass]="{ icon: position > -1, visible_icon: position == -1 }">add</mat-icon>
 
     <mat-menu #menu="matMenu">
-        <editor-steps-panel
-            [isMenu]="true"
-            (addStep)="addStep($event)"
-        ></editor-steps-panel>
+        <editor-steps-panel [isMenu]="true" (addStep)="addStep($event)"></editor-steps-panel>
     </mat-menu>
 </div>

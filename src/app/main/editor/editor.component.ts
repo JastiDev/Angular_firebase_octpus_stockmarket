@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Location } from '@angular/common';
 import { FuseConfigService } from '@fuse/services/config.service';
@@ -18,7 +18,7 @@ declare const EasyPZ;
     templateUrl: './editor.component.html',
     styleUrls: ['./editor.component.scss'],
 })
-export class EditorComponent implements OnInit, OnDestroy {
+export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     easypz;
     translateX = -7500;
     translateY = -7500;
@@ -71,31 +71,17 @@ export class EditorComponent implements OnInit, OnDestroy {
             }
 
             const flowId = paramMap.get('flowId');
-            const flow = await this.flowsService.getFlow(flowId);
-
-            if (!flow) {
-                // TODO: handle error
-                this.snackbar.open('Strategy not found with id: ' + flowId, 'close', {
-                    horizontalPosition: 'end',
-                    verticalPosition: 'top',
-                    duration: 5000,
-                    panelClass: ['red-snackbar'],
-                });
-                this.router.navigate(['/home/strategies']);
-                return;
-            }
-
-            this.flowService.setFlow(flowId, flow);
-
-            setTimeout(() => {
-                this.makeEasyPZ();
-            }, 4);
+            this.flowService.loadFlow(flowId);
         });
 
         this.subsFlow = this.flowService.flow$.subscribe(({ flowId, flow }) => {
             this.flowId = flowId;
             this.flow = flow;
         });
+    }
+
+    ngAfterViewInit(): void {
+        this.makeEasyPZ();
     }
 
     ngOnDestroy(): void {

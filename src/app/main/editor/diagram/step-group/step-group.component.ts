@@ -8,7 +8,7 @@ import { IFlowStep, IFlowStepType } from 'app/shared/interfaces/IFlow';
     styleUrls: ['./step-group.component.scss'],
 })
 export class StepGroupComponent implements OnInit {
-    @Input() steps: IFlowStep[];
+    @Input() step: IFlowStep;
 
     dragCounter = 0;
 
@@ -30,13 +30,13 @@ export class StepGroupComponent implements OnInit {
 
     onDropChild(event): void {
         event.preventDefault();
-
+        this.dragCounter--;
         const dataType = event.dataTransfer.getData('dataType');
         if (dataType === 'template') {
             const type: IFlowStepType = JSON.parse(event.dataTransfer.getData('dataValue'));
 
             if (type === 'signal') {
-                this.flowService.addStep(type, this.steps[0].order);
+                this.flowService.addChild(type, this.step._id);
             }
         } else if (dataType === 'step') {
             const step = JSON.parse(event.dataTransfer.getData('dataValue'));
@@ -44,7 +44,7 @@ export class StepGroupComponent implements OnInit {
         }
     }
 
-    hasActive(steps: IFlowStep[], activeStep: IFlowStep): boolean {
-        return activeStep && steps.findIndex((step) => step._id === activeStep._id) > -1;
+    hasActive(step: IFlowStep, activeStep: IFlowStep): boolean {
+        return activeStep && (step._id === activeStep._id || step.children.findIndex((x) => x._id === activeStep._id) > -1);
     }
 }
