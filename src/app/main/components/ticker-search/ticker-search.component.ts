@@ -26,7 +26,11 @@ export class TickerSearchComponent implements OnInit, OnDestroy, ControlValueAcc
     subscription: Subscription;
 
     value: string;
-
+    disabled = false;
+    updateValue(value: string): void {
+        this.value = value;
+        this.onChange();
+    }
     onChange: any = () => {};
     onTouch: any = () => {};
 
@@ -43,6 +47,10 @@ export class TickerSearchComponent implements OnInit, OnDestroy, ControlValueAcc
     // method to be triggered on component touch
     registerOnTouched(fn: any): void {
         this.onTouch = fn;
+    }
+
+    setDisabledState?(isDisabled: boolean): void {
+        this.disabled = isDisabled;
     }
 
     ngOnInit(): void {
@@ -73,7 +81,7 @@ export class TickerSearchComponent implements OnInit, OnDestroy, ControlValueAcc
     }
 
     onSelect(event: MatAutocompleteSelectedEvent): void {
-        this.onChange(event.option.value);
+        this.updateValue(event.option.value);
     }
 }
 

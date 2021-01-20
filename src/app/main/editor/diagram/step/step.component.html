@@ -2,27 +2,20 @@
     *ngIf="step"
     class="step-container"
     [ngClass]="{
-        stepContainer: true,
-        active: flowService.activeStep?._id == step._id
+        'step-buy': step.type === 'buy',
+        'step-sell': step.type === 'sell',
+        'step-signal': step.type === 'signal',
+        active: !flowService.activeStep || flowService.activeStep?._id == step._id,
+        expand: activeExpand
     }"
+    (dragenter)="onDragEnter($event)"
+    (dragleave)="onDragLeave($event)"
+    (dragover)="$event.preventDefault()"
+    (drop)="onDrop($event)"
+    (click)="onClickStep($event)"
 >
-    <mat-card
-        class="icon-circle"
-        [ngClass]="{
-            'icon-buy': step.type === 'buy',
-            'icon-sell': step.type === 'sell',
-            'icon-signal': step.type === 'signal'
-        }"
-        (click)="onClickStep($event)"
-        (dragstart)="onDragStart($event)"
-        (dragover)="$event.preventDefault()"
-        (dragenter)="onDragEnter($event)"
-        (dragleave)="onDragLeave($event)"
-        (drop)="onDrop($event)"
-        draggable="true"
-    >
+    <mat-card class="icon-circle">
         <fa-icon [icon]="step.type | stepType: 'icon'"></fa-icon>
-        <label class="children-count">{{ '' }}</label>
     </mat-card>
 
     <strong style="color: blue; word-break: break-all">

@@ -1,12 +1,14 @@
 <div
     class="group-container"
-    [ngClass]="getClass(steps[0].type, dragover || hasActive(steps, flowService.activeStep))"
+    id="group"
+    [ngClass]="getClass(steps[0].type, dragCounter > 0 || hasActive(steps, flowService.activeStep))"
     (dragenter)="onDragEnter($event)"
     (dragleave)="onDragLeave($event)"
     (dragover)="$event.preventDefault()"
     (drop)="onDropChild($event)"
+    (click)="$event.target.id == 'group' ? onClickStep(steps[0]) : null"
 >
-    <div class="center-container" (click)="onClickStep(steps[0])">
+    <div class="center-container">
         <mat-card class="center-icon">
             <fa-icon [icon]="steps[0].type | stepType: 'icon'"></fa-icon>
             <label class="children-count">{{ steps.length }}</label>

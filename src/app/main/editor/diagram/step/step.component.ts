@@ -11,6 +11,7 @@ import { Subscription } from 'rxjs';
 export class StepComponent implements OnInit, OnDestroy {
     @Input() step: IFlowStep;
 
+    activeExpand = false;
     constructor(public flowService: FlowService) {}
 
     ngOnInit(): void {}
@@ -32,13 +33,15 @@ export class StepComponent implements OnInit, OnDestroy {
 
     onDragEnter(event: any): void {
         const element: HTMLElement = event.target;
-        if (element.classList.contains('step-container')) {
-        }
+
+        this.activeExpand = true;
     }
 
     onDragLeave(event: any): void {
         const element: HTMLElement = event.target;
         if (element.classList.contains('step-container')) {
+            this.activeExpand = false;
+            console.log('! expand');
         }
     }
 

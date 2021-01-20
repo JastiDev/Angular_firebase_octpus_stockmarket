@@ -1,6 +1,6 @@
 <mat-form-field appearance="outline" style="width: 100%">
     <mat-label>Ticker</mat-label>
-    <input matInput type="text" placeholder="search ticker" [matAutocomplete]="auto" [formControl]="searchControl" [value]="value" />
+    <input matInput type="text" placeholder="search ticker" [matAutocomplete]="auto" [formControl]="searchControl" [(ngModel)]="value" />
     <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [panelWidth]="'400px'" (optionSelected)="onSelect($event)">
         <mat-option *ngIf="isLoading">Loading...</mat-option>
         <ng-container *ngIf="!isLoading">

@@ -10,8 +10,7 @@ import { IFlowStep, IFlowStepType } from 'app/shared/interfaces/IFlow';
 export class StepGroupComponent implements OnInit {
     @Input() steps: IFlowStep[];
 
-    dragover = false;
-    private isAnimating = false;
+    dragCounter = 0;
 
     constructor(public flowService: FlowService) {}
 
@@ -31,31 +30,11 @@ export class StepGroupComponent implements OnInit {
     }
 
     onDragEnter(event: any): void {
-        if (this.isAnimating) {
-            return;
-        }
-        const element: HTMLElement = event.target;
-        if (element.classList.contains('group-container')) {
-            this.isAnimating = true;
-            setTimeout(() => {
-                this.isAnimating = false;
-            }, 600);
-            this.dragover = true;
-        }
+        this.dragCounter++;
     }
 
     onDragLeave(event: any): void {
-        if (this.isAnimating) {
-            return;
-        }
-        const element: HTMLElement = event.target;
-        if (element.classList.contains('group-container')) {
-            this.isAnimating = true;
-            setTimeout(() => {
-                this.isAnimating = false;
-            }, 600);
-            this.dragover = false;
-        }
+        this.dragCounter--;
     }
 
     onDropChild(event): void {

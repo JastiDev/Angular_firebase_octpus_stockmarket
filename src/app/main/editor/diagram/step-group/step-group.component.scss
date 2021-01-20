@@ -35,6 +35,7 @@
     border: none;
     border-radius: 50%;
     opacity: 0.3;
+    cursor: pointer;
 
     transition-property: width, height;
     transition-timing-function: ease-in-out;
@@ -48,10 +49,11 @@
     .center-container,
     .children-container {
         position: absolute;
+        user-select: none;
+        pointer-events: none;
     }
 
     .center-container {
-        cursor: pointer;
         text-align: center;
 
         .center-icon {
@@ -76,8 +78,6 @@
         width: 0;
         height: 0;
         overflow: hidden;
-        user-select: none;
-        pointer-events: none;
         .child {
             width: 0;
             height: 0;

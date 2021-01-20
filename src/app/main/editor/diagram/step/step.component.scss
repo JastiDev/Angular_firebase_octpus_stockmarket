@@ -1,39 +1,3 @@
-@mixin on-circle($item-count, $circle-size, $item-size) {
-    position: relative;
-    width: $circle-size;
-    height: $circle-size;
-    padding: 0;
-    border-radius: 50%;
-    list-style: none;
-
-    .circle-child {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        border-radius: 50%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 0 0;
-
-        width: $item-size;
-        height: $item-size;
-        margin: -($item-size / 2);
-
-        $angle: (360 / $item-count);
-        $rot: 0;
-
-        @for $i from 1 through $item-count {
-            &:nth-of-type(#{$i + 1}) {
-                transform: rotate($rot * 1deg) translate($circle-size / 2) rotate($rot * -1deg);
-            }
-
-            $rot: $rot + $angle;
-        }
-    }
-}
-
 .step-container {
     display: flex;
     flex-direction: column;
@@ -43,49 +7,27 @@
     opacity: 0.3;
     width: 80px;
     height: 80px;
+    border-radius: 50%;
+    border: none;
     position: relative;
 
     transition-property: width, height;
     transition-timing-function: ease-in-out;
     transition-duration: 600ms;
-    // transition-delay: 500ms;
-
-    .circle-child {
-        display: flex;
-        overflow: hidden;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        border-radius: 50%;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 0 0;
-
-        width: 0px;
-        height: 0px;
-        margin: 0px;
-
-        transition-property: width, height, top, left, transform;
-        transition-timing-function: ease-in-out;
-        transition-duration: 600ms;
-    }
 
     &.active {
         opacity: 1;
     }
 
-    &.activeExpand {
-        @include on-circle($item-count: 12, $circle-size: 120px, $item-size: 30px);
+    &.expand {
         width: 160px;
         height: 160px;
-        border: 3px solid blue;
-        .circle-child {
-            display: flex;
-        }
+        opacity: 1;
+        border: 3px solid;
     }
 
-    span {
+    span,
+    strong {
         user-select: none;
         pointer-events: none;
     }
@@ -99,22 +41,29 @@
         font-size: larger;
         width: 50px;
         height: 50px;
+        user-select: none;
+        pointer-events: none;
     }
 
-    .icon-buy {
-        color: white;
-        background-color: orange;
+    &.step-buy {
+        border-color: orange;
+        .icon-circle {
+            color: white;
+            background-color: orange;
+        }
     }
-    .icon-sell {
-        color: white;
-        background-color: green;
+    &.step-sell {
+        border-color: green;
+        .icon-circle {
+            color: white;
+            background-color: green;
+        }
     }
-    .icon-signal {
-        color: white;
-        background-color: blue;
-    }
-
-    .children-count {
-        font-size: smaller;
+    &.step-signal {
+        border-color: blue;
+        .icon-circle {
+            color: white;
+            background-color: blue;
+        }
     }
 }
