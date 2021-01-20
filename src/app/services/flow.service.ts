@@ -59,12 +59,8 @@ export class FlowService {
 
     sortStepsByOrder(): void {
         this.flow.steps.sort((x, y) => {
-            if (x.order > y.order) {
-                return 1;
-            }
-            if (x.order === y.order) {
-                return 0;
-            }
+            if (x.order > y.order) return 1;
+            if (x.order === y.order) return 0;
             return -1;
         });
         let order = 0;

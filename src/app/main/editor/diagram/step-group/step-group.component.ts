@@ -35,7 +35,7 @@ export class StepGroupComponent implements OnInit {
         if (dataType === 'template') {
             const type: IFlowStepType = JSON.parse(event.dataTransfer.getData('dataValue'));
 
-            if (type === this.steps[0].type) {
+            if (type === 'signal') {
                 this.flowService.addStep(type, this.steps[0].order);
             }
         } else if (dataType === 'step') {

@@ -31,7 +31,7 @@ export class TickerSearchComponent implements OnInit, OnDestroy, ControlValueAcc
         if (this.searchControl.value !== v) this.searchControl.setValue(v);
     }
 
-    get value() {
+    get value(): string {
         return this.val;
     }
 

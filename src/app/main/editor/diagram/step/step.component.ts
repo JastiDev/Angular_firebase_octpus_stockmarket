@@ -48,7 +48,7 @@ export class StepComponent implements OnInit, OnDestroy {
         if (dataType === 'template') {
             const type: IFlowStepType = JSON.parse(event.dataTransfer.getData('dataValue'));
 
-            if (type === this.step.type) {
+            if (type === 'signal') {
                 this.flowService.addStep(type, this.step.order);
             }
         } else if (dataType === 'step') {

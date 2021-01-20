@@ -87,8 +87,7 @@
 
 .group-container.step-buy {
     border-color: orange !important;
-    .center-icon,
-    .child {
+    .center-icon {
         color: white;
         background-color: orange;
     }
@@ -96,8 +95,7 @@
 
 .group-container.step-sell {
     border-color: green !important;
-    .center-icon,
-    .child {
+    .center-icon {
         color: white;
         background-color: green;
     }
@@ -105,8 +103,7 @@
 
 .group-container.step-signal {
     border-color: blue !important;
-    .center-icon,
-    .child {
+    .center-icon {
         color: white;
         background-color: blue;
     }
@@ -135,6 +132,9 @@
             cursor: pointer;
             pointer-events: all;
             opacity: 0.7;
+
+            color: white;
+            background-color: blue;
 
             transition-property: width, height, top, left, transform;
             transition-timing-function: ease-in-out;

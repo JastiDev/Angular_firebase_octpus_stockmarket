@@ -2,53 +2,25 @@
     "extends": "tslint:recommended",
     "rules": {
         "align": {
-            "options": [
-                "parameters",
-                "statements"
-            ]
+            "options": ["parameters", "statements"]
         },
         "array-type": false,
         "arrow-parens": false,
         "arrow-return-shorthand": true,
-        "curly": true,
+        "curly": false,
         "deprecation": {
             "severity": "warning"
         },
         "component-class-suffix": true,
         "contextual-lifecycle": true,
         "directive-class-suffix": true,
-        "directive-selector": [
-            true,
-            "attribute",
-            [
-                "fuse",
-                ""
-            ],
-            "camelCase"
-        ],
-        "component-selector": [
-            true,
-            "element",
-            "attribute",
-            [
-                "fuse",
-                ""
-            ],
-            [
-                "kebab-case",
-                "camelCase"
-            ]
-        ],
+        "directive-selector": [true, "attribute", ["fuse", ""], "camelCase"],
+        "component-selector": [true, "element", "attribute", ["fuse", ""], ["kebab-case", "camelCase"]],
         "eofline": true,
-        "import-blacklist": [
-            true,
-            "rxjs/Rx"
-        ],
+        "import-blacklist": [true, "rxjs/Rx"],
         "import-spacing": true,
         "indent": {
-            "options": [
-                "spaces"
-            ]
+            "options": ["spaces"]
         },
         "interface-name": false,
         "max-classes-per-file": false,
@@ -63,28 +35,13 @@
         "member-ordering": [
             true,
             {
-                "order": [
-                    "static-field",
-                    "instance-field",
-                    "static-method",
-                    "instance-method"
-                ]
+                "order": ["static-field", "instance-field", "static-method", "instance-method"]
             }
         ],
         "no-consecutive-blank-lines": false,
-        "no-console": [
-            true,
-            "debug",
-            "info",
-            "time",
-            "timeEnd",
-            "trace"
-        ],
+        "no-console": [true, "debug", "info", "time", "timeEnd", "trace"],
         "no-empty": false,
-        "no-inferrable-types": [
-            true,
-            "ignore-params"
-        ],
+        "no-inferrable-types": [true, "ignore-params"],
         "no-non-null-assertion": true,
         "no-string-literal": false,
         "no-switch-case-fall-through": true,
@@ -94,10 +51,7 @@
         "object-literal-sort-keys": false,
         "one-line": false,
         "ordered-imports": false,
-        "quotemark": [
-            true,
-            "single"
-        ],
+        "quotemark": [true, "single"],
         "semicolon": false,
         "space-before-function-paren": {
             "options": {
@@ -108,11 +62,7 @@
                 "named": "never"
             }
         },
-        "typedef": [
-            true,
-            "call-signature",
-            "property-declaration"
-        ],
+        "typedef": [true, "call-signature", "property-declaration"],
         "trailing-comma": false,
         "no-conflicting-lifecycle": true,
         "no-host-metadata-property": true,
@@ -144,16 +94,8 @@
         },
         "use-lifecycle-interface": true,
         "use-pipe-transform-interface": true,
-        "variable-name": [
-            true,
-            "ban-keywords",
-            "check-format",
-            "allow-pascal-case",
-            "allow-leading-underscore"
-        ],
+        "variable-name": [true, "ban-keywords", "check-format", "allow-pascal-case", "allow-leading-underscore"],
         "whitespace": false
     },
-    "rulesDirectory": [
-        "codelyzer"
-    ]
+    "rulesDirectory": ["codelyzer"]
 }
