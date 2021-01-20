@@ -66,6 +66,5 @@ export class DetailPanelComponent implements OnChanges {
         }
 
         this.flowService.updateStep(this.step._id, this.form.value);
-        this.close();
     }
 }

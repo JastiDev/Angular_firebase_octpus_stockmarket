@@ -6,7 +6,7 @@
         'step-sell': step.type === 'sell',
         'step-signal': step.type === 'signal',
         active: !flowService.activeStep || flowService.activeStep?._id == step._id,
-        expand: activeExpand
+        expand: dragCount > 0
     }"
     (dragenter)="onDragEnter($event)"
     (dragleave)="onDragLeave($event)"

@@ -25,12 +25,16 @@ export class TickerSearchComponent implements OnInit, OnDestroy, ControlValueAcc
     errMsg: string;
     subscription: Subscription;
 
-    value: string;
-    disabled = false;
-    updateValue(value: string): void {
-        this.value = value;
-        this.onChange();
+    val: string;
+    set value(v) {
+        this.val = v;
+        if (this.searchControl.value !== v) this.searchControl.setValue(v);
     }
+
+    get value() {
+        return this.val;
+    }
+
     onChange: any = () => {};
     onTouch: any = () => {};
 
@@ -49,13 +53,12 @@ export class TickerSearchComponent implements OnInit, OnDestroy, ControlValueAcc
         this.onTouch = fn;
     }
 
-    setDisabledState?(isDisabled: boolean): void {
-        this.disabled = isDisabled;
-    }
-
     ngOnInit(): void {
         this.subscription = this.searchControl.valueChanges.pipe(debounceTime(500)).subscribe((x) => {
             this.filteredArr = [];
+            if (x === '') {
+                return;
+            }
             this.isLoading = true;
             this.search(x).subscribe(
                 (arr) => {
@@ -81,7 +84,8 @@ export class TickerSearchComponent implements OnInit, OnDestroy, ControlValueAcc
     }
 
     onSelect(event: MatAutocompleteSelectedEvent): void {
-        this.updateValue(event.option.value);
+        this.value = event.option.value;
+        this.onChange(this.value);
     }
 }
 

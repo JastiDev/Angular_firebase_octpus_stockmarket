@@ -16,15 +16,6 @@ export class StepGroupComponent implements OnInit {
 
     ngOnInit(): void {}
 
-    getClass(type: IFlowStepType, hasActive: boolean): any {
-        return {
-            'step-buy': type === 'buy',
-            'step-sell': type === 'sell',
-            'step-signal': type === 'signal',
-            'has-active': hasActive,
-        };
-    }
-
     onClickStep(step: IFlowStep): void {
         this.flowService.activeStep = step;
     }

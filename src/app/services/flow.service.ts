@@ -112,7 +112,6 @@ export class FlowService {
             return v;
         });
 
-        this.sortStepsByOrder();
         this.unsavedChanges = true;
         this.nextFlow();
     }

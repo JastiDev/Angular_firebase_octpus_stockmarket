@@ -1,7 +1,13 @@
 <div
     class="group-container"
     id="group"
-    [ngClass]="getClass(steps[0].type, dragCounter > 0 || hasActive(steps, flowService.activeStep))"
+    [ngClass]="{
+        'step-buy': steps[0].type === 'buy',
+        'step-sell': steps[0].type === 'sell',
+        'step-signal': steps[0].type === 'signal',
+        expand: dragCounter > 0 || hasActive(steps, flowService.activeStep),
+        active: !flowService.activeStep || hasActive(steps, flowService.activeStep)
+    }"
     (dragenter)="onDragEnter($event)"
     (dragleave)="onDragLeave($event)"
     (dragover)="$event.preventDefault()"
