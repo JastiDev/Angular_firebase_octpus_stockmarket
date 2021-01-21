@@ -75,7 +75,7 @@ export class ApiService {
                     horizontalPosition: 'end',
                     verticalPosition: 'top',
                     duration: 3000,
-                    panelClass: ['red-snackbar'],
+                    panelClass: ['green-snackbar'],
                 });
             });
         }

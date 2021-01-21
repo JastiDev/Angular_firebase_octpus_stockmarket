@@ -1,6 +1,6 @@
 <!-- TODO loader -->
 <ng-template #loading>
-    <mat-spinner color="accent"></mat-spinner>
+    <mat-progress-bar mode="indeterminate" color="primary"></mat-progress-bar>
 </ng-template>
 
 <div class="page-layout simple p-24">
@@ -25,21 +25,21 @@
                     <div style="display: flex; justify-content: center; margin-top: 50px">
                         <mat-form-field appearance="outline" [style]="{ width: '400px' }">
                             <mat-label>BASE_URL</mat-label>
-                            <input matInput value="{{ app.baseUrl }}" />
+                            <input matInput [(ngModel)]="app.baseUrl" />
                             <mat-error> Base url is required </mat-error>
                         </mat-form-field>
                     </div>
                     <div style="display: flex; justify-content: center">
                         <mat-form-field appearance="outline" [style]="{ width: '400px' }">
                             <mat-label>KEY_ID</mat-label>
-                            <input matInput value="{{ app.key }}" />
+                            <input matInput [(ngModel)]="app.key" />
                             <mat-error> Key id is required </mat-error>
                         </mat-form-field>
                     </div>
                     <div style="display: flex; justify-content: center">
                         <mat-form-field appearance="outline" [style]="{ width: '400px' }">
                             <mat-label>SECRET_KEY</mat-label>
-                            <input matInput value="{{ app.secret }}" />
+                            <input matInput [(ngModel)]="app.secret" />
                             <mat-error> Secret key is required </mat-error>
                         </mat-form-field>
                     </div>

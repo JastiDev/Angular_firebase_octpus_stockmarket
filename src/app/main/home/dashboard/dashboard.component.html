@@ -5,29 +5,6 @@
         <!-- / HEADER -->
 
         <!-- CONTENT -->
-        <!-- <div class="content p-24" style="text-align: center">
-            <mat-card-title>
-                <h1>Create your own strategy</h1>
-                <h4>Know exactly what you want to build? Select the steps you want to connect to start your custom setup.</h4>
-            </mat-card-title>
-            <mat-card-content>
-                <div style="display: flex">
-                    <div style="flex: 1">
-                        <dash-select-step [step]="step0" (stepChanged)="step0 = $event"></dash-select-step>
-                    </div>
-                    <div id="arrow_right">
-                        <mat-icon inline="true">chevron_right</mat-icon>
-                    </div>
-                    <div style="flex: 1">
-                        <dash-select-step [step]="step1" (stepChanged)="step1 = $event"></dash-select-step>
-                    </div>
-                </div>
-
-                <div *ngIf="step0 && step1" style="display: flex; justify-content: center; padding-top: 100px">
-                    <button mat-raised-button color="warn" (click)="onClickMakeFlow()">Make Strategy</button>
-                </div>
-            </mat-card-content>
-        </div> -->
 
         <div class="content p-24">
             <div class="p-24">
@@ -40,13 +17,13 @@
                         <div class="popular-icon-wraper" [style.color]="c.color">
                             <div class="popular-icon-outer"></div>
                             <div class="popular-icon-inner"></div>
-    
+
                             <fa-icon [icon]="fafa[c.icon]" size="2x"></fa-icon>
                         </div>
-    
-                        <div class="popular-title">{{c.title}}</div>
+
+                        <div class="popular-title">{{ c.title }}</div>
                         <div class="popular-button">Use strategy</div>
-                        <div class="popular-description">Used by {{c.usedBy}} people</div>
+                        <div class="popular-description">Used by {{ c.usedBy }} people</div>
                     </div>
                 </div>
             </div>

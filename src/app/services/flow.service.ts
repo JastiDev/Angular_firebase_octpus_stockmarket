@@ -1,9 +1,11 @@
 import { Injectable, NgZone } from '@angular/core';
-import { ApiService } from 'app/services/api.service';
 import { IFlow, IFlowStep, IFlowStepType } from 'app/shared/interfaces/IFlow';
 import { Subject } from 'rxjs';
 import * as _ from 'lodash';
 import { FlowsService } from 'app/services/flows.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
+const MAX_CHILDREN = 12;
 
 @Injectable({
     providedIn: 'root',
@@ -16,7 +18,7 @@ export class FlowService {
     activeStep: IFlowStep;
     unsavedChanges = false;
 
-    constructor(private apiService: ApiService, private flowsService: FlowsService) {}
+    constructor(private flowsService: FlowsService, public ngZone: NgZone, private snackbar: MatSnackBar) {}
 
     /** Flow */
     private nextFlow(): void {
@@ -138,6 +140,17 @@ export class FlowService {
             const parent = this.flow.steps.find((x) => x._id === parentId);
             if (!parent) return;
             if (!parent.children) parent.children = [];
+            if (parent.children.length === MAX_CHILDREN) {
+                this.ngZone.run(() => {
+                    this.snackbar.open('Can not add more than 12 children', 'close', {
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top',
+                        duration: 5000,
+                        panelClass: ['red-snackbar'],
+                    });
+                });
+                return;
+            }
             parent.children.push(step);
         }
 

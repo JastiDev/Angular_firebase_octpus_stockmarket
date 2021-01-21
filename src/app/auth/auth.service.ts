@@ -64,10 +64,7 @@ export class AuthService {
 
     // tslint:disable-next-line:typedef
     emailSignIn(credentials: ISignInCredentials) {
-        return this.auth.signInWithEmailAndPassword(
-            credentials.email,
-            credentials.password
-        );
+        return this.auth.signInWithEmailAndPassword(credentials.email, credentials.password);
     }
 
     async signOut(): Promise<void> {
@@ -79,18 +76,13 @@ export class AuthService {
 
     // tslint:disable-next-line:typedef
     emailSignUp(credentials: ICreateCredentials) {
-        return this.auth
-            .createUserWithEmailAndPassword(
-                credentials.email,
-                credentials.password
-            )
-            .then(async ({ user }) => {
-                user.updateProfile({
-                    displayName: credentials.displayName,
-                });
-                this.auth.updateCurrentUser(user);
-                return user;
+        return this.auth.createUserWithEmailAndPassword(credentials.email, credentials.password).then(async ({ user }) => {
+            user.updateProfile({
+                displayName: credentials.displayName,
             });
+            this.auth.updateCurrentUser(user);
+            return user;
+        });
     }
 
     updateProfile(displayName: string, photoURL: string = ''): void {
@@ -180,8 +172,10 @@ export class AuthService {
                 }, 500);
             })
             .catch((error) => {
-                this.snack.open('Failed: ' + error.message, 'Dismiss', {
-                    duration: 5000,
+                this.ngZone.run(() => {
+                    this.snack.open('Failed: ' + error.message, 'Dismiss', {
+                        duration: 5000,
+                    });
                 });
             });
     }
@@ -197,8 +191,10 @@ export class AuthService {
                 }, 500);
             })
             .catch((error) => {
-                this.snack.open('Failed: ' + error.message, 'Dismiss', {
-                    duration: 5000,
+                this.ngZone.run(() => {
+                    this.snack.open('Failed: ' + error.message, 'Dismiss', {
+                        duration: 5000,
+                    });
                 });
             });
     }
@@ -212,10 +208,8 @@ export class AuthService {
 
     // tslint:disable-next-line:typedef
     resetPassword(credentials: IPasswordReset) {
-        return this.auth
-            .confirmPasswordReset(credentials.code, credentials.newPassword)
-            .then((data) => {
-                return data;
-            });
+        return this.auth.confirmPasswordReset(credentials.code, credentials.newPassword).then((data) => {
+            return data;
+        });
     }
 }

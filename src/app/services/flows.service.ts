@@ -64,16 +64,15 @@ export class FlowsService {
 
         if (!flow) {
             this.ngZone.run(() => {
-                this.router.navigate(['/pages/auth/login']);
+                this.snackbar.open('Strategy not found with id: ' + _id, 'close', {
+                    horizontalPosition: 'end',
+                    verticalPosition: 'top',
+                    duration: 5000,
+                    panelClass: ['red-snackbar'],
+                });
+                this.router.navigate(['/home/strategies']);
             });
-            // TODO: handle error
-            this.snackbar.open('Strategy not found with id: ' + _id, 'close', {
-                horizontalPosition: 'end',
-                verticalPosition: 'top',
-                duration: 5000,
-                panelClass: ['red-snackbar'],
-            });
-            this.router.navigate(['/home/strategies']);
+
             return;
         }
 
