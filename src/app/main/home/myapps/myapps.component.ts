@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IAccount } from 'app/shared/interfaces/IAccount';
+import { IAccount, IAccountApp } from 'app/shared/interfaces/IAccount';
 import { AccountService } from '../../../services/account.service';
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -12,8 +12,6 @@ import * as _ from 'lodash';
     styleUrls: ['./myapps.component.scss'],
 })
 export class MyappsComponent implements OnInit {
-    hideKeyId = true;
-    hideSecretKey = true;
     account: IAccount;
 
     typeOptions = [
@@ -24,7 +22,6 @@ export class MyappsComponent implements OnInit {
     constructor(private accountService: AccountService) {
         this.accountService.account$.pipe(untilDestroyed(this)).subscribe((acc) => {
             this.account = acc;
-            console.log(acc);
         });
     }
 
@@ -32,9 +29,19 @@ export class MyappsComponent implements OnInit {
         this.accountService.fetchAccount();
     }
 
-    save(): void {
-        this.accountService.updateAccount({
+    onClickReset(app: IAccountApp) {
+        if (window.confirm('Reset app? Current data will be lost.')) {
+            app.editable = true;
+            app.key = '';
+            app.secret = '';
+        }
+    }
+
+    async save(app: IAccountApp): Promise<void> {
+        app.editable = false;
+        let newAccount = await this.accountService.updateAccount({
             apps: this.account.apps,
         });
+        console.log(newAccount);
     }
 }

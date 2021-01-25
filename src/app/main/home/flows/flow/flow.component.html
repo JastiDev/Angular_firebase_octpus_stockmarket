@@ -1,10 +1,12 @@
 <mat-card class="mt-12 card" style="display: flex; align-items: stretch; border: 1px solid lightgray; box-shadow: none">
     <a href="#" [routerLink]="['/editor', flow._id]" style="flex: 1; display: flex; align-items: center; cursor: pointer">
         <strong>{{ flow.title }}</strong>
+        <div style="margin-left: 50px"><main-flow-status [status]="flow.status"></main-flow-status></div>
     </a>
+
     <div style="margin-left: 50px; display: flex; align-items: center">
         <mat-slide-toggle
-            [checked]="flow.status === 'active'"
+            [checked]="!flowService.isEditable(flow)"
             (change)="flowsService.updateFlow(flow._id, { status: $event.checked ? 'active' : 'stopped' })"
         ></mat-slide-toggle>
 
@@ -18,14 +20,19 @@
 
         <mat-menu #menu="matMenu">
             <div style="width: 250px">
-                <button mat-menu-item *ngIf="flow.status == 'stopped' || flow.status == 'finished'" (click)="action.emit(FlowAction.EDIT)">
-                    <mat-icon>edit</mat-icon>
-                    <span>Edit</span>
-                </button>
-                <button mat-menu-item *ngIf="flow.status == 'active' || flow.status == 'paused'" (click)="action.emit(FlowAction.EDIT)">
-                    <mat-icon>remove_red_eye</mat-icon>
-                    <span>View</span>
-                </button>
+                <ng-container *ngIf="flowService.isEditable(flow); else elseTemplate">
+                    <button mat-menu-item (click)="action.emit(FlowAction.EDIT)">
+                        <mat-icon>edit</mat-icon>
+                        <span>Edit</span>
+                    </button>
+                </ng-container>
+                <ng-template #elseTemplate>
+                    <button mat-menu-item (click)="action.emit(FlowAction.EDIT)">
+                        <mat-icon>remove_red_eye</mat-icon>
+                        <span>View</span>
+                    </button>
+                </ng-template>
+
                 <button mat-menu-item (click)="action.emit(FlowAction.RENAME)">
                     <mat-icon>title</mat-icon>
                     <span>Rename</span>

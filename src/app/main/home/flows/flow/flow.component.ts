@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { FlowService } from 'app/services/flow.service';
 import { FlowsService } from 'app/services/flows.service';
 import { IFlow, IFlowStatus } from 'app/shared/interfaces/IFlow';
 import { FlowAction } from '../flows.component';
@@ -14,6 +15,6 @@ export class FlowComponent implements OnChanges {
     @Input() flow: IFlow;
     @Output() action = new EventEmitter<FlowAction>();
 
-    constructor(public flowsService: FlowsService) {}
+    constructor(public flowsService: FlowsService, public flowService: FlowService) {}
     ngOnChanges(changes: SimpleChanges): void {}
 }

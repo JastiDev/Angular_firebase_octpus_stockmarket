@@ -30,7 +30,7 @@ export class FlowService {
     }
 
     isEditable(flow: IFlow): boolean {
-        return flow && flow.status !== 'active' && flow.status !== 'paused';
+        return flow && flow.status !== 'active';
     }
 
     async loadFlow(flowId: string): Promise<void> {
@@ -42,8 +42,8 @@ export class FlowService {
         this.nextFlow();
     }
 
-    async saveFlow(): Promise<void> {
-        if (this.flow.status === 'active' || this.flow.status === 'paused') {
+    async saveFlow(forced = false): Promise<void> {
+        if (!forced && !this.isEditable(this.flow)) {
             this.ngZone.run(() => {
                 this.snackbar.open('Only stopped or finished strategies can be edited', 'close', {
                     horizontalPosition: 'end',

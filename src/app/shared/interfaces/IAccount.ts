@@ -3,7 +3,8 @@ export interface IAccountApp {
     baseUrl?: string;
     key?: string;
     secret?: string;
-    type: 'paper' | 'live';
+    type?: 'paper' | 'live';
+    editable?: boolean;
 }
 
 export interface IAccount {

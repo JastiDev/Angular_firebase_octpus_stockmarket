@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { TickerSearchModule } from 'app/main/components/ticker-search/ticker-search.module';
+import { FlowStatusModule } from 'app/main/components/flow-status/flow-status.module';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -61,6 +62,7 @@ const routes: Routes = [
         FontAwesomeModule,
 
         TickerSearchModule,
+        FlowStatusModule,
 
         MatCardModule,
         MatListModule,

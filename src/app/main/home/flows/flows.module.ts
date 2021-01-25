@@ -21,6 +21,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DetailsComponent } from './details/details.component';
 import { AuthGuard } from '../../../auth/auth.guard';
+import { FlowStatusModule } from 'app/main/components/flow-status/flow-status.module';
 
 const routes: Routes = [{ path: 'strategies', canActivate: [AuthGuard], component: FlowsComponent }];
 
@@ -46,6 +47,8 @@ const routes: Routes = [{ path: 'strategies', canActivate: [AuthGuard], componen
         MatProgressBarModule,
 
         FontAwesomeModule,
+
+        FlowStatusModule,
     ],
 })
 export class FlowsModule {}
