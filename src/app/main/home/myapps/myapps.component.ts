@@ -12,11 +12,19 @@ import * as _ from 'lodash';
     styleUrls: ['./myapps.component.scss'],
 })
 export class MyappsComponent implements OnInit {
+    hideKeyId = true;
+    hideSecretKey = true;
     account: IAccount;
+
+    typeOptions = [
+        { label: 'Paper', value: 'paper' },
+        { label: 'Live', value: 'live' },
+    ];
 
     constructor(private accountService: AccountService) {
         this.accountService.account$.pipe(untilDestroyed(this)).subscribe((acc) => {
             this.account = acc;
+            console.log(acc);
         });
     }
 

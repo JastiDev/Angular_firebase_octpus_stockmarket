@@ -1,7 +1,7 @@
 :host {
     background: white;
     .header {
-        font-family: "Open Sans", sans-serif;
+        font-family: 'Open Sans', sans-serif;
         font-size: 40px;
         font-weight: 800;
         letter-spacing: -1px;
@@ -14,7 +14,11 @@
         margin-right: 10px;
     }
 
-    mat-form-field{
+    mat-form-field {
         width: 100%;
+    }
+
+    .clickable:hover {
+        cursor: pointer;
     }
 }

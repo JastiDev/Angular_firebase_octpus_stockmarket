@@ -45,7 +45,7 @@
                 </ng-container>
             </mat-card-content>
 
-            <mat-card-footer style="display: flex; justify-content: flex-end; margin: 0">
+            <mat-card-footer style="display: flex; justify-content: flex-end; margin: 0" *ngIf="editable">
                 <button type="button" mat-raised-button color="warn" (click)="delete()">Delete</button>
                 <button type="button" mat-raised-button [disabled]="form.invalid" color="primary" style="margin-left: 1rem" (click)="save()">
                     Save

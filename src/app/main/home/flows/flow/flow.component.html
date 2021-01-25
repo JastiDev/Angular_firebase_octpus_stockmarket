@@ -3,7 +3,10 @@
         <strong>{{ flow.title }}</strong>
     </a>
     <div style="margin-left: 50px; display: flex; align-items: center">
-        <mat-slide-toggle [checked]="flow.status === 'active'" (change)="flowService.updateFlow(flow, { status: $event.checked ? 'active' : 'stopped' })"></mat-slide-toggle>
+        <mat-slide-toggle
+            [checked]="flow.status === 'active'"
+            (change)="flowsService.updateFlow(flow._id, { status: $event.checked ? 'active' : 'stopped' })"
+        ></mat-slide-toggle>
 
         <div matTooltip="Details" matTooltipClass="mytooltip" class="info-button" (click)="action.emit(FlowAction.INFO)">
             <mat-icon>info</mat-icon>
@@ -15,9 +18,13 @@
 
         <mat-menu #menu="matMenu">
             <div style="width: 250px">
-                <button mat-menu-item (click)="action.emit(FlowAction.EDIT)">
+                <button mat-menu-item *ngIf="flow.status == 'stopped' || flow.status == 'finished'" (click)="action.emit(FlowAction.EDIT)">
                     <mat-icon>edit</mat-icon>
                     <span>Edit</span>
+                </button>
+                <button mat-menu-item *ngIf="flow.status == 'active' || flow.status == 'paused'" (click)="action.emit(FlowAction.EDIT)">
+                    <mat-icon>remove_red_eye</mat-icon>
+                    <span>View</span>
                 </button>
                 <button mat-menu-item (click)="action.emit(FlowAction.RENAME)">
                     <mat-icon>title</mat-icon>

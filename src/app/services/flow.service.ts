@@ -29,6 +29,10 @@ export class FlowService {
         return this.flow;
     }
 
+    isEditable(flow: IFlow): boolean {
+        return flow && flow.status !== 'active' && flow.status !== 'paused';
+    }
+
     async loadFlow(flowId: string): Promise<void> {
         this.flowId = flowId;
         const flow = await this.flowsService.getFlow(flowId);
@@ -39,6 +43,16 @@ export class FlowService {
     }
 
     async saveFlow(): Promise<void> {
+        if (this.flow.status === 'active' || this.flow.status === 'paused') {
+            this.ngZone.run(() => {
+                this.snackbar.open('Only stopped or finished strategies can be edited', 'close', {
+                    horizontalPosition: 'end',
+                    verticalPosition: 'top',
+                    duration: 3000,
+                    panelClass: ['red-snackbar'],
+                });
+            });
+        }
         const flow = this.tree2order(this.flow);
         this.flowsService.updateFlow(this.flowId, flow);
 
@@ -97,12 +111,11 @@ export class FlowService {
         });
 
         flow.steps = steps;
-        console.log(flow.steps);
 
         return flow;
     }
 
-    updateFlow(flow: IFlow, data: Partial<IFlow>): void {
+    updateEditingFlow(flow: IFlow, data: Partial<IFlow>): void {
         Object.assign(flow, data);
         this.unsavedChanges = true;
         this.nextFlow();

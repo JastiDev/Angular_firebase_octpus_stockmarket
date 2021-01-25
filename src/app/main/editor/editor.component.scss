@@ -21,7 +21,7 @@
                     background-color: rgb(28, 214, 169);
                 }
                 ::ng-deep.mat-slide-toggle-bar::after {
-                    content: "ON";
+                    content: 'ON';
                     font-size: 75%;
                     font-weight: 700;
                     color: white;
@@ -39,7 +39,7 @@
             }
             &:not(.mat-checked) {
                 ::ng-deep.mat-slide-toggle-bar::after {
-                    content: "OFF";
+                    content: 'OFF';
                     font-size: 75%;
                     font-weight: 700;
                     color: white;
@@ -52,6 +52,7 @@
 
         .info-button {
             margin-right: 20px;
+            margin-left: 50px;
             margin-top: 5px;
             padding: 5px 10px;
             padding-top: 10px;
@@ -99,7 +100,13 @@
         justify-content: center;
         -webkit-box-align: center;
         align-items: center;
-        background-image: -webkit-repeating-radial-gradient(center center, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1) 1px, transparent 1px, transparent 100%);
+        background-image: -webkit-repeating-radial-gradient(
+            center center,
+            rgba(0, 0, 0, 0.1),
+            rgba(0, 0, 0, 0.1) 1px,
+            transparent 1px,
+            transparent 100%
+        );
         background-size: 16px 16px;
         transform-origin: calc(7500px + 50vw) calc(7500px + 50vh);
     }
@@ -155,6 +162,5 @@
 
     .save-button {
         margin-left: 10px;
-        margin-right: 50px;
     }
 }

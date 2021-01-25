@@ -2,68 +2,80 @@
     <mat-progress-bar mode="indeterminate" color="primary"></mat-progress-bar>
 </div>
 
-<ng-container>
-    <div style="width: 100%; display: flex; flex-direction: column">
-        <mat-toolbar style="display: flex; height: 70px; background-color: white; border-bottom: 1px solid rgb(230, 230, 230)">
-            <button mat-button [routerLink]="['/home/strategies']">
-                <mat-icon>keyboard_arrow_left</mat-icon>
-                <span>Back</span>
-            </button>
+<div style="width: 100%; display: flex; flex-direction: column">
+    <mat-toolbar style="display: flex; height: 70px; background-color: white; border-bottom: 1px solid rgb(230, 230, 230)">
+        <button mat-button [routerLink]="['/home/strategies']">
+            <mat-icon>keyboard_arrow_left</mat-icon>
+            <span>Back</span>
+        </button>
 
-            <div style="margin-left: 100px">
-                <mat-form-field *ngIf="flow">
-                    <input type="text" matInput [(ngModel)]="flow.title" (blur)="flowService.updateFlow(flow, { title: flow.title })" />
-                    <mat-icon matSuffix>mode_edit</mat-icon>
-                </mat-form-field>
+        <div style="margin-left: 100px" *ngIf="flow">
+            <mat-form-field *ngIf="flowService.isEditable(flow)">
+                <input type="text" matInput [(ngModel)]="flow.title" (blur)="flowService.updateEditingFlow(flow, { title: flow.title })" />
+                <mat-icon matSuffix>mode_edit</mat-icon>
+            </mat-form-field>
+            <div *ngIf="!flowService.isEditable(flow)">
+                {{ flow.title }}
             </div>
+        </div>
 
-            <div style="flex: 1"></div>
-            <!-- TODO: stylings -->
-            <span *ngIf="flowService.unsavedChanges" class="unsaved-text">You have unsaved changes</span>
+        <div style="flex: 1"></div>
 
-            <button mat-raised-button (click)="flowService.saveFlow()" class="save-button" color="accent" [disabled]="!flowService.unsavedChanges">
-                <mat-icon>save</mat-icon>
-                Save
-            </button>
+        <ng-container *ngIf="flow">
+            <div *ngIf="!flowService.isEditable(flow)" class="unsaved-text">View mode</div>
+            <ng-container *ngIf="flowService.isEditable(flow)">
+                <span *ngIf="flowService.unsavedChanges" class="unsaved-text">You have unsaved changes</span>
 
-            <div matTooltip="Details" matTooltipClass="mytooltip" class="info-button" (click)="openDetailsDialog()">
-                <mat-icon>info</mat-icon>
-            </div>
+                <button
+                    mat-raised-button
+                    (click)="flowService.saveFlow()"
+                    class="save-button"
+                    color="accent"
+                    [disabled]="!flowService.unsavedChanges"
+                >
+                    <mat-icon>save</mat-icon>
+                    Save
+                </button>
+            </ng-container>
+        </ng-container>
 
-            <mat-slide-toggle
-                *ngIf="flow"
-                [checked]="flow.status === 'active'"
-                (change)="flowService.updateFlow(flow, { status: $event.checked ? 'active' : 'stopped' })"
-            ></mat-slide-toggle>
-        </mat-toolbar>
+        <div matTooltip="Details" matTooltipClass="mytooltip" class="info-button" (click)="openDetailsDialog()">
+            <mat-icon>info</mat-icon>
+        </div>
 
-        <div id="page-body">
-            <div id="steps-panel-container">
-                <mat-card style="padding: 5px 0; border-radius: 6px">
-                    <editor-steps-panel [isMenu]="false"></editor-steps-panel>
-                </mat-card>
-            </div>
+        <mat-slide-toggle
+            *ngIf="flow && flow.status != 'active' && flow.status != 'paused'"
+            [checked]="flow.status === 'active'"
+            (change)="flowService.updateEditingFlow(flow, { status: $event.checked ? 'active' : 'stopped' })"
+        ></mat-slide-toggle>
+    </mat-toolbar>
 
-            <div id="detail-panel-container" *ngIf="flowService.activeStep">
-                <editor-detail-panel [step]="flowService.activeStep"></editor-detail-panel>
-            </div>
+    <div id="page-body">
+        <div id="steps-panel-container">
+            <mat-card style="padding: 5px 0; border-radius: 6px">
+                <editor-steps-panel [isMenu]="false"></editor-steps-panel>
+            </mat-card>
+        </div>
 
-            <div id="zoom-control">
-                <editor-zoom-control
-                    [percent]="scale * 100"
-                    (resetClicked)="zoomRest()"
-                    (plusClicked)="zoomPlus()"
-                    (minusClicked)="zoomMinus()"
-                ></editor-zoom-control>
-            </div>
+        <div id="detail-panel-container" *ngIf="flowService.activeStep">
+            <editor-detail-panel [step]="flowService.activeStep" [editable]="flowService.isEditable(flow)"></editor-detail-panel>
+        </div>
 
-            <div id="pan-container" (click)="onClickPanContainer($event)">
-                <div id="pan-panel" [style.transform]="transformString(scale, translateX, translateY)">
-                    <div id="pan-div">
-                        <editor-diagram *ngIf="flow" [flow]="flow"></editor-diagram>
-                    </div>
+        <div id="zoom-control">
+            <editor-zoom-control
+                [percent]="scale * 100"
+                (resetClicked)="zoomRest()"
+                (plusClicked)="zoomPlus()"
+                (minusClicked)="zoomMinus()"
+            ></editor-zoom-control>
+        </div>
+
+        <div id="pan-container" (click)="onClickPanContainer($event)">
+            <div id="pan-panel" [style.transform]="transformString(scale, translateX, translateY)">
+                <div id="pan-div">
+                    <editor-diagram *ngIf="flow" [flow]="flow"></editor-diagram>
                 </div>
             </div>
         </div>
     </div>
-</ng-container>
+</div>

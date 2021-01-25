@@ -23,24 +23,51 @@
                 </mat-card-title>
                 <mat-card-content>
                     <div style="display: flex; justify-content: center; margin-top: 50px">
-                        <mat-form-field appearance="outline" [style]="{ width: '400px' }">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Type</mat-label>
+                            <mat-select [(ngModel)]="app.type">
+                                <mat-option *ngFor="let option of typeOptions" [value]="option.value">
+                                    {{ option.label }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <!-- <mat-form-field appearance="outline" [style]="{ width: '400px' }">
                             <mat-label>BASE_URL</mat-label>
                             <input matInput [(ngModel)]="app.baseUrl" />
                             <mat-error> Base url is required </mat-error>
-                        </mat-form-field>
+                        </mat-form-field> -->
                     </div>
                     <div style="display: flex; justify-content: center">
                         <mat-form-field appearance="outline" [style]="{ width: '400px' }">
                             <mat-label>KEY_ID</mat-label>
-                            <input matInput [(ngModel)]="app.key" />
-                            <mat-error> Key id is required </mat-error>
+                            <input
+                                matInput
+                                [(ngModel)]="app.key"
+                                placeholder="Please enter your KEY_ID"
+                                [type]="hideKeyId ? 'password' : 'text'"
+                                required
+                            />
+                            <mat-icon matSuffix (click)="hideKeyId = !hideKeyId" class="clickable">{{
+                                hideKeyId ? 'visibility' : 'visibility_off'
+                            }}</mat-icon>
+                            <mat-error> KEY_ID is required </mat-error>
                         </mat-form-field>
                     </div>
                     <div style="display: flex; justify-content: center">
                         <mat-form-field appearance="outline" [style]="{ width: '400px' }">
                             <mat-label>SECRET_KEY</mat-label>
-                            <input matInput [(ngModel)]="app.secret" />
-                            <mat-error> Secret key is required </mat-error>
+                            <input
+                                matInput
+                                [(ngModel)]="app.secret"
+                                placeholder="Please enter your SECRET_KEY"
+                                [type]="hideSecretKey ? 'password' : 'text'"
+                                required
+                            />
+                            <mat-icon matSuffix (click)="hideSecretKey = !hideSecretKey" class="clickable">{{
+                                hideSecretKey ? 'visibility' : 'visibility_off'
+                            }}</mat-icon>
+                            <mat-error> SECRET_KEY is required </mat-error>
                         </mat-form-field>
                     </div>
                 </mat-card-content>

@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FlowService } from 'app/services/flow.service';
-import { IFlow } from 'app/shared/interfaces/IFlow';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { FlowsService } from 'app/services/flows.service';
+import { IFlow, IFlowStatus } from 'app/shared/interfaces/IFlow';
 import { FlowAction } from '../flows.component';
 
 @Component({
@@ -8,11 +8,12 @@ import { FlowAction } from '../flows.component';
     templateUrl: './flow.component.html',
     styleUrls: ['./flow.component.scss'],
 })
-export class FlowComponent {
+export class FlowComponent implements OnChanges {
     FlowAction = FlowAction;
 
     @Input() flow: IFlow;
     @Output() action = new EventEmitter<FlowAction>();
 
-    constructor(public flowService: FlowService) {}
+    constructor(public flowsService: FlowsService) {}
+    ngOnChanges(changes: SimpleChanges): void {}
 }

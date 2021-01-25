@@ -53,6 +53,11 @@ export class TickerSearchComponent implements OnInit, OnDestroy, ControlValueAcc
         this.onTouch = fn;
     }
 
+    setDisabledState(isDisabled: boolean): void {
+        if (isDisabled) this.searchControl.disable();
+        else this.searchControl.enable();
+    }
+
     ngOnInit(): void {
         this.subscription = this.searchControl.valueChanges.pipe(debounceTime(500)).subscribe((x) => {
             this.filteredArr = [];

@@ -40,9 +40,9 @@ export class FlowsService {
     }
 
     async updateFlow(_id: string, data: Partial<IFlow>): Promise<IFlow> {
-        const updatedFlow = await this.apiService.updateFlow(_id, data);
+        const updatedFlow: IFlow = await this.apiService.updateFlow(_id, data);
 
-        this.next(this.flows.map((f) => (f._id === _id ? f : updatedFlow)));
+        this.next(this.flows.map((f) => (f._id === _id ? updatedFlow : f)));
 
         return updatedFlow;
     }

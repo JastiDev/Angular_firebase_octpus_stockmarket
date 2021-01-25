@@ -10,6 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSelectModule } from '@angular/material/select';
 
 const routes: Routes = [{ path: 'myapps', component: MyappsComponent }];
 
@@ -26,6 +27,7 @@ const routes: Routes = [{ path: 'myapps', component: MyappsComponent }];
         MatButtonModule,
         MatIconModule,
         MatProgressBarModule,
+        MatSelectModule,
     ],
 })
 export class MyappsModule {}

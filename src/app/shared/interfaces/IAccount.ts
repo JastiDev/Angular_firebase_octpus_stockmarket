@@ -1,13 +1,14 @@
 export interface IAccountApp {
-  id: string
-  baseUrl?: string
-  key?: string
-  secret?: string
+    id: string;
+    baseUrl?: string;
+    key?: string;
+    secret?: string;
+    type: 'paper' | 'live';
 }
 
 export interface IAccount {
-  _id?: string
-  email?: string
-  uid?: string
-  apps?: IAccountApp[]
+    _id?: string;
+    email?: string;
+    uid?: string;
+    apps?: IAccountApp[];
 }

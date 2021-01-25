@@ -3,7 +3,6 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { IFlow, IFlowStep, SIGNAL_TYPES } from 'app/shared/interfaces/IFlow';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FlowService } from 'app/services/flow.service';
-import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'editor-detail-panel',
@@ -12,36 +11,32 @@ import { Subscription } from 'rxjs';
 })
 export class DetailPanelComponent implements OnChanges {
     @Input() step: IFlowStep;
+    @Input() editable: boolean;
 
     signalTypes = SIGNAL_TYPES;
     form?: FormGroup;
 
-    subsFlow: Subscription;
-
     constructor(private fb: FormBuilder, private snackbar: MatSnackBar, public flowService: FlowService) {}
+
     ngOnChanges(changes: SimpleChanges): void {
-        const step = changes.step.currentValue;
-        if (step) {
+        if (changes.step) {
+            const step = changes.step.currentValue;
+
             this.form = this.fb.group({
                 ticker: [step.ticker, Validators.required],
                 ...(step.type === 'signal'
                     ? {
-                          signalType: [step.signalType || SIGNAL_TYPES[0], Validators.required],
-                          signalValue: [step.signalValue || '', Validators.required],
+                          signalType: [step.signalType, Validators.required],
+                          signalValue: [step.signalValue, Validators.required],
                       }
                     : {
                           amount: [step.amount, [Validators.required, Validators.pattern(/\d{1,}/), Validators.min(1), Validators.max(9999)]],
                       }),
             });
-
-            if (step.type) {
-                this.form.get('signalType')?.valueChanges.subscribe(() => {
-                    this.form.get('signalValue').setValue('');
-                    this.form.get('signalValue').markAsPristine();
-                    this.form.get('signalValue').markAsUntouched();
-                });
-            }
         }
+
+        if (this.editable) this.form.enable();
+        else this.form.disable();
     }
 
     close(): void {

@@ -1,11 +1,13 @@
 /**
     Step Detail panel
 */
-#step-detail-panel {
-    width: 100%;
-    height: 100%;
-}
+:host {
+    #step-detail-panel {
+        width: 100%;
+        height: 100%;
+    }
 
-mat-form-field{
-    width: 100%;
+    mat-form-field {
+        width: 100%;
+    }
 }
