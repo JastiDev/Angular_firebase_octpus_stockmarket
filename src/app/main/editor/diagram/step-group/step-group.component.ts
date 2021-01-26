@@ -21,14 +21,20 @@ export class StepGroupComponent implements OnInit {
     }
 
     onDragEnter(event: any): void {
-        this.dragCounter++;
+        if (this.flowService.draggedItemType === 'signal') this.dragCounter++;
     }
 
     onDragLeave(event: any): void {
-        this.dragCounter--;
+        if (this.flowService.draggedItemType === 'signal') this.dragCounter--;
+    }
+
+    onDragOver(event: DragEvent): void {
+        if (this.flowService.draggedItemType === 'signal') event.preventDefault();
     }
 
     onDropChild(event): void {
+        this.flowService.draggedItemType = null;
+
         event.preventDefault();
         this.dragCounter--;
         const dataType = event.dataTransfer.getData('dataType');

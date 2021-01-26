@@ -18,6 +18,9 @@ export class FlowService {
     activeStep: IFlowStep;
     unsavedChanges = false;
 
+    // for dragenter & dragleave
+    draggedItemType: IFlowStepType;
+
     constructor(private flowsService: FlowsService, public ngZone: NgZone, private snackbar: MatSnackBar) {}
 
     /** Flow */
@@ -116,7 +119,7 @@ export class FlowService {
     }
 
     updateEditingFlow(flow: IFlow, data: Partial<IFlow>): void {
-        Object.assign(flow, data);
+        Object.assign(this.flow, data);
         this.unsavedChanges = true;
         this.nextFlow();
     }

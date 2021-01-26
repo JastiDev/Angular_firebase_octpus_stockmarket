@@ -10,7 +10,7 @@
     }"
     (dragenter)="onDragEnter($event)"
     (dragleave)="onDragLeave($event)"
-    (dragover)="$event.preventDefault()"
+    (dragover)="onDragOver($event)"
     (drop)="onDropChild($event)"
     (click)="$event.target.id == 'group' ? onClickStep(step) : null"
 >

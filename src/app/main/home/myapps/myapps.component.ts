@@ -29,19 +29,23 @@ export class MyappsComponent implements OnInit {
         this.accountService.fetchAccount();
     }
 
-    onClickReset(app: IAccountApp) {
+    onClickReset(appId: number): void {
         if (window.confirm('Reset app? Current data will be lost.')) {
-            app.editable = true;
-            app.key = '';
-            app.secret = '';
+            this.account.apps[appId].editable = true;
+            this.account.apps[appId].type = '';
+            this.account.apps[appId].key = '';
+            this.account.apps[appId].secret = '';
         }
     }
 
-    async save(app: IAccountApp): Promise<void> {
-        app.editable = false;
-        let newAccount = await this.accountService.updateAccount({
+    async save(appId: number): Promise<void> {
+        this.account.apps[appId].editable = false;
+        this.account.apps.forEach((app) => {
+            delete app.editable;
+            delete app.baseUrl;
+        });
+        const newAccount = await this.accountService.updateAccount({
             apps: this.account.apps,
         });
-        console.log(newAccount);
     }
 }

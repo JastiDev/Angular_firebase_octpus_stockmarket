@@ -11,20 +11,20 @@
 
         <!-- CONTENT -->
         <div class="content p-24" *ngIf="account; else loading">
-            <mat-card [style]="{ width: 'fit-content' }" class="p-24" *ngFor="let app of account.apps">
+            <mat-card [style]="{ width: 'fit-content' }" class="p-24" *ngFor="let app of account.apps; let appId = index">
                 <mat-card-title style="display: flex; align-items: center">
                     <img src="assets/images/alpaca.jpeg" class="app-img" />
                     <span>Alpaca API</span>
                     <div style="flex: 1"></div>
 
                     <ng-container *ngIf="app.editable; else elseTemplate">
-                        <button mat-stroked-button (click)="save(app)" color="accent">
+                        <button mat-stroked-button (click)="save(appId)" color="accent">
                             <mat-icon>save</mat-icon>
                             Save
                         </button>
                     </ng-container>
                     <ng-template #elseTemplate>
-                        <button mat-stroked-button (click)="onClickReset(app)" color="accent">
+                        <button mat-stroked-button (click)="onClickReset(appId)" color="accent">
                             <mat-icon>edit</mat-icon>
                             Reset
                         </button>

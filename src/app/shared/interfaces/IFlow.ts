@@ -2,7 +2,7 @@ export const SIGNAL_TYPES = ['price_below', 'price_above', 'wait_seconds'];
 
 export type IFlowStepType = 'buy' | 'sell' | 'signal';
 
-export type IFlowStatus = 'active' | 'stopped' | 'failed' | 'finished';
+export type IFlowStatus = 'draft' | 'active' | 'stopped' | 'failed' | 'finished';
 
 export type IFlowStepStatus = 'waiting' | 'failed' | 'executed';
 

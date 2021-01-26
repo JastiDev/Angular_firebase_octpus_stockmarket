@@ -29,6 +29,7 @@ export class PlusComponent {
     }
 
     onDrop(event: DragEvent): void {
+        this.flowService.draggedItemType = null;
         event.preventDefault();
         this.active = false;
 

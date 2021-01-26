@@ -201,12 +201,12 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
         });
     }
 
-    onToggleFlowStatus(checked: boolean) {
+    onToggleFlowStatus(checked: boolean): void {
         this.flowService.updateEditingFlow(this.flow, { status: checked ? 'active' : 'stopped' });
         this.flowService.saveFlow(true);
     }
 
-    onChangeFlowTitle() {
+    onChangeFlowTitle(): void {
         this.flowService.updateEditingFlow(this.flow, { title: this.flow.title });
         this.flowService.saveFlow(true);
     }

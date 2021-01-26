@@ -1,7 +1,8 @@
-<mat-card class="mt-12 card" style="display: flex; align-items: stretch; border: 1px solid lightgray; box-shadow: none">
-    <a href="#" [routerLink]="['/editor', flow._id]" style="flex: 1; display: flex; align-items: center; cursor: pointer">
+<div class="mt-12 flow-card">
+    <a href="#" [routerLink]="['/editor', flow._id]" style="height: 100px; flex: 1; display: flex; align-items: center; cursor: pointer">
+        <div style="width: 150px"><main-flow-status [status]="flow.status"></main-flow-status></div>
+
         <strong>{{ flow.title }}</strong>
-        <div style="margin-left: 50px"><main-flow-status [status]="flow.status"></main-flow-status></div>
     </a>
 
     <div style="margin-left: 50px; display: flex; align-items: center">
@@ -48,4 +49,4 @@
             </div>
         </mat-menu>
     </div>
-</mat-card>
+</div>

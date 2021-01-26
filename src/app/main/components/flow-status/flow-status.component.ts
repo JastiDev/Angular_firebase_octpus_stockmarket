@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { IFlowStatus } from 'app/shared/interfaces/IFlow';
 
 @Component({
@@ -6,9 +6,7 @@ import { IFlowStatus } from 'app/shared/interfaces/IFlow';
     templateUrl: './flow-status.component.html',
     styleUrls: ['./flow-status.component.scss'],
 })
-export class FlowStatusComponent implements OnInit {
+export class FlowStatusComponent {
     @Input() status: IFlowStatus;
     constructor() {}
-
-    ngOnInit() {}
 }

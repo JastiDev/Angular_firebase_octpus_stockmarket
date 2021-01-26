@@ -19,30 +19,43 @@
             </mat-card-subtitle>
 
             <mat-card-content>
-                <main-ticker-search style="width: 100%" formControlName="ticker"></main-ticker-search>
+                <ng-container *ngIf="step.type == 'signal'; else elseTemplate">
+                    <ng-container *ngIf="form.get('signalType')">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Signal Type</mat-label>
+                            <mat-select formControlName="signalType">
+                                <mat-option *ngFor="let type of signalTypes" [value]="type">{{ type | signalType }}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </ng-container>
 
-                <ng-container *ngIf="form.get('amount')">
-                    <mat-form-field appearance="outline">
-                        <mat-label>Amount (# of stocks)</mat-label>
-                        <input autocomplete="off" matInput type="number" formControlName="amount" />
-                        <mat-error> amount is required </mat-error>
-                    </mat-form-field>
+                    <ng-container *ngIf="form.get('signalType')?.value">
+                        <main-ticker-search
+                            *ngIf="form.get('ticker') && form.get('signalType')?.value != 'wait_seconds'"
+                            style="width: 100%"
+                            formControlName="ticker"
+                        ></main-ticker-search>
+
+                        <ng-container *ngIf="form.get('signalValue')">
+                            <mat-form-field appearance="outline">
+                                <mat-label>{{ form.get('signalType').value | signalType }}</mat-label>
+                                <input autocomplete="off" matInput type="number" formControlName="signalValue" />
+                                <mat-error> This field is required </mat-error>
+                            </mat-form-field>
+                        </ng-container>
+                    </ng-container>
                 </ng-container>
-                <ng-container *ngIf="form.get('signalType')">
-                    <mat-form-field appearance="outline">
-                        <mat-label>Signal Type</mat-label>
-                        <mat-select formControlName="signalType">
-                            <mat-option *ngFor="let type of signalTypes" [value]="type">{{ type | signalType }}</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </ng-container>
-                <ng-container *ngIf="form.get('signalValue') && form.get('signalType')?.value">
-                    <mat-form-field appearance="outline">
-                        <mat-label>{{ form.get('signalType').value | signalType }}</mat-label>
-                        <input autocomplete="off" matInput type="number" formControlName="signalValue" />
-                        <mat-error> This field is required </mat-error>
-                    </mat-form-field>
-                </ng-container>
+                <ng-template #elseTemplate>
+                    <main-ticker-search *ngIf="form.get('ticker')" style="width: 100%" formControlName="ticker"></main-ticker-search>
+
+                    <ng-container *ngIf="form.get('amount')">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Amount (# of stocks)</mat-label>
+                            <input autocomplete="off" matInput type="number" formControlName="amount" />
+                            <mat-error> amount is required </mat-error>
+                        </mat-form-field>
+                    </ng-container>
+                </ng-template>
             </mat-card-content>
 
             <mat-card-footer style="display: flex; justify-content: flex-end; margin: 0" *ngIf="editable">

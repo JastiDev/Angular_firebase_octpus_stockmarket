@@ -19,6 +19,7 @@ export class StepComponent {
     }
 
     onDragStart(event: DragEvent): void {
+        this.flowService.draggedItemType = this.step.type;
         const target: HTMLElement = event.target as HTMLElement;
 
         const icon: Element = target;
@@ -28,15 +29,21 @@ export class StepComponent {
         event.dataTransfer.setData('dataValue', JSON.stringify(this.step));
     }
 
-    onDragEnter(event: any): void {
-        this.dragCount++;
+    onDragEnter(event: DragEvent): void {
+        if (this.flowService.draggedItemType === 'signal') this.dragCount++;
     }
 
-    onDragLeave(event: any): void {
-        this.dragCount--;
+    onDragLeave(event: DragEvent): void {
+        if (this.flowService.draggedItemType === 'signal') this.dragCount--;
+    }
+
+    onDragOver(event: DragEvent): void {
+        if (this.flowService.draggedItemType === 'signal') event.preventDefault();
     }
 
     onDrop(event: DragEvent): void {
+        this.flowService.draggedItemType = null;
+
         event.preventDefault();
         this.flowService.activeStep = this.step;
         this.dragCount--;

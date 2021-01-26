@@ -49,7 +49,6 @@ export class DetailPanelComponent implements OnChanges {
     }
 
     save(): void {
-        // TODO: handle error
         if (this.form.invalid) {
             this.snackbar.open('Invalid form data', 'close', {
                 horizontalPosition: 'end',

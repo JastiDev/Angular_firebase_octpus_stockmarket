@@ -4,23 +4,15 @@
 
 <div mat-dialog-title>
     <h1>{{ flow.title }}</h1>
-    <div>
-        <ng-container *ngFor="let tab of tabs; let i = index">
-            <button mat-button [ngClass]="{ active: i == activeTabId }" (click)="activeTabId = i">{{ tab.title }}</button>
-        </ng-container>
-    </div>
 </div>
 
 <mat-dialog-content class="mat-typography content">
-    <ng-container *ngIf="activeTabId == 0"></ng-container>
-    <ng-container *ngIf="activeTabId == 1">
-        <ng-container *ngIf="flow?.log?.length > 0; else elseTemplate">
-            <ul>
-                <li *ngFor="let log of flow.log">{{ log }}</li>
-            </ul>
-        </ng-container>
-        <ng-template #elseTemplate>
-            <span>No logs</span>
-        </ng-template>
+    <ng-container *ngIf="flow?.log?.length > 0; else elseTemplate">
+        <ul>
+            <li *ngFor="let log of flow.log">{{ log }}</li>
+        </ul>
     </ng-container>
+    <ng-template #elseTemplate>
+        <span>No logs</span>
+    </ng-template>
 </mat-dialog-content>

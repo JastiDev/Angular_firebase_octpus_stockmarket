@@ -22,6 +22,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DetailsComponent } from './details/details.component';
 import { AuthGuard } from '../../../auth/auth.guard';
 import { FlowStatusModule } from 'app/main/components/flow-status/flow-status.module';
+import { ConfirmModule } from 'app/main/components/confirm/confirm.module';
 
 const routes: Routes = [{ path: 'strategies', canActivate: [AuthGuard], component: FlowsComponent }];
 
@@ -49,6 +50,7 @@ const routes: Routes = [{ path: 'strategies', canActivate: [AuthGuard], componen
         FontAwesomeModule,
 
         FlowStatusModule,
+        ConfirmModule,
     ],
 })
 export class FlowsModule {}

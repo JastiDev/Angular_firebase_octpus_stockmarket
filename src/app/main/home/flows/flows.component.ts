@@ -9,6 +9,7 @@ import { DetailsComponent } from './details/details.component';
 import { Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IFlow } from 'app/shared/interfaces/IFlow';
+import { ConfirmComponent } from 'app/main/components/confirm/confirm.component';
 
 export enum FlowAction {
     INFO,
@@ -65,7 +66,16 @@ export class FlowsComponent implements OnInit {
                 break;
             }
             case FlowAction.DELETE: {
-                this.flowsService.deleteFlow(flow._id);
+                this.dialog
+                    .open(ConfirmComponent, {
+                        width: '300px',
+                        data: { title: 'Delete Confirmation', description: 'Do you want to delete this strategy?', strOk: 'OK', strCancel: 'Cancel' },
+                    })
+                    .afterClosed()
+                    .subscribe((result) => {
+                        if (result) this.flowsService.deleteFlow(flow._id);
+                    });
+
                 break;
             }
         }

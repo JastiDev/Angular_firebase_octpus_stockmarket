@@ -1,0 +1,26 @@
+mat-chip {
+    &.draft {
+        background-color: lightgrey;
+        color: gray;
+    }
+
+    &.active {
+        background-color: #1cd6a9 !important;
+        color: white !important;
+    }
+
+    &.stopped {
+        background-color: pink !important;
+        color: rgb(247, 45, 45) !important;
+    }
+
+    &.errored {
+        background-color: red !important;
+        color: white !important;
+    }
+
+    &.finished {
+        background-color: grey !important;
+        color: white !important;
+    }
+}
