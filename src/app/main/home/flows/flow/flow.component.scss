@@ -1,4 +1,16 @@
 :host {
+    .flow-title {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        font-weight: 900;
+        width: 200px;
+    }
+
+    .flow-status {
+        margin-left: 50px;
+    }
+
     .mat-slide-toggle {
         margin-top: 4px;
         &::ng-deep.mat-slide-toggle-bar {

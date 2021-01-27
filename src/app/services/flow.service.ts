@@ -21,6 +21,9 @@ export class FlowService {
     // for dragenter & dragleave
     draggedItemType: IFlowStepType;
 
+    // for publish button
+    isValid = false;
+
     constructor(private flowsService: FlowsService, public ngZone: NgZone, private snackbar: MatSnackBar) {}
 
     /** Flow */
@@ -43,6 +46,8 @@ export class FlowService {
 
         this.activeStep = null;
         this.nextFlow();
+
+        this.isValidFlow(this.flow);
     }
 
     async saveFlow(forced = false): Promise<void> {
@@ -140,6 +145,8 @@ export class FlowService {
         this.activeStep = step;
         this.unsavedChanges = true;
         this.nextFlow();
+
+        this.isValidFlow(this.flow);
     }
 
     addChild(type: IFlowStepType, parentId: string): void {
@@ -168,6 +175,8 @@ export class FlowService {
                 return;
             }
             parent.children.push(step);
+
+            this.isValidFlow(this.flow);
         }
 
         this.activeStep = step;
@@ -195,6 +204,24 @@ export class FlowService {
     //     this.nextFlow();
     // }
 
+    isValidFlow(flow: IFlow): boolean {
+        const i = flow.steps.findIndex((x) => !this.isValidStep(x));
+        if (flow.steps.length === 0 || i > -1) this.isValid = false;
+        else this.isValid = true;
+        return this.isValid;
+    }
+
+    isValidStep(step: IFlowStep): boolean {
+        if (step.type === 'signal') {
+            if (!step.signalType || step.signalValue === undefined || step.signalValue === null) return false;
+            if (step.signalType !== 'wait_seconds' && (!step.ticker || step.ticker.length === 0)) return false;
+        } else {
+            if (!step.ticker || step.ticker.length === 0) return false;
+            if (!step.amount) return false;
+        }
+        return true;
+    }
+
     updateStep(id: any, data: Partial<IFlowStep>): void {
         this.flow.steps = _.map(this.flow.steps, (v, i) => {
             if (v._id === id) {
@@ -208,6 +235,8 @@ export class FlowService {
 
         this.unsavedChanges = true;
         this.nextFlow();
+
+        this.isValidFlow(this.flow);
     }
 
     deleteStep(id: any): void {
@@ -219,5 +248,7 @@ export class FlowService {
         this.activeStep = null;
         this.unsavedChanges = true;
         this.nextFlow();
+
+        this.isValidFlow(this.flow);
     }
 }

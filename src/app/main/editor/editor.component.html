@@ -38,7 +38,7 @@
                     Save Draft
                 </button>
 
-                <button mat-raised-button class="save-button" color="accent">
+                <button mat-raised-button class="save-button" color="accent" [disabled]="!flowService.isValid">
                     <mat-icon>publish</mat-icon>
                     Publish
                 </button>
