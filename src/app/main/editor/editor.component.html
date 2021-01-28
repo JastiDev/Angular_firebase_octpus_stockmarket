@@ -1,25 +1,26 @@
-<div *ngIf="!flow">
-    <mat-progress-bar mode="indeterminate" color="primary"></mat-progress-bar>
-</div>
-
 <div style="width: 100%; display: flex; flex-direction: column">
-    <mat-toolbar style="display: flex; height: 70px; background-color: white; border-bottom: 1px solid rgb(230, 230, 230)">
-        <button mat-button [routerLink]="['/home/strategies']">
-            <mat-icon>keyboard_arrow_left</mat-icon>
-            <span>Back</span>
+    <div *ngIf="!flow">
+        <mat-progress-bar mode="indeterminate" color="primary"></mat-progress-bar>
+    </div>
+
+    <div class="editor-topbar">
+        <button mat-stroked-button [routerLink]="['/home/strategies']" class="cancel-button" [disableRipple]="true">
+            <mat-icon>keyboard_backspace</mat-icon>
+            <span>Cancel</span>
         </button>
 
-        <div style="margin-left: 100px" *ngIf="flow">
-            <mat-form-field *ngIf="flowService.isEditable(flow)">
-                <input type="text" matInput [(ngModel)]="flow.title" (blur)="onChangeFlowTitle()" />
-                <mat-icon matSuffix>mode_edit</mat-icon>
-            </mat-form-field>
-            <div *ngIf="!flowService.isEditable(flow)">
-                {{ flow.title }}
-            </div>
+        <div style="margin-left: 20px" *ngIf="flow">
+            <ng-container *ngIf="flowService.isEditable(flow); else elseTemplate">
+                <mat-form-field>
+                    <input matInput type="text" [(ngModel)]="flow.title" (ngModelChange)="onChangeFlowTitle($event)" />
+                </mat-form-field>
+            </ng-container>
+            <ng-template #elseTemplate>
+                <div class="flow-title">{{ flow.title }}</div>
+            </ng-template>
         </div>
 
-        <span class="ml-24"><main-flow-status [status]="flow?.status"></main-flow-status></span>
+        <div class="flow-status"><main-flow-status [status]="flow?.status"></main-flow-status></div>
 
         <div style="flex: 1"></div>
 
@@ -27,34 +28,38 @@
             <ng-container *ngIf="flowService.isEditable(flow); else elseTemplate">
                 <span *ngIf="flowService.unsavedChanges" class="unsaved-text">You have unsaved changes</span>
 
-                <button
-                    mat-raised-button
-                    (click)="flowService.saveFlow()"
-                    class="save-button"
-                    color="accent"
-                    [disabled]="!flowService.unsavedChanges"
-                >
+                <button mat-stroked-button (click)="flowService.saveFlow()" class="save-button" [disabled]="!flowService.unsavedChanges">
                     <mat-icon>save</mat-icon>
                     Save Draft
                 </button>
 
-                <button mat-raised-button class="save-button" color="accent" [disabled]="!flowService.isValid">
+                <button mat-stroked-button class="save-button" [disabled]="!flowService.isValid" (click)="onToggleFlowStatus(true)">
                     <mat-icon>publish</mat-icon>
-                    Publish
+                    Deploy
                 </button>
+
+                <div class="mode-text">
+                    <mat-icon>flash_off</mat-icon>
+                    NOT DEPLOYED
+                </div>
             </ng-container>
 
             <ng-template #elseTemplate>
-                <div class="unsaved-text">View mode</div>
+                <div class="mode-text">
+                    <mat-icon>remove_red_eye</mat-icon>
+                    VIEW MODE
+                </div>
             </ng-template>
 
-            <div matTooltip="Details" matTooltipClass="mytooltip" class="info-button" (click)="openDetailsDialog()">
-                <mat-icon>info</mat-icon>
-            </div>
+            <ng-container *ngIf="flow?.status == 'active'">
+                <div matTooltip="Details" matTooltipClass="mytooltip" class="info-button" (click)="openDetailsDialog()">
+                    <mat-icon>info</mat-icon>
+                </div>
 
-            <mat-slide-toggle [checked]="flow.status === 'active'" (change)="onToggleFlowStatus($event.checked)"></mat-slide-toggle>
+                <mat-slide-toggle [checked]="flow.status === 'active'" (change)="onToggleFlowStatus($event.checked)"></mat-slide-toggle>
+            </ng-container>
         </ng-container>
-    </mat-toolbar>
+    </div>
 
     <div id="page-body">
         <div id="steps-panel-container">

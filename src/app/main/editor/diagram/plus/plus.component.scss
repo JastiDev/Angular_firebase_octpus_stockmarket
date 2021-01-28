@@ -1,5 +1,5 @@
 #line_container {
-    height: 40px;
+    height: 50px;
     width: 150px;
     display: flex;
     flex-direction: column;
@@ -11,7 +11,7 @@
         position: absolute;
         top: 0;
         left: 0;
-        height: 40px;
+        height: 50px;
         width: 150px;
         z-index: 1000;
         cursor: pointer;
@@ -19,20 +19,16 @@
 
     #line {
         width: 1px;
-        height: 40px;
-        border: 1px solid grey;
+        height: 50px;
+        border: 1px solid #d4dae0;
     }
 
-    .icon,
-    .visible_icon {
+    .icon {
         position: absolute;
         top: 10px;
         background-color: white;
         border-radius: 50%;
         cursor: pointer;
-    }
-
-    .icon {
         display: none;
     }
 
@@ -44,11 +40,47 @@
 
     #active_icon {
         position: absolute;
+        box-sizing: content-box;
         top: 10px;
-        background-color: blue;
+        background-color: rgb(28, 102, 214);
         color: white;
         border-radius: 50%;
         cursor: pointer;
         z-index: 10;
+    }
+}
+
+.last-container {
+    .last-line {
+        margin: auto;
+        width: 1px;
+        height: 16px;
+        border: 1px solid #d4dae0;
+    }
+    .last-rect {
+        cursor: pointer;
+        opacity: 0.7;
+        width: 240px;
+        height: 80px;
+        border: 3px dashed lightgray;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        .icon {
+            border-radius: 50%;
+            background-color: rgb(28, 102, 214);
+            color: white;
+        }
+        .label {
+            margin-top: 8px;
+            color: rgb(28, 102, 214);
+        }
+
+        &:hover,
+        &.dragover {
+            opacity: 1;
+        }
     }
 }

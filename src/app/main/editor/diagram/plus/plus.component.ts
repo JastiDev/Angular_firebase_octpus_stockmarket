@@ -10,28 +10,22 @@ import { IFlowStepType } from 'app/shared/interfaces/IFlow';
 export class PlusComponent {
     @Input() position: number;
 
-    active = false;
+    dragcnt = 0;
 
     constructor(private flowService: FlowService) {}
 
     onDragEnter(event): void {
-        const element: HTMLElement = event.target;
-        if (element.id === 'droptarget') {
-            this.active = true;
-        }
+        this.dragcnt++;
     }
 
     onDragLeave(event): void {
-        const element: HTMLElement = event.target;
-        if (element.id === 'droptarget') {
-            this.active = false;
-        }
+        this.dragcnt--;
     }
 
     onDrop(event: DragEvent): void {
         this.flowService.draggedItemType = null;
         event.preventDefault();
-        this.active = false;
+        this.dragcnt--;
 
         const dataType = event.dataTransfer.getData('dataType');
         if (dataType === 'template') {

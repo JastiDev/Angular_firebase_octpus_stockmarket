@@ -99,9 +99,15 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     initTransform(): void {
-        this.translateX = -7500;
-        this.translateY = -7500;
-        this.scale = 1;
+        if (this.flow && this.flow.steps.length > 2) {
+            this.translateX = -7500;
+            this.translateY = -7750;
+            this.scale = 1;
+        } else {
+            this.translateX = -7500;
+            this.translateY = -7500;
+            this.scale = 1;
+        }
     }
 
     transformString(scale, translateX, translateY): string {
@@ -206,8 +212,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
         this.flowService.saveFlow(true);
     }
 
-    onChangeFlowTitle(): void {
-        this.flowService.updateEditingFlow(this.flow, { title: this.flow.title });
-        this.flowService.saveFlow(true);
+    onChangeFlowTitle(title): void {
+        this.flowService.updateEditingFlow(this.flow, { title });
     }
 }

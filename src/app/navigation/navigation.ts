@@ -10,7 +10,7 @@ export const navigation: FuseNavigation[] = [
     },
     {
         id: 'dashboard',
-        title: 'Dashboard',
+        title: 'Discover',
         type: 'item',
         icon: 'dashboard',
         url: '/home/dashboard',

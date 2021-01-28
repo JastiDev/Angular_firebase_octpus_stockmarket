@@ -1,9 +1,26 @@
 :host {
-    mat-toolbar {
+    .editor-topbar {
         z-index: 1;
+        display: flex;
+        align-items: center;
+        height: 70px;
+        background-color: white;
+        border-bottom: 1px solid rgb(230, 230, 230);
+        padding: 0 20px;
+
+        .cancel-button {
+            opacity: 0.5;
+            background-color: transparent;
+            &:hover {
+                color: gray;
+                border-color: gray;
+                opacity: 1;
+            }
+        }
 
         .mat-slide-toggle {
             margin-top: 4px;
+
             &::ng-deep.mat-slide-toggle-bar {
                 height: 28px;
                 width: 80px;
@@ -47,6 +64,33 @@
                     right: 6px;
                     top: 2px;
                 }
+            }
+        }
+
+        .flow-title {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            font-weight: 900;
+            width: 200px;
+            font-size: small;
+        }
+
+        .flow-status {
+            margin-left: 20px;
+        }
+
+        .mode-text {
+            position: fixed;
+            top: 18px;
+            left: 50%;
+            transform: translateX(-60%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: 900;
+            color: rgb(112, 111, 111);
+            mat-icon {
+                transform: translateY(5px);
+                margin-right: 6px;
             }
         }
 
@@ -161,6 +205,13 @@
     }
 
     .save-button {
+        color: rgb(40, 62, 194);
         margin-left: 10px;
+        &:hover {
+            &:disabled {
+                border-color: lightgray;
+            }
+            border-color: rgb(40, 62, 194);
+        }
     }
 }

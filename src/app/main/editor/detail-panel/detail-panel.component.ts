@@ -23,7 +23,11 @@ export class DetailPanelComponent implements OnChanges {
             const step = changes.step.currentValue;
 
             this.form = this.fb.group({
-                ticker: [step.ticker, Validators.required],
+                ...(step.type === 'signal' && step.signalType === 'wait_seconds'
+                    ? {}
+                    : {
+                          ticker: [step.ticker],
+                      }),
                 ...(step.type === 'signal'
                     ? {
                           signalType: [step.signalType, Validators.required],
