@@ -60,7 +60,7 @@
     .last-rect {
         cursor: pointer;
         opacity: 0.7;
-        width: 240px;
+        width: 260px;
         height: 80px;
         border: 3px dashed lightgray;
         border-radius: 10px;
@@ -81,6 +81,8 @@
         &:hover,
         &.dragover {
             opacity: 1;
+            border-color: rgb(28, 102, 214);
+            background-color: rgba(28, 102, 214, 0.1);
         }
     }
 }

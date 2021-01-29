@@ -7,8 +7,8 @@
             (dragleave)="onDragLeave($event)"
             (drop)="onDrop($event)"
             [matMenuTriggerFor]="menu"
-            (onMenuOpen)="active = true"
-            (onMenuClose)="active = false"
+            (onMenuOpen)="onDragEnter($event)"
+            (onMenuClose)="onDragLeave($event)"
         ></div>
         <div id="line"></div>
 
@@ -17,7 +17,9 @@
         <mat-icon class="icon">add</mat-icon>
 
         <mat-menu #menu="matMenu">
-            <editor-steps-panel [isMenu]="true" (addStep)="addStep($event)"></editor-steps-panel>
+            <div style="min-height: 400px">
+                <editor-steps-panel [isMenu]="true" (addStep)="addStep($event)"></editor-steps-panel>
+            </div>
         </mat-menu>
     </div>
 </ng-container>
@@ -33,8 +35,8 @@
             (dragleave)="onDragLeave($event)"
             (drop)="onDrop($event)"
             [matMenuTriggerFor]="menu"
-            (onMenuOpen)="active = true"
-            (onMenuClose)="active = false"
+            (onMenuOpen)="onDragEnter($event)"
+            (onMenuClose)="onDragLeave($event)"
         >
             <mat-icon class="icon">add</mat-icon>
             <strong class="label">Add Step</strong>
