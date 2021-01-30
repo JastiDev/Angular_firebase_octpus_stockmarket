@@ -1,0 +1,34 @@
+<div class="page-layout simple p-24">
+    <div class="my-container">
+        <!-- HEADER -->
+        <div class="header p-24" fxLayout="row" fxLayoutAlign="start center">Get started with our most popular strategies</div>
+        <!-- / HEADER -->
+
+        <!-- CONTENT -->
+
+        <div class="content p-24">
+            <div class="p-24">
+                <h2>These templates can help you start saving time right away, no matter which apps you use</h2>
+            </div>
+
+            <div class="cards">
+                <div class="cards-item" *ngFor="let c of cards">
+                    <div class="popular-card" (click)="select(c.flowJSON)">
+                        <div class="popular-icon-wraper" [style.color]="c.color">
+                            <div class="popular-icon-outer"></div>
+                            <div class="popular-icon-inner"></div>
+
+                            <fa-icon [icon]="fafa[c.icon]" size="2x"></fa-icon>
+                        </div>
+
+                        <div class="popular-title">{{ c.title }}</div>
+                        <div class="popular-button">Use strategy</div>
+                        <div class="popular-description">Used by {{ c.usedBy }} people</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- / CONTENT -->
+    </div>
+</div>

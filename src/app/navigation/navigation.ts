@@ -9,11 +9,18 @@ export const navigation: FuseNavigation[] = [
         url: '/editor',
     },
     {
+        id: '',
+        title: 'Home',
+        type: 'item',
+        icon: 'home',
+        url: '/home/dashboard',
+    },
+    {
         id: 'dashboard',
         title: 'Discover',
         type: 'item',
         icon: 'dashboard',
-        url: '/home/dashboard',
+        url: '/home/discover',
     },
     {
         id: 'flows',

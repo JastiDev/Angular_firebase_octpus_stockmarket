@@ -1,34 +1,128 @@
 <div class="page-layout simple p-24">
-    <div class="my-container">
-        <!-- HEADER -->
-        <div class="header p-24" fxLayout="row" fxLayoutAlign="start center">Get started with our most popular strategies</div>
-        <!-- / HEADER -->
+    <div class="my-container p-24">
+        <div class="flex-base">
+            <div class="header mr-24">{{ 99981.97 | currency }}</div>
+            <div class="header-sm mr-24" style="width: 100px">Equity</div>
+            <button mat-button>
+                <mat-icon>refresh</mat-icon>
+                Reset
+            </button>
+        </div>
 
-        <!-- CONTENT -->
+        <div class="flex-base mt-12">
+            <div class="buying-currency mr-24">{{ 399014.53 | currency }}</div>
+            <div class="buying-text">Buying Power</div>
+        </div>
 
-        <div class="content p-24">
-            <div class="p-24">
-                <h2>These templates can help you start saving time right away, no matter which apps you use</h2>
-            </div>
-
-            <div class="cards">
-                <div class="cards-item" *ngFor="let c of cards">
-                    <div class="popular-card" (click)="select(c.flowJSON)">
-                        <div class="popular-icon-wraper" [style.color]="c.color">
-                            <div class="popular-icon-outer"></div>
-                            <div class="popular-icon-inner"></div>
-
-                            <fa-icon [icon]="fafa[c.icon]" size="2x"></fa-icon>
-                        </div>
-
-                        <div class="popular-title">{{ c.title }}</div>
-                        <div class="popular-button">Use strategy</div>
-                        <div class="popular-description">Used by {{ c.usedBy }} people</div>
-                    </div>
+        <mat-tab-group>
+            <mat-tab label="TODAY">
+                <div class="dashboard-line-chart">
+                    <main-chart [shadow]="true" [options]="chartDataConfig.lineChartOptions" [data]="lineChartData"> </main-chart>
                 </div>
+            </mat-tab>
+            <mat-tab label="MONTH">
+                <div class="dashboard-line-chart">
+                    <main-chart [shadow]="true" [options]="chartDataConfig.lineChartOptions" [data]="lineChartData"> </main-chart>
+                </div>
+            </mat-tab>
+            <mat-tab label="YEAR">
+                <div class="dashboard-line-chart">
+                    <main-chart [shadow]="true" [options]="chartDataConfig.lineChartOptions" [data]="lineChartData"> </main-chart>
+                </div>
+            </mat-tab>
+            <mat-tab label="TOTAL">
+                <div class="dashboard-line-chart">
+                    <main-chart [shadow]="true" [options]="chartDataConfig.lineChartOptions" [data]="lineChartData"> </main-chart>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+
+        <div class="card mt-48">
+            <div class="card-header">
+                <div class="card-title">Portfolio</div>
+                <div class="ml-24">Cash: {{ 99148.72 | currency }}</div>
+                <div class="ml-24">Portfolio Value: {{ 833.25 | currency }}</div>
+                <div style="flex: 1"></div>
+                <a href="javascript:;">View All</a>
+            </div>
+            <div>
+                <table class="card-table">
+                    <thead>
+                        <tr>
+                            <th>Stock</th>
+                            <th>Price</th>
+                            <th>Shares</th>
+                            <th>Market Value</th>
+                            <th>Total Profit</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="stock-pink">
+                                    <strong>TSLA</strong>
+                                    <div class="stock-percent">-3.58%</div>
+                                </div>
+                            </td>
+                            <td>{{ 833.25 | currency }}</td>
+                            <td>1</td>
+                            <td>{{ 833.25 | currency }}</td>
+                            <td style="color: darkred">{{ -39.39 | currency }}</td>
+                            <td>
+                                <button mat-icon-button>
+                                    <mat-icon>cancel</mat-icon>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
 
-        <!-- / CONTENT -->
+        <div class="card mt-48">
+            <div class="card-header">
+                <div class="card-title">Order History</div>
+            </div>
+            <div>
+                <table class="card-table">
+                    <thead>
+                        <tr>
+                            <th>Stock</th>
+                            <th>Order</th>
+                            <th>Shares</th>
+                            <th>Price per share</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <strong>TSLA</strong>
+                            </td>
+                            <td>
+                                <div>Market SELL</div>
+                                <div>{{ '01/25/2021 03:50 PM' | date }}</div>
+                            </td>
+                            <td>{{ 4 }}</td>
+                            <td>{{ 877.98 | currency }}</td>
+                            <td style="color: green">{{ 'Filled' }}</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>TSLA</strong>
+                            </td>
+                            <td>
+                                <div>Market SELL</div>
+                                <div>{{ '01/25/2021 03:50 PM' | date }}</div>
+                            </td>
+                            <td>{{ 4 }}</td>
+                            <td>{{ 877.98 | currency }}</td>
+                            <td style="color: green">{{ 'Filled' }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
