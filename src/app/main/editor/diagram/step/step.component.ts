@@ -30,15 +30,15 @@ export class StepComponent {
     }
 
     onDragEnter(event: DragEvent): void {
-        if (this.flowService.draggedItemType === 'signal') this.dragCount++;
+        if (this.step.type !== 'signal' && this.flowService.draggedItemType === 'signal') this.dragCount++;
     }
 
     onDragLeave(event: DragEvent): void {
-        if (this.flowService.draggedItemType === 'signal') this.dragCount--;
+        if (this.step.type !== 'signal' && this.flowService.draggedItemType === 'signal') this.dragCount--;
     }
 
     onDragOver(event: DragEvent): void {
-        if (this.flowService.draggedItemType === 'signal') event.preventDefault();
+        if (this.step.type !== 'signal' && this.flowService.draggedItemType === 'signal') event.preventDefault();
     }
 
     onDrop(event: DragEvent): void {
@@ -52,7 +52,7 @@ export class StepComponent {
         if (dataType === 'template') {
             const type: IFlowStepType = JSON.parse(event.dataTransfer.getData('dataValue'));
 
-            if (type === 'signal') {
+            if (this.step.type !== 'signal' && type === 'signal') {
                 this.flowService.addChild(type, this.step._id);
             }
         } else if (dataType === 'step') {
