@@ -1,0 +1,39 @@
+:host {
+    color: #666666;
+
+    header {
+        font-weight: bolder;
+        display: flex;
+        align-items: center;
+        span {
+            margin-left: 18px;
+        }
+    }
+
+    a.manage-plan {
+        font-family: 'Open Sans', sans-serif;
+        text-decoration: underline;
+        color: #666666;
+        font-weight: 700;
+        &:hover {
+            color: #5795ff;
+        }
+    }
+
+    .upgrade-button {
+        cursor: pointer;
+        font-weight: 900;
+        text-align: center;
+        font-size: small;
+        color: #5795ff;
+        background-color: #f3f8ff;
+        transition: all 300ms ease-in-out 0s;
+        border-radius: 8px;
+        margin: 20px 0;
+        padding: 10px;
+        &:hover {
+            background-color: #5795ff;
+            color: white;
+        }
+    }
+}

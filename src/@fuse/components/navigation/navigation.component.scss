@@ -10,3 +10,20 @@ fuse-navigation {
         width: 100%;
     }
 }
+
+// JastiDev
+.vertical-container {
+    height: calc(100vh - 65px) !important;
+    display: flex;
+    flex-direction: column;
+    .nav-items {
+        flex: 1;
+        overflow-y: auto;
+    }
+
+    .my-pricing-side {
+        padding: 20px;
+        border: 1px solid lightgray;
+        box-sizing: content-box;
+    }
+}

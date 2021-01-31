@@ -13,28 +13,21 @@ import { FuseNavVerticalGroupComponent } from './vertical/group/group.component'
 import { FuseNavHorizontalItemComponent } from './horizontal/item/item.component';
 import { FuseNavHorizontalCollapsableComponent } from './horizontal/collapsable/collapsable.component';
 
+import { MyPricingSideComponent } from './my-pricing-side/my-pricing-side.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+
 @NgModule({
-    imports     : [
-        CommonModule,
-        RouterModule,
-
-        MatIconModule,
-        MatRippleModule,
-
-        TranslateModule.forChild()
-    ],
-    exports     : [
-        FuseNavigationComponent
-    ],
+    imports: [CommonModule, RouterModule, MatIconModule, MatRippleModule, TranslateModule.forChild(), MatButtonModule, MatProgressBarModule],
+    exports: [FuseNavigationComponent],
     declarations: [
         FuseNavigationComponent,
         FuseNavVerticalGroupComponent,
         FuseNavVerticalItemComponent,
         FuseNavVerticalCollapsableComponent,
         FuseNavHorizontalItemComponent,
-        FuseNavHorizontalCollapsableComponent
-    ]
+        FuseNavHorizontalCollapsableComponent,
+        MyPricingSideComponent,
+    ],
 })
-export class FuseNavigationModule
-{
-}
+export class FuseNavigationModule {}
