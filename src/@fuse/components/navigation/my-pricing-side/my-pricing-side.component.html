@@ -2,24 +2,25 @@
     <mat-icon>account_balance_wallet</mat-icon>
     <span>Free Plan</span>
 </header>
+<section>
+    <div style="display: flex; font-size: x-small; margin: 14px 2px 6px 2px">
+        <strong>TASKS</strong>
+        <div style="flex: 1"></div>
+        <strong>0 / 100</strong>
+    </div>
+    <mat-progress-bar mode="determinate" value="0"></mat-progress-bar>
 
-<div style="display: flex; font-size: x-small; margin: 14px 2px 6px 2px">
-    <strong>TASKS</strong>
-    <div style="flex: 1"></div>
-    <strong>0 / 100</strong>
-</div>
-<mat-progress-bar mode="determinate" value="0"></mat-progress-bar>
+    <div style="display: flex; font-size: x-small; margin: 14px 2px 6px 2px">
+        <strong>ZAPS</strong>
+        <div style="flex: 1"></div>
+        <strong>1 / 5</strong>
+    </div>
+    <mat-progress-bar mode="determinate" value="20"></mat-progress-bar>
 
-<div style="display: flex; font-size: x-small; margin: 14px 2px 6px 2px">
-    <strong>ZAPS</strong>
-    <div style="flex: 1"></div>
-    <strong>1 / 5</strong>
-</div>
-<mat-progress-bar mode="determinate" value="20"></mat-progress-bar>
-
-<div style="display: flex; font-size: x-small; margin: 14px 2px 6px 2px">
-    <span>Monthly usage resets in 1 day</span>
-    <div style="flex: 1"></div>
-    <a [routerLink]="['/pricing']" class="manage-plan">Manage Plan</a>
-</div>
-<div class="upgrade-button">UPGRADE PLAN</div>
+    <div style="display: flex; font-size: x-small; margin: 14px 2px 6px 2px">
+        <span>Monthly usage resets in 1 day</span>
+        <div style="flex: 1"></div>
+        <a [routerLink]="['/pricing']" class="manage-plan">Manage Plan</a>
+    </div>
+    <div class="upgrade-button">UPGRADE PLAN</div>
+</section>

@@ -36,4 +36,16 @@
             color: white;
         }
     }
+
+    .folded:not(.unfolded) & {
+        header {
+            span {
+                opacity: 0;
+                transition: opacity 200ms ease;
+            }
+        }
+        section {
+            display: none;
+        }
+    }
 }
