@@ -17,9 +17,7 @@
         <mat-icon class="icon">add</mat-icon>
 
         <mat-menu #menu="matMenu">
-            <div style="min-height: 400px">
-                <editor-steps-panel [isMenu]="true" (addStep)="addStep($event)"></editor-steps-panel>
-            </div>
+            <editor-steps-panel [isMenu]="true" (addStep)="addStep($event)"></editor-steps-panel>
         </mat-menu>
     </div>
 </ng-container>

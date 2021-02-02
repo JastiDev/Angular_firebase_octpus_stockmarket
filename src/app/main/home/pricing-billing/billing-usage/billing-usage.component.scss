@@ -68,27 +68,6 @@
                     }
                 }
             }
-
-            .popular-button {
-                cursor: pointer;
-                margin: 0 20px;
-                height: 50px;
-                font-size: 16px;
-                line-height: 25px;
-                font-weight: 700;
-                width: fit-content;
-                padding: 10px 30px;
-                border-radius: 10px;
-                transition-timing-function: ease-in-out;
-                transition-duration: 300ms;
-                color: #136bf5;
-                background-color: #f2f2f2;
-
-                &:hover {
-                    color: white;
-                    background-color: #136bf5;
-                }
-            }
         }
 
         .card-gray-footer {
@@ -101,28 +80,34 @@
 
         .invoice-info {
             color: #5f6c72;
-            padding: 18px 18px;
+            padding: 18px 0 18px 18px;
             display: flex;
             flex-flow: row wrap;
             align-items: center;
             justify-content: space-between;
+        }
+    }
 
-            .button-gray {
-                cursor: pointer;
-                height: 50px;
-                font-size: 16px;
-                padding: 14px 30px;
-                border-radius: 10px;
-                transition-timing-function: ease-in-out;
-                transition-duration: 300ms;
-                color: #5f6c72;
-                background-color: rgb(232, 237, 239);
-                border: 1px solid rgb(218, 223, 226);
+    .popular-button {
+        cursor: pointer;
+        margin: 0 20px;
+        height: 50px;
+        font-size: 16px;
+        line-height: 25px;
+        font-weight: 700;
+        width: fit-content;
+        border-radius: 10px;
+        transition-timing-function: ease-in-out;
+        transition-duration: 300ms;
+        color: #136bf5;
+        background-color: #f2f2f2;
+        display: flex;
+        align-items: center;
+        padding: 10px 20px;
 
-                &:hover {
-                    background-color: rgb(218, 223, 226);
-                }
-            }
+        &:hover {
+            color: white;
+            background-color: #136bf5;
         }
     }
 
