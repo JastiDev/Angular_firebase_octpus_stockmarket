@@ -1,0 +1,186 @@
+:host {
+    width: 100%;
+    background: white;
+    font-family: 'Open Sans', sans-serif;
+
+    #arrow_right {
+        user-select: none;
+        color: rgb(150, 158, 162);
+        padding: 4px 10px;
+        font-size: 48px;
+    }
+
+    .header {
+        font-size: 64px;
+        font-weight: 800;
+        letter-spacing: -1px;
+        line-height: 70px;
+    }
+
+    h2 {
+        font-size: 24px;
+        font-weight: 700;
+        line-height: 30px;
+    }
+
+    .cards {
+        width: 100%;
+        padding: 50px 120px 50px 120px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+
+        &-item {
+            flex: 1 1 20%;
+            max-width: 20%;
+            min-width: 200px;
+            padding: 10px;
+        }
+    }
+
+    .popular-button {
+        margin-top: 10px;
+        text-align: center;
+        font-size: larger;
+        font-weight: 700;
+        background-color: rgb(19, 107, 245);
+        width: fit-content;
+        padding: 10px 20px;
+        border-radius: 10px;
+        color: white;
+        transition-timing-function: ease-in-out;
+        transition-duration: 300ms;
+    }
+
+    .popular-card {
+        border-radius: 10px;
+        transition-property: box-shadow, border-color, background-color;
+        transition-timing-function: ease-in-out;
+        transition-duration: 300ms;
+        -webkit-box-align: stretch;
+        align-items: stretch;
+        box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px;
+        border: 1px solid rgb(230, 230, 230);
+        background-color: rgb(255, 255, 255);
+        padding: 18px 18px 50px 18px;
+        cursor: pointer;
+
+        &:hover {
+            box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 30px 0px;
+            .popular-button {
+                background-color: rgb(38, 85, 189);
+            }
+        }
+
+        .price-row {
+            display: flex;
+            margin: 8px;
+            padding: 0;
+            border: 0;
+            font: inherit;
+            font-size: 100%;
+            vertical-align: baseline;
+
+            .dollar {
+                margin: 0px 5px 0px 0px;
+                color: rgb(204, 204, 204);
+                font-size: 32px;
+                font-weight: 700;
+                letter-spacing: -1px;
+                line-height: 35px;
+            }
+            .integer {
+                color: rgb(102, 102, 102);
+                font-size: 40px;
+                font-weight: 800;
+                letter-spacing: -1px;
+                line-height: 45px;
+            }
+            .float {
+                margin: 5px 0px 0px 2px;
+                color: rgb(102, 102, 102);
+                font-size: 16px;
+                font-weight: 700;
+                line-height: 20px;
+            }
+            .usd {
+                margin: 5px 0px 0px 5px;
+                color: rgb(204, 204, 204);
+                font-size: 16px;
+                font-weight: 700;
+                letter-spacing: -1px;
+                line-height: 20px;
+            }
+        }
+
+        .text {
+            color: rgb(102, 102, 102);
+            font-size: 12px;
+            font-weight: 400;
+            line-height: 15px;
+            height: 50px;
+        }
+
+        .hr {
+            background-color: rgb(230, 230, 230);
+            border-radius: 5px;
+            height: 3px;
+            width: 40px;
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: 700;
+            line-height: 30px;
+            color: rgb(51, 51, 51);
+            vertical-align: baseline;
+            margin: 15px 0;
+        }
+
+        .subtitle {
+            color: rgb(102, 102, 102);
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 20px;
+            margin: 0 0 15px;
+        }
+    }
+
+    .features {
+        .title {
+            margin: 10px 0;
+            font-size: 12px;
+            font-weight: 700;
+            line-height: 15px;
+            text-transform: uppercase;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .feature-row {
+            color: #5f6c72;
+            cursor: default;
+            display: flex;
+            padding-bottom: 8px;
+            .icon {
+                align-self: flex-start;
+                margin-right: 10px;
+                vertical-align: baseline;
+            }
+            .text {
+                vertical-align: baseline;
+            }
+            .check-icon {
+                color: rgb(19, 208, 171);
+                margin-right: 5px;
+            }
+        }
+
+        .hr {
+            background-color: rgb(230, 230, 230);
+            border-radius: 5px;
+            height: 3px;
+            width: 40px;
+            margin: 10px 20px 20px;
+        }
+    }
+}

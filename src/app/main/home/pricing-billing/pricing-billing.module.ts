@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -18,24 +19,29 @@ import { MatSelectModule } from '@angular/material/select';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'app/shared/shared.module';
 
-import { SelectStepComponent } from './select-step/select-step.component';
-import { DiscoverComponent } from './discover.component';
+import { PricingBillingComponent } from './pricing-billing.component';
+import { PricingPlansComponent } from './pricing-plans/pricing-plans.component';
+import { BillingUsageComponent } from './billing-usage/billing-usage.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { NgCircleProgressModule } from 'ng-circle-progress';
 
 const routes: Routes = [
     {
-        path: 'discover',
-        component: DiscoverComponent,
+        path: 'billing',
+        component: PricingBillingComponent,
+        children: [
+            { path: 'plans', component: PricingPlansComponent },
+            { path: 'usage', component: BillingUsageComponent },
+        ],
     },
 ];
 
 @NgModule({
-    declarations: [DiscoverComponent, SelectStepComponent],
     imports: [
-        RouterModule.forChild(routes),
         CommonModule,
+        RouterModule.forChild(routes),
         FormsModule,
         SharedModule,
         ReactiveFormsModule,
@@ -57,6 +63,9 @@ const routes: Routes = [
         MatInputModule,
         MatAutocompleteModule,
         MatSelectModule,
+        MatProgressSpinnerModule,
+        NgCircleProgressModule,
     ],
+    declarations: [PricingBillingComponent, PricingPlansComponent, BillingUsageComponent],
 })
-export class DiscoverModule {}
+export class PricingBillingModule {}

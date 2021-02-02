@@ -29,6 +29,7 @@ import { AngularFireModule } from '@angular/fire';
 import { environment } from 'environments/environment';
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NgCircleProgressModule } from 'ng-circle-progress';
 
 const appRoutes: Routes = [
     {
@@ -95,6 +96,7 @@ const appRoutes: Routes = [
         AngularFireAuthModule,
         AngularFireAuthGuardModule,
         FontAwesomeModule,
+        NgCircleProgressModule.forRoot(),
     ],
     bootstrap: [AppComponent],
     providers: [AuthGuard],

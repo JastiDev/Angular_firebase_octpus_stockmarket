@@ -56,6 +56,7 @@
         "firebase": "7.15.5",
         "lodash": "4.17.19",
         "moment": "2.27.0",
+        "ng-circle-progress": "1.6.0",
         "ng2-charts": "2.3.2",
         "ngrx-store-freeze": "0.2.4",
         "ngx-color-picker": "9.1.0",

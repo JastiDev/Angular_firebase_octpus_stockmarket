@@ -17,5 +17,5 @@ export class DashboardComponent implements OnInit {
         this.chartDataConfig = this.chartService;
     }
 
-    ngOnInit() {}
+    ngOnInit(): void {}
 }

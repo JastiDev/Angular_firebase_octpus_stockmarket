@@ -1,0 +1,116 @@
+<div class="page-layout simple p-24">
+    <div class="my-container">
+        <!-- HEADER -->
+        <div class="header p-24" fxLayout="row" fxLayoutAlign="start center">Billing and Usage</div>
+        <!-- / HEADER -->
+
+        <!-- CONTENT -->
+        <div class="content p-24">
+            <div class="card-gray">
+                <div class="card-gray-body">
+                    <div class="titles-with-icon">
+                        <div class="pa-icon">PA</div>
+                        <div class="titles">
+                            <div class="title">Personal Account</div>
+                            <div class="subtitle">Free Plan</div>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; margin: 0 20px">
+                        <div class="titles-with-icon">
+                            <circle-progress
+                                [percent]="0"
+                                [radius]="16"
+                                [showUnits]="false"
+                                [outerStrokeWidth]="6"
+                                [innerStrokeWidth]="6"
+                                [space]="-7"
+                                [outerStrokeColor]="'#78C000'"
+                                [innerStrokeColor]="'#C7E596'"
+                                [animation]="true"
+                                [showTitle]="false"
+                                [showSubtitle]="false"
+                                [animationDuration]="300"
+                                [outerStrokeColor]="'#13D0AB'"
+                                [innerStrokeColor]="'rgb(218, 223, 226)'"
+                            ></circle-progress>
+                            <div class="titles">
+                                <div class="title">Tasks</div>
+                                <div class="subtitle">0 / 100</div>
+                            </div>
+                        </div>
+                        <div class="titles-with-icon">
+                            <circle-progress
+                                [percent]="20"
+                                [radius]="16"
+                                [showUnits]="false"
+                                [outerStrokeWidth]="6"
+                                [innerStrokeWidth]="6"
+                                [space]="-7"
+                                [outerStrokeColor]="'#78C000'"
+                                [innerStrokeColor]="'#C7E596'"
+                                [animation]="true"
+                                [showTitle]="false"
+                                [showSubtitle]="false"
+                                [animationDuration]="300"
+                                [outerStrokeColor]="'#13D0AB'"
+                                [innerStrokeColor]="'rgb(218, 223, 226)'"
+                            ></circle-progress>
+                            <div class="titles">
+                                <div class="title">Zaps</div>
+                                <div class="subtitle">1 / 5</div>
+                            </div>
+                        </div>
+                        <div class="titles-with-icon">
+                            <div class="titles">
+                                <div class="title">Usage Reset</div>
+                                <div class="subtitle">Feb 02, 2021</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="popular-button">Change Plan</div>
+                </div>
+                <div class="card-gray-footer">
+                    <span class="mr-12">Have qestions about your plan?</span>
+                    <a [routerLink]="['/home/billing/plans']" style="color: rgb(19, 107, 245)">Learn about plans and pricing.</a>
+                </div>
+            </div>
+            <div class="header-gray mt-48">Payment Information</div>
+            <div class="payment-select">
+                <div class="no-payment-info mb-12">No Payment Info</div>
+                <div class="payment-text mb-12">
+                    We accept American Express, Diners Club, Discover, JCB, Mastercard, Visa, UnionPay, ACH or PayPal for payments in USD $.
+                </div>
+                <div style="display: flex; justify-content: center">
+                    <ng-container *ngFor="let method of billingService.billingMethods">
+                        <img [alt]="method.title" [src]="method.svg" class="method-svg" />
+                    </ng-container>
+                </div>
+                <div class="mt-24">
+                    <button mat-stroked-button [matMenuTriggerFor]="menu">
+                        Add Payment Method
+                        <mat-icon>unfold_more</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item>Debit or Credit Card</button>
+                        <button mat-menu-item>Bank Transfer (US Only)</button>
+                        <button mat-menu-item>PayPal</button>
+                    </mat-menu>
+                </div>
+            </div>
+
+            <div class="header-gray mt-48">Invoice Information</div>
+            <div class="card-gray">
+                <div class="invoice-info">
+                    <div>No invoice company name or email</div>
+                    <div class="button-gray">Update Info</div>
+                </div>
+            </div>
+
+            <div class="header-gray mt-48">Invoices</div>
+            <div class="no-invoices">No Invoices</div>
+        </div>
+        <!-- / CONTENT -->
+    </div>
+</div>

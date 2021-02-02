@@ -1,0 +1,74 @@
+<div class="my-container">
+    <!-- HEADER -->
+    <div style="margin-top: 100px !important">
+        <div class="header" fxLayout="row" fxLayoutAlign="start center">Plans &<br />Pricing</div>
+        <h2>Whether your time-saving<br />automation needs are large or small,<br />we’re here to help you scale.</h2>
+    </div>
+    <!-- / HEADER -->
+</div>
+<!-- CONTENT -->
+<div class="cards">
+    <div class="cards-item" *ngFor="let plan of billingService.pricingPlans">
+        <div class="popular-card" (click)="select(plan)">
+            <div class="price-row">
+                <div class="dollar">$</div>
+                <div class="integer">{{ (plan.options[plan.optionId].price | number: '1.2-2').split('.')[0] }}</div>
+                <div class="float" *ngIf="!isInt(plan.options[plan.optionId].price)">
+                    .{{ (plan.options[plan.optionId].price | number: '1.2-2').split('.')[1] }}
+                </div>
+                <div class="usd">USD</div>
+            </div>
+            <div class="text">
+                <ng-container *ngIf="plan.options[plan.optionId].priceMonthly; else free">
+                    per month, billed annually <br />
+                    or {{ plan.options[plan.optionId].priceMonthly | currency }} USD month-to-month
+                </ng-container>
+                <ng-template #free> free forever </ng-template>
+            </div>
+            <div class="hr"></div>
+            <div class="title">{{ plan.title }}</div>
+            <div class="subtitle">{{ plan.subtitle }}</div>
+
+            <div class="mt-24">
+                <ng-container *ngIf="plan.options.length == 1; else elseTemplate">
+                    <button mat-stroked-button style="width: 100%; text-align: left">
+                        {{ plan.options[plan.optionId].tasksPerMonth | number }} Tasks /mo
+                    </button>
+                </ng-container>
+                <ng-template #elseTemplate>
+                    <button mat-stroked-button [matMenuTriggerFor]="menu" style="width: 100%; text-align: left">
+                        {{ plan.options[plan.optionId].tasksPerMonth | number }} Tasks /mo
+                        <mat-icon style="position: absolute; right: 0; top: 5px">unfold_more</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <ng-container *ngFor="let option of plan.options; let id = index">
+                            <button mat-menu-item (click)="plan.optionId = id" style="min-width: 180px">
+                                {{ option.tasksPerMonth | number }} Tasks /mo
+                            </button>
+                        </ng-container>
+                    </mat-menu>
+                </ng-template>
+            </div>
+
+            <div class="popular-button" style="width: 100%">Upgrade</div>
+        </div>
+
+        <div class="features">
+            <div class="title">{{ plan.title }} plan features</div>
+            <div class="feature-row">
+                <div class="icon"><mat-icon>group_work</mat-icon></div>
+                <div class="text">{{ plan.limitZaps }} Zaps</div>
+            </div>
+            <div class="feature-row">
+                <div class="icon"><mat-icon>timer</mat-icon></div>
+                <div class="text">{{ plan.limitUpdateTime }} min Update Time</div>
+            </div>
+            <div class="hr"></div>
+            <div class="feature-row" *ngFor="let feature of plan.features">
+                <div class="check-icon"><mat-icon>check</mat-icon></div>
+                <div class="text">{{ feature }}</div>
+            </div>
+        </div>
+    </div>
+    <!-- / CONTENT -->
+</div>

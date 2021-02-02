@@ -20,7 +20,7 @@
     <div style="display: flex; font-size: x-small; margin: 14px 2px 6px 2px">
         <span>Monthly usage resets in 1 day</span>
         <div style="flex: 1"></div>
-        <a [routerLink]="['/pricing']" class="manage-plan">Manage Plan</a>
+        <a [routerLink]="['/home/billing/usage']" class="manage-plan">Manage Plan</a>
     </div>
-    <div class="upgrade-button">UPGRADE PLAN</div>
+    <div class="upgrade-button" [routerLink]="['/home/billing/plans']">UPGRADE PLAN</div>
 </section>
