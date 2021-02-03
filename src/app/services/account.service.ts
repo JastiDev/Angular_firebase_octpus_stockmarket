@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IAccount } from '../shared/interfaces/IAccount';
+import { IAccount, IAccountApp } from '../shared/interfaces/IAccount';
 import { Subject } from 'rxjs';
 import { ApiService } from './api.service';
 
@@ -18,7 +18,7 @@ export class AccountService {
 
     async fetchAccount(): Promise<void> {
         const account = await this.apiService.getAccount();
-
+        console.log(account);
         this.next(account);
     }
 
@@ -26,6 +26,13 @@ export class AccountService {
         const account = await this.apiService.updateAccount(data);
         this.next(account);
 
+        return account;
+    }
+
+    async updateAccountApp(data: IAccountApp) {
+        const account = await this.apiService.updateAccountApp(data);
+        console.log(account);
+        this.next(account);
         return account;
     }
 }

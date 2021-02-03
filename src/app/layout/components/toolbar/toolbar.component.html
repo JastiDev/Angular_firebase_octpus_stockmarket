@@ -11,7 +11,7 @@
                 </button>
 
                 <div class="logo">
-                    <img src="assets/images/logos/fuse_text.svg" style="width: auto; height: 30px" />
+                    <img src="assets/images/logos/fuse_text.svg" style="width: auto; height: 30px; cursor: pointer" [routerLink]="['/home']" />
                 </div>
             </div>
 
@@ -36,7 +36,11 @@
         <div class="" fxFlex="0 1 auto" fxLayout="row" fxLayoutAlign="start center">
             <button mat-button [matMenuTriggerFor]="userMenu" class="user-button">
                 <div fxLayout="row" fxLayoutAlign="center center">
-                    <img class="avatar mr-0 mr-sm-16" [src]="authService.user?.photoURL || 'assets/images/avatars/profile.jpg'" referrerpolicy="no-referrer" />
+                    <img
+                        class="avatar mr-0 mr-sm-16"
+                        [src]="authService.user?.photoURL || 'assets/images/avatars/profile.jpg'"
+                        referrerpolicy="no-referrer"
+                    />
                     <span class="username mr-12" fxHide fxShow.gt-sm>{{ authService.user?.displayName }}</span>
                     <mat-icon class="s-16" fxHide.xs>keyboard_arrow_down</mat-icon>
                 </div>
@@ -52,6 +56,11 @@
                     <mat-icon>mail</mat-icon>
                     <span>Inbox</span>
                 </button> -->
+
+                <button mat-menu-item [routerLink]="'/home/billing/usage'">
+                    <mat-icon>payment</mat-icon>
+                    <span>Billing and Usage</span>
+                </button>
 
                 <button mat-menu-item class="" (click)="onClickSignout()">
                     <mat-icon>exit_to_app</mat-icon>

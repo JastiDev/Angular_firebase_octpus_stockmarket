@@ -7,7 +7,13 @@ import { BillingService } from 'app/services/billing.service';
     styleUrls: ['./billing-usage.component.scss'],
 })
 export class BillingUsageComponent implements OnInit {
+    showCard = false;
+
     constructor(public billingService: BillingService) {}
 
     ngOnInit(): void {}
+
+    editPaymentMethod(): void {
+        this.showCard = !this.showCard;
+    }
 }

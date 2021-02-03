@@ -44,8 +44,6 @@ export class MyappsComponent implements OnInit {
             delete app.editable;
             delete app.baseUrl;
         });
-        const newAccount = await this.accountService.updateAccount({
-            apps: this.account.apps,
-        });
+        const newAccount = await this.accountService.updateAccountApp(this.account.apps[0]);
     }
 }

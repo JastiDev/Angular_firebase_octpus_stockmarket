@@ -11,9 +11,6 @@ export class BillingService {
         { svg: 'assets/billing/jcb.svg', title: '' },
         { svg: 'assets/billing/mastercard.svg', title: '' },
         { svg: 'assets/billing/visa.svg', title: '' },
-        { svg: 'assets/billing/unionpay.svg', title: '' },
-        { svg: 'assets/billing/ach.svg', title: '' },
-        { svg: 'assets/billing/paypal.svg', title: '' },
     ];
 
     pricingPlans: IPricingPlan[] = [

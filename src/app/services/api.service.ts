@@ -5,7 +5,7 @@ import { environment } from 'environments/environment';
 import { catchError, map } from 'rxjs/operators';
 import { IFlow } from '../shared/interfaces/IFlow';
 import { throwError, Observable } from 'rxjs';
-import { IAccount } from '../shared/interfaces/IAccount';
+import { IAccount, IAccountApp } from '../shared/interfaces/IAccount';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 enum HttpMethod {
@@ -156,8 +156,16 @@ export class ApiService {
 
     /**
      * Updates user's account
+     * deprecated
      */
     updateAccount(data: IAccount): Promise<IAccount> {
         return this.request(HttpMethod.PUT, '/account', data);
+    }
+
+    updateAccountApp(data: IAccountApp): Promise<IAccount> {
+        delete data.baseUrl;
+        delete data.editable;
+        delete data['_id'];
+        return this.request(HttpMethod.PUT, '/account/app', data);
     }
 }

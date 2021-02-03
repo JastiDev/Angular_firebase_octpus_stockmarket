@@ -69,47 +69,42 @@
                         </div>
                     </div>
                     <div style="flex: 1"></div>
-                    <div class="popular-button">Change Plan</div>
+                    <div class="popular-button" [routerLink]="['/home/billing/plans']">Change Plan</div>
                 </div>
                 <div class="card-gray-footer">
                     <span class="mr-12">Have qestions about your plan?</span>
                     <a [routerLink]="['/home/billing/plans']" style="color: rgb(19, 107, 245)">Learn about plans and pricing.</a>
                 </div>
             </div>
+
             <div class="header-gray mt-48">Payment Information</div>
-            <div class="payment-select">
-                <div class="no-payment-info mb-12">No Payment Info</div>
-                <div class="payment-text mb-12">
-                    We accept American Express, Diners Club, Discover, JCB, Mastercard, Visa, UnionPay, ACH or PayPal for payments in USD $.
-                </div>
-                <div style="display: flex; justify-content: center">
-                    <ng-container *ngFor="let method of billingService.billingMethods">
-                        <img [alt]="method.title" [src]="method.svg" class="method-svg" />
-                    </ng-container>
-                </div>
-                <div class="mt-24">
-                    <button mat-stroked-button [matMenuTriggerFor]="menu">
-                        Add Payment Method
-                        <mat-icon>unfold_more</mat-icon>
-                    </button>
-                    <mat-menu #menu="matMenu">
-                        <button mat-menu-item>Debit or Credit Card</button>
-                        <button mat-menu-item>Bank Transfer (US Only)</button>
-                        <button mat-menu-item>PayPal</button>
-                    </mat-menu>
+            <div class="card-gray">
+                <div class="card-gray-body">
+                    <div class="no-text">No Payment Info</div>
+                    <div style="flex: 1"></div>
+                    <div class="popular-button" (click)="editPaymentMethod()">Edit Payment Method</div>
+
+                    <div class="mt-24" style="width: 100%" *ngIf="showCard">
+                        <main-my-stripe></main-my-stripe>
+                    </div>
                 </div>
             </div>
 
             <div class="header-gray mt-48">Invoice Information</div>
             <div class="card-gray">
-                <div class="invoice-info">
-                    <div>No invoice company name or email</div>
+                <div class="card-gray-body">
+                    <div class="no-text">No invoice company name or email</div>
+                    <div style="flex: 1"></div>
                     <div class="popular-button">Update Info</div>
                 </div>
             </div>
 
             <div class="header-gray mt-48">Invoices</div>
-            <div class="no-invoices">No Invoices</div>
+            <div class="card-gray">
+                <div class="card-gray-body">
+                    <div class="no-text">No Invoices</div>
+                </div>
+            </div>
         </div>
         <!-- / CONTENT -->
     </div>

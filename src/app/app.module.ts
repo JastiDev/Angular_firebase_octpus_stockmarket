@@ -30,6 +30,7 @@ import { environment } from 'environments/environment';
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgCircleProgressModule } from 'ng-circle-progress';
+import { StripeModule } from 'stripe-angular';
 
 const appRoutes: Routes = [
     {
@@ -97,6 +98,8 @@ const appRoutes: Routes = [
         AngularFireAuthGuardModule,
         FontAwesomeModule,
         NgCircleProgressModule.forRoot(),
+
+        StripeModule.forRoot(environment.stripeKey),
     ],
     bootstrap: [AppComponent],
     providers: [AuthGuard],

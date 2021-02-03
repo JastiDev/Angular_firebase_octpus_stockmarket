@@ -16,16 +16,18 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSelectModule } from '@angular/material/select';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NgCircleProgressModule } from 'ng-circle-progress';
+import { StripeModule } from 'stripe-angular';
 
 import { SharedModule } from 'app/shared/shared.module';
 
 import { PricingBillingComponent } from './pricing-billing.component';
 import { PricingPlansComponent } from './pricing-plans/pricing-plans.component';
 import { BillingUsageComponent } from './billing-usage/billing-usage.component';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { NgCircleProgressModule } from 'ng-circle-progress';
+import { MyStripeComponent } from './my-stripe/my-stripe.component';
 
 const routes: Routes = [
     {
@@ -47,6 +49,7 @@ const routes: Routes = [
         ReactiveFormsModule,
 
         FontAwesomeModule,
+        NgCircleProgressModule,
 
         MatCardModule,
         MatListModule,
@@ -64,8 +67,9 @@ const routes: Routes = [
         MatAutocompleteModule,
         MatSelectModule,
         MatProgressSpinnerModule,
-        NgCircleProgressModule,
+
+        StripeModule,
     ],
-    declarations: [PricingBillingComponent, PricingPlansComponent, BillingUsageComponent],
+    declarations: [PricingBillingComponent, PricingPlansComponent, BillingUsageComponent, MyStripeComponent],
 })
 export class PricingBillingModule {}

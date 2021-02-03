@@ -5,6 +5,7 @@ import { Subject } from 'rxjs';
 import { UserRole } from './auth.roles';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { switchMap, first, map } from 'rxjs/operators';
 
 export interface ISignInCredentials {
     email: string;
@@ -40,6 +41,10 @@ export class AuthService {
         this.auth.authState.subscribe((userData: User) => {
             this.setUserData(userData, UserRole.FreeUser);
         });
+    }
+
+    async getUser() {
+        return this.auth.authState.pipe(first()).toPromise();
     }
 
     private autoLogin(): void {

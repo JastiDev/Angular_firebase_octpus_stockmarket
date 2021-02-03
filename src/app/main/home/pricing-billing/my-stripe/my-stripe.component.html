@@ -1,0 +1,35 @@
+<div class="payment-text">
+    We accept American Express, Diners Club, Discover, JCB, Mastercard, Visa, UnionPay, ACH or PayPal for payments in USD $.
+</div>
+<div style="display: flex; justify-content: center">
+    <ng-container *ngFor="let method of billingService.billingMethods">
+        <img [alt]="method.title" [src]="method.svg" class="method-svg" />
+    </ng-container>
+</div>
+
+<div style="margin: 20px 0 0 0; border: 1px solid lightgray; padding: 10px">
+    <stripe-card
+        #stripeCard
+        (catch)="onStripeError($event)"
+        [(complete)]="cardDetailsFilledOut"
+        [(invalid)]="invalidError"
+        (cardMounted)="cardCaptureReady = true"
+        (paymentMethodChange)="setPaymentMethod($event)"
+        (tokenChange)="setStripeToken($event)"
+        (sourceChange)="setStripeSource($event)"
+    ></stripe-card>
+</div>
+<div *ngIf="invalidError" style="color: red; margin: 6px">
+    {{ invalidError.message }}
+</div>
+
+<div class="mt-24" style="text-align: right">
+    <button mat-stroked-button type="button" (click)="stripeCard.createPaymentMethod(extraData)">Save</button>
+    <button mat-stroked-button type="button" class="ml-24" (click)="stripeCard.createSource(extraData)">Cancel</button>
+</div>
+
+<!-- <div class="mt-24" style="text-align: right">
+    <button mat-stroked-button type="button" (click)="stripeCard.createPaymentMethod(extraData)">createPaymentMethod</button>
+    <button mat-stroked-button type="button" (click)="stripeCard.createSource(extraData)">createSource</button>
+    <button mat-stroked-button type="button" (click)="stripeCard.createToken(extraData)">createToken</button>
+</div> -->
