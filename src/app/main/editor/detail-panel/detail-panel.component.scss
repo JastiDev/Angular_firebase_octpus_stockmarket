@@ -11,3 +11,17 @@
         width: 100%;
     }
 }
+
+::ng-deep.mat-input-element:disabled {
+    color: black !important;
+}
+::ng-deep.mat-select-disabled .mat-select-value {
+    color: rgba(0, 0, 0, 1) !important;
+}
+
+::ng-deep.mat-form-field-disabled .mat-form-field-underline {
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 1) 0, rgba(0, 0, 0, 0.42) 33%, #c2c7cc 0) !important;
+    background-size: 1px 100% !important;
+    background-repeat: repeat-x !important;
+    color: black !important;
+}
